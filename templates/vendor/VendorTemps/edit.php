@@ -271,7 +271,7 @@
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_pincode', ['type' => 'number', 'name' => 'branch[branch_office][0][pincode]', 'label' => 'Pincode', 'class' => 'form-control pincode-input branch_office_0_pincode',  'id' => 'branch_office_0_pincode', 'maxlength' => '6']); ?>
+                                                    <?php echo $this->Form->control('branch_office_pincode', ['type' => 'number', 'name' => 'branch[branch_office][0][pincode]', 'label' => 'Pincode', 'class' => 'form-control pincode-input maxlength_validation branch_office_0_pincode',  'id' => 'branch_office_0_pincode', 'maxlength' => '6']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
@@ -728,10 +728,10 @@
                                                             id="factory_office_0_commencement_0">
                                                             <div class="col-sm-12 col-md-3 col-lg-3">
                                                                 <label for="">Year Of Commencement Of Production</label>
-                                                                <input type="number" class="form-control"
+                                                                <input type="number" class="form-control maxlength_validation"
                                                                     name="prdflt[factory_office][0][commencement][0][commencement_year]"
                                                                     id="factory_office_0_commencement_0_commencement_year"
-                                                                    required="true">
+                                                                    required="true" maxlength="6">
                                                             </div>
                                                             <div class="col-sm-12 col-md-2 col-lg-2">
                                                                 <label for="">Material</label>
@@ -961,7 +961,7 @@
                                             </div>
 
                                             <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('order_currency', ['name' => 'bank[order_currency]', 'class' => 'selectpicker form-control my-select id_order_currency', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                                <?php echo $this->Form->control('order_currency', ['name' => 'vendor[order_currency]', 'class' => 'selectpicker form-control my-select id_order_currency', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
                                             </div>
 
                                             <!-- <div class="col-3 mb-3">
@@ -1208,13 +1208,13 @@
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed_0_state', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country']); ?>
+                                                    <?php echo $this->Form->control('reputed[customer][0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed_customer_0_state', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][state]', ['name' => 'reputed[0][state]', 'id' => 'reputed_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
+                                                    <?php echo $this->Form->control('reputed[customer][0][state]', ['name' => 'reputed[customer][0][state]', 'id' => 'reputed_customer_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">

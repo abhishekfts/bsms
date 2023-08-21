@@ -68,3 +68,7 @@ a.text-info:hover { color: #333 !important;}
 }
 
 #questionnaireAll .text-info { color: #333 !important; font-size: medium !important;}
+
+.hide {
+    display: none;
+}

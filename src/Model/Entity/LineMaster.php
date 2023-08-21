@@ -9,8 +9,8 @@ use Cake\ORM\Entity;
  * LineMaster Entity
  *
  * @property int $id
- * @property int|null $factory_id
  * @property string $sap_vendor_code
+ * @property int|null $vendor_factory_id
  * @property string $name
  * @property string $capacity
  * @property string $uom
@@ -33,8 +33,8 @@ class LineMaster extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'factory_id' => true,
         'sap_vendor_code' => true,
+        'vendor_factory_id' => true,
         'name' => true,
         'capacity' => true,
         'uom' => true,

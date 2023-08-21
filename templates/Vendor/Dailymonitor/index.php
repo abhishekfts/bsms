@@ -38,9 +38,14 @@
                     <tbody>
                     <?php if (isset($dailymonitor)) : ?>
                         <?php foreach ($dailymonitor as $dailymonitors) : 
+
+                        //echo '<pre>'; print_r($dailymonitors); exit;
                             $status = 'Active';
-                            if($dailymonitors->status == 2) { $status = 'Cancelled'; }
-                            else if($dailymonitors->status == 3) { $status = 'Production Confirmed'; }
+                            if($dailymonitors->status == 2) { 
+                                $status = 'Cancelled'; 
+                            } else if($dailymonitors->status == 3) { 
+                                $status = 'Production Confirmed'; 
+                            }
                             ?>
                             <tr>
                                 <td><?= h($dailymonitors->plan_date) ?></td>

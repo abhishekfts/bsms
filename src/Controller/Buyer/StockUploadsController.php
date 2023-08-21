@@ -29,25 +29,13 @@ class StockUploadsController extends BuyerAppController
      */
     public function index()
     {
-        $this->loadModel("StockUploads");
+        
         $session = $this->getRequest()->getSession();
-        $vendorId = $session->read('id');
-        $sapVendor = $session->read('vendor_code');
-        print_r($sapVendor);
-        $stockupload = $this->StockUploads->find('all', [
-            'conditions' => ['StockUploads.sap_vendor_code' => $session->read('vendor_code')]
-        ])->select([
-            'id', 'opening_stock', 'material_id', 'sap_vendor_code', 'added_date', 'updated_date',
-            'vm_description' => 'vm.description', 'vm_vendor_code' => 'vm.code', 'vm.uom',
-        ])->join([
-            'table' => 'materials',
-            'alias' => 'vm',
-            'type' => 'LEFT',
-            'conditions' => 'vm.id = StockUploads.material_id',
-        ])->toArray();
-        // echo '<pre>';print_r($stockupload);exit;
+        $stockupload = $this->StockUploads->find('all')->contain(['Materials', 'VendorFactories'])
+        ->toArray();
+        
 
-
+        //echo '<pre>'; print_r($stockupload); exit;
         $this->set(compact('stockupload'));
     }
 
@@ -360,7 +348,7 @@ class StockUploadsController extends BuyerAppController
 
                         $stockData[] = $datas;
                         $tmp['asn_stock'] = 0;
-                        if(!isset($datas['error'])) {
+                        if(empty($datas['error'])) {
                             $uploadData[] = $tmp;   
                         }
                     }
@@ -373,7 +361,7 @@ class StockUploadsController extends BuyerAppController
                         foreach ($uploadData as $data) {
                             $upsertQuery->values($data);
                         }
-                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
+                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE sap_vendor_code=VALUES(sap_vendor_code), factory_id=VALUES(factory_id), `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
                             ->execute();
                     }
 

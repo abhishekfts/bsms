@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $sap_vendor_code
- * @property int|null $factory_id
+ * @property int|null $vendor_factory_id
  * @property int $material_id
  * @property string $opening_stock
  * @property string $current_stock
@@ -19,7 +19,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $updated_date
  *
  * @property \App\Model\Entity\Material $material
- * @property \App\Model\Entity\Factory $factory
  */
 class StockUpload extends Entity
 {
@@ -34,7 +33,7 @@ class StockUpload extends Entity
      */
     protected $_accessible = [
         'sap_vendor_code' => true,
-        'factory_id' => true,
+        'vendor_factory_id' => true,
         'material_id' => true,
         'opening_stock' => true,
         'current_stock' => true,
@@ -42,6 +41,5 @@ class StockUpload extends Entity
         'added_date' => true,
         'updated_date' => true,
         'material' => true,
-        'factory' => true,
     ];
 }

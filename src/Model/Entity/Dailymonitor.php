@@ -13,8 +13,8 @@ use Cake\ORM\Entity;
  * @property int|null $production_line_id
  * @property int|null $material_id
  * @property \Cake\I18n\FrozenDate|null $plan_date
- * @property int|null $target_production
- * @property int|null $confirm_production
+ * @property string $target_production
+ * @property string|null $confirm_production
  * @property int|null $status
  * @property \Cake\I18n\FrozenTime|null $added_date
  * @property \Cake\I18n\FrozenTime|null $updated_date

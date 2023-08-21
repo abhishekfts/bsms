@@ -117,45 +117,65 @@ class LineMastersController extends VendorAppController
 
                     $tmp = [];
                     $this->loadModel("VendorFactories");
-                    for ($row = 3; $row <= $highestRow; ++$row) {
+
+                    for ($row = 2; $row <= $highestRow; ++$row) {
                         
                         $tmp['sap_vendor_code']  = $session->read('vendor_code');
+                        $facError = false;
+                        $datas = [];
                         for ($col = 1; $col <= $highestColumnIndex; ++$col) {
                             $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                             if($col == 1) {
                                 $tmp['name'] = $value;
+                                $datas['name'] = $value;
                             } else if($col == 2) {
                                 $factory = $this->VendorFactories->find('list')
                                 ->select(['id'])
                                 ->where(['factory_code' => $value])
                                 ->first();
                                 $tmp['factory_id'] = $factory ? $factory : null;
+                                $datas['factory_code'] = $value;
+                                if(!$factory) {
+                                    $facError = true;
+                                }
+
                             } else if($col == 3) {
                                 $tmp['capacity'] = $value;
+                                $datas['capacity'] = $value;
                             } else {
                                 $tmp['uom'] = $value;
+                                $datas['uom'] = $value;
                             }
                             
                         }
 
-                        $uploadData[] = $tmp;
+                        $datas['error'] = '';
+                        if($facError) {
+                            $datas['error'] = 'Invalid factory code';
+                        } 
+
+                        $stockData[] = $datas;
+                        if(empty($datas['error'])) {
+                            $uploadData[] = $tmp;   
+                        }
                     }
 
                    // print_r($uploadData);exit;
-                    
-                    $columns = array_keys($uploadData[0]);
-                    $upsertQuery = $this->LineMasters->query();
-                    $upsertQuery->insert($columns);
+                   if(!empty($uploadData)) {
+                        $columns = array_keys($uploadData[0]);
+                        $upsertQuery = $this->LineMasters->query();
+                        $upsertQuery->insert($columns);
 
-                    foreach($uploadData as $row) {
-                        $upsertQuery->values($row);
-                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `sap_vendor_code`=VALUES(`sap_vendor_code`), `name`=VALUES(`name`),
-                        `capacity`=VALUES(`capacity`), `uom`=VALUES(`uom`)')
-                        ->execute();
+                        foreach($uploadData as $row) {
+                            $upsertQuery->values($row);
+                        }
+                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `capacity`=VALUES(`capacity`), `uom`=VALUES(`uom`)')
+                            ->execute();
                     }
 
                     $response['status'] = 1;
                     $response['message'] = 'uploaded Successfully';
+                    $response['data'] = $stockData;
                 } else {
                     $response['status'] = 0;
                     $response['message'] = 'file not uploaded';
@@ -178,18 +198,13 @@ class LineMastersController extends VendorAppController
     {
         $this->autoRender = false;
         $this->loadModel('ProductionLines');
-        $this->loadModel('VendorFactories');
         $total = 0;
         $response = ['status' => 1, 'message' => ''];
         $lineMaster = $this->LineMasters->get($id);
-        $factory = $this->VendorFactories->find()
-        ->select([''])
-        ->where(['line_master_id' => $id])->first();
-
         $totalResult = $this->ProductionLines->find()
         ->select(['total' => 'sum(capacity)'])
         ->where(['line_master_id' => $id])->first();
-        //echo '<pre>'; print_r($lineMaster); print_r($total); exit();
+        
         $response['data']['capacity'] = $lineMaster->capacity;
         if(!$totalResult->isEmpty('total')) {
             $total = $totalResult->total;
@@ -199,5 +214,39 @@ class LineMastersController extends VendorAppController
         $response['data']['balance'] = $lineMaster->capacity - $total;
 
         echo json_encode($response); exit;
+    }
+
+    public function getFactoryLines($factoryId = null) {
+        $this->autoRender = false;
+        $this->loadModel("LineMasters");
+        $this->loadModel("StockUploads");
+
+        $session = $this->getRequest()->getSession();
+        $sapVendor = $session->read('vendor_code');
+        
+        $lineMasterList = $this->LineMasters->find('all')
+        ->select(['id', 'name'])
+        ->where(['sap_vendor_code' => $sapVendor, 'vendor_factory_id' => $factoryId]);
+
+        $materialList = $this->StockUploads->find('all')
+        ->select(['Materials.id', 'Materials.code', 'Materials.description'])
+        ->contain(['Materials'])
+        ->where(['StockUploads.sap_vendor_code' => $sapVendor, 'vendor_factory_id' => $factoryId]);
+
+        $materials = [];
+        foreach($materialList as $mat) {
+            $materials[] = ['id' => $mat->material->id, 'description' => $mat->material->description];
+        }
+
+        $response['status'] = 0;
+        $response['message'] = 'Lines not found';
+        if($lineMasterList) {
+            $response['status'] = 1;
+            $response['message'] = 'Lines found';
+            $response['data']['lines'] = $lineMasterList;
+            $response['data']['materials'] = $materials;
+        }
+
+        echo json_encode($response);
     }
 }

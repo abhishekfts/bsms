@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * LineMasters Model
  *
+ * @property \App\Model\Table\VendorFactoriesTable&\Cake\ORM\Association\BelongsTo $VendorFactories
  * @property \App\Model\Table\ProductionLinesTable&\Cake\ORM\Association\HasMany $ProductionLines
  *
  * @method \App\Model\Entity\LineMaster newEmptyEntity()
@@ -44,8 +45,7 @@ class LineMastersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('VendorFactories', [
-            'className' => 'VendorFactories', 
-            'foreignKey' => 'factory_id', 
+            'foreignKey' => 'vendor_factory_id',
         ]);
         $this->hasMany('ProductionLines', [
             'foreignKey' => 'line_master_id',
@@ -61,14 +61,14 @@ class LineMastersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('factory_id')
-            ->allowEmptyString('factory_id');
-
-        $validator
             ->scalar('sap_vendor_code')
             ->maxLength('sap_vendor_code', 10)
             ->requirePresence('sap_vendor_code', 'create')
             ->notEmptyString('sap_vendor_code');
+
+        $validator
+            ->integer('vendor_factory_id')
+            ->allowEmptyString('vendor_factory_id');
 
         $validator
             ->scalar('name')
@@ -111,7 +111,8 @@ class LineMastersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['sap_vendor_code', 'name']), ['errorField' => 'sap_vendor_code']);
+        $rules->add($rules->isUnique(['sap_vendor_code', 'vendor_factory_id', 'name'], ['allowMultipleNulls' => true]), ['errorField' => 'sap_vendor_code']);
+        $rules->add($rules->existsIn('vendor_factory_id', 'VendorFactories'), ['errorField' => 'vendor_factory_id']);
 
         return $rules;
     }

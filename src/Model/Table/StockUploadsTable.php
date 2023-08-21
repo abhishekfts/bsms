@@ -43,6 +43,9 @@ class StockUploadsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('VendorFactories', [
+            'foreignKey' => 'vendor_factory_id',
+        ]);
         $this->belongsTo('Materials', [
             'foreignKey' => 'material_id',
             'joinType' => 'INNER',
@@ -64,8 +67,8 @@ class StockUploadsTable extends Table
             ->notEmptyString('sap_vendor_code');
 
         $validator
-            ->integer('factory_id')
-            ->allowEmptyString('factory_id');
+            ->integer('vendor_factory_id')
+            ->allowEmptyString('vendor_factory_id');
 
         $validator
             ->integer('material_id')
@@ -107,6 +110,7 @@ class StockUploadsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn('material_id', 'Materials'), ['errorField' => 'material_id']);
+        $rules->add($rules->existsIn('vendor_factory_id', 'VendorFactories'), ['errorField' => 'vendor_factory_id']);
 
         return $rules;
     }

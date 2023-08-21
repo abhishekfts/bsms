@@ -28,7 +28,9 @@
                 <table class="table table-bordered table-striped table-hover" id="example1">
                     <thead>
                         <tr>
-                            <th>Material Code</th>
+                            <th>SAP Vendor Code</th>
+                            <th>Factory</th>
+                            <th>Material</th>
                             <th>Material Description</th>
                             <th>Opening Stock</th>
                         </tr>
@@ -39,13 +41,19 @@
                         <tr class="redirect"
                             data-href="<?= $this->Url->build('/') ?>vendor/stock-uploads/edit/<?= $stockuploads->id ?>">
                             <td>
-                                <?= h($stockuploads->vm_vendor_code) ?>
+                                <?= h($stockuploads->sap_vendor_code) ?>
                             </td>
                             <td>
-                                <?= h($stockuploads->vm_description) ?>
+                                <?= h($stockuploads->vendor_factory->factory_code) ?>
                             </td>
                             <td>
-                                <?= h($stockuploads->opening_stock . ' '. $stockuploads->vm['uom']) ?>
+                                <?= h($stockuploads->material->code) ?>
+                            </td>
+                            <td>
+                                <?= h($stockuploads->material->description) ?>
+                            </td>
+                            <td>
+                                <?= h($stockuploads->opening_stock . ' '. $stockuploads->material->uom) ?>
                             </td>
                         </tr>
                     </tbody>

@@ -79,6 +79,8 @@ class ProductionLinesController extends VendorAppController
         $this->loadModel("Materials");
         $this->loadModel("VendorTemps");
         $this->loadModel('Notifications');
+        $this->loadModel('StockUploads');
+        
         $productionline = $this->ProductionLines->newEmptyEntity();
 
         // exit;
@@ -120,10 +122,8 @@ class ProductionLinesController extends VendorAppController
             $this->set('flash', $flash);
         }
         
-
-        $vendor_mateial = $this->Materials->find('list', ['conditions' => ['sap_vendor_code' => $sapVendor],'keyField' => 'id', 'valueField' => 'code'])->all();
-        $lineMasterList = $this->LineMasters->find('list', ['conditions' => ['sap_vendor_code' => $sapVendor],'keyField' => 'id', 'valueField' => 'name'])->all();
-
+        $vendor_mateial = [];
+        $lineMasterList = [];
 
         $this->set(compact('productionline','vendor_mateial', 'lineMasterList','factory'));
     }
@@ -183,5 +183,52 @@ class ProductionLinesController extends VendorAppController
         $this->set('flash', $flash);
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function checkRecordExists() {
+        $this->autoRender = false;
+        
+        $session = $this->getRequest()->getSession();
+        $sapVendor = $session->read('vendor_code');
+        
+        $response['status'] = 0;
+        $response['message'] = 'Empty request';
+        
+        if ($this->request->is(['patch', 'post', 'put', 'ajax'])) {
+            $request = $this->getRequest()->getData();
+            if($this->ProductionLines->exists(['sap_vendor_code' => $sapVendor, 'material_id' => $request['material'], 'line_master_id' => $request['line']])) {
+                $response['status'] = 0;
+                $response['message'] = 'Material already mapped to selected production line';
+            } else {
+                $response['status'] = 1;
+                $response['message'] = 'Valid' ;
+            }
+        } 
+        
+
+        echo json_encode($response);
+    }
+
+
+    public function getLineMaterials($lineMasterId = null) {
+        $this->autoRender = false;
+        
+        $session = $this->getRequest()->getSession();
+        $sapVendor = $session->read('vendor_code');
+        
+        $materialList = $this->ProductionLines->find()
+        ->select(['capacity', 'Materials.id', 'Materials.code', 'Materials.description'])
+        ->contain(['Materials'])
+        ->where(['line_master_id' => $lineMasterId]);
+
+        $materials = [];
+        foreach($materialList as $mat) {
+            $materials[] = ['id' => $mat->material->id, 'description' => $mat->material->description, 'capacity' => $mat->capacity];
+        }
+
+        $response['status'] = 1;
+        $response['data']['materials'] = $materials;
+
+        echo json_encode($response);
     }
 }

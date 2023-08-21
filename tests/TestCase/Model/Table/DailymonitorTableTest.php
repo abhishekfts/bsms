@@ -25,6 +25,8 @@ class DailymonitorTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Dailymonitor',
+        'app.ProductionLines',
+        'app.Materials',
     ];
 
     /**

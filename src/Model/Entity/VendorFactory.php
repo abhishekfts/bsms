@@ -13,11 +13,10 @@ use Cake\ORM\Entity;
  * @property string $factory_code
  * @property string|null $address
  * @property string|null $address_2
- * @property string|null $telephone
  * @property string|null $pincode
  * @property string|null $city
- * @property string|null $state
- * @property string|null $country
+ * @property int $state
+ * @property int $country
  * @property string|null $installed_capacity
  * @property string|null $installed_capacity_file
  * @property string|null $machinery_available
@@ -48,7 +47,6 @@ class VendorFactory extends Entity
         'factory_code' => true,
         'address' => true,
         'address_2' => true,
-        'telephone' => true,
         'pincode' => true,
         'city' => true,
         'state' => true,

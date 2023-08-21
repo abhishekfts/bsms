@@ -23,22 +23,24 @@
             <div class="card-body invoice-details">
                 <div class="row">
 
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <?php echo $this->Form->control('factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Factory', 'required')); ?>
+                        </div>
+                    </div>
                     <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('line_master_id', array('class' => 'form-control w-100', 'options' => $lineMasterList, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Line Description')); ?>
+                            <?php echo $this->Form->control('line_master_id', array('class' => 'form-control w-100', 'options' => $lineMasterList, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Line')); ?>
                         </div>
                     </div>
 
 
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Material Code')); ?>
+                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Material')); ?>
                         </div>
                     </div>
   
-                    <div class="col-sm-12 col-md-3 col-lg-3">
-                        <?php echo $this->Form->control('factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Factories')); ?>
-                    </div>
                     <div class="col-sm-8 col-md-2">
                         <div class="form-group">
                             <?php echo $this->Form->control('capacity', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required', 'label' => 'Capacity (Per Day)')); ?>
@@ -78,12 +80,10 @@
 
 <?= $this->Form->end() ?>
 
-
-
 <script>
     function showConfirmationModal() {
         if ($('#productionLineForm').valid()) {
-            $('#modal-sm').modal('show');
+            checkRecordExists();
         }
     }
 
@@ -172,5 +172,79 @@
             $(this).val(capacityBal);
         }
     });
+
+    $("#factory-id").change(function () {
+        var lineId = $(this).val();
+        $("#line-master-id").empty().append("<option value=''>Please Select</option>");
+        $("#material-id").empty().append("<option value=''>Please Select</option>");
+
+        if (lineId != "") {
+            $.ajax({
+                type: "get",
+                url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/line-masters', 'action' => 'get-factory-lines')); ?>/" + lineId,
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(
+                        "Content-type",
+                        "application/x-www-form-urlencoded"
+                    );
+                },
+                success: function (response) {
+                    if (response.status) {
+                        $.each(response.data.lines, function (key, val) { 
+                             $("#line-master-id").append("<option value='"+val.id+"'>"+val.name+"</option>");
+                        });
+                        $.each(response.data.materials, function (key, val) { 
+                             $("#material-id").append("<option value='"+val.id+"'>"+val.description+"</option>");
+                        });
+                    }
+                },
+                error: function (e) {
+                    alert("An error occurred: " + e.responseText.message);
+                    console.log(e);
+                },
+            });
+        }
+    });
+
+    
+    function checkRecordExists() {
+
+        var factory = $("#factory-id").val();
+        var line = $("#line-master-id").val();
+        var material = $("#material-id").val()
+
+        $.ajax({
+            type: "post",
+            url: "<?php echo \Cake\Routing\Router::url(array('action' => 'check-record-exists')); ?>",
+            dataType: "json",
+            data: {line: line, material:material},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(
+                    "Content-type",
+                    "application/x-www-form-urlencoded"
+                );
+                xhr.setRequestHeader(
+                    'X-CSRF-Token',
+                    <?= json_encode($this->request->getAttribute('csrfToken')); ?>
+                );
+                
+            },
+            success: function (response) {
+                if (response.status) {
+                    $('#modal-sm').modal('show');
+                } else {
+                    Toast.fire({
+                    icon: 'error',
+                    title: response.message
+                    });
+                }
+            },
+            error: function (e) {
+                alert("An error occurred: " + e.responseText.message);
+                console.log(e);
+            },
+        });
+    }
 
 </script>

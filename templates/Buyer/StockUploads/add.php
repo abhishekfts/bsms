@@ -105,7 +105,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     </thead>
                     <tbody>
 
-                        <!-- <?php foreach ($stockuploadData as $stockuploads) :  ?>
+                        <?php foreach ($stockuploadData as $stockuploads) :  ?>
                         <?php if ($stockuploads['status']) : ?>
 
                         <tr>
@@ -139,7 +139,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                             </td>
                         </tr>
                         <?php endif; ?>
-                        <?php endforeach; ?> -->
+                        <?php endforeach; ?> 
                     </tbody>
                 </table>
             </div>

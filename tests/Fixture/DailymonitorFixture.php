@@ -29,12 +29,12 @@ class DailymonitorFixture extends TestFixture
                 'sap_vendor_code' => 'Lorem ip',
                 'production_line_id' => 1,
                 'material_id' => 1,
-                'plan_date' => '2023-07-16',
-                'target_production' => 1,
-                'confirm_production' => 1,
+                'plan_date' => '2023-08-21',
+                'target_production' => 1.5,
+                'confirm_production' => 1.5,
                 'status' => 1,
-                'added_date' => '2023-07-16 15:33:59',
-                'updated_date' => '2023-07-16 15:33:59',
+                'added_date' => '2023-08-21 15:20:13',
+                'updated_date' => '2023-08-21 15:20:13',
             ],
         ];
         parent::init();

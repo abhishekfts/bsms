@@ -39,6 +39,7 @@
         </div>
         <?= $this->Form->end() ?>
     </div>
+
 </div>
 
 <?= $this->Form->create(null, ['id' => 'formUpload', 'url' => ['controller' => '/line-masters', 'action' => 'upload']]) ?>
@@ -69,6 +70,24 @@
 </div>
 <?= $this->Form->end() ?>
 
+<div class="card-footer" id="id_pohead">
+                <table class="table table-hover" id="example1">
+                    <thead>
+                        <tr>
+                            
+                            <th>Factory Code</th>
+                            <th>Line Name</th>
+                            <th>Opening Stock</th>
+                            <th>Uom</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
 <script>
     $('#OpenImgUpload').click(function() {
         $('#bulk_file').trigger('click');
@@ -95,7 +114,19 @@
                         title: response.message
                     });
 
-                    //setTimeout(function() {history.go(-1);}, 1000);
+                    $("#example1 tbody").empty();
+
+                    // Loop through the response data and build the table rows dynamically
+                    $.each(response.data, function (key, val) { 
+                        var rowHtml = `<tr>
+                        <td> `+ val.factory_code + `</td>
+                        <td> `+ val.name +`</td>
+                        <td> `+ val.capacity + `</td>
+                        <td> `+ val.uom + `</td>
+                        <td> `+ val.error + `</td>
+                        </tr>`;
+                        $("#example1 tbody").append(rowHtml);
+                    });
 
                 } else {
                     Toast.fire({

@@ -47,6 +47,9 @@ class VendorFactoriesTable extends Table
         $this->belongsTo('VendorTemps', [
             'foreignKey' => 'vendor_temp_id',
         ]);
+        $this->hasMany('StockUploads', [
+            'foreignKey' => 'vendor_factory_id',
+        ]);
         $this->hasMany('VendorCommencements', [
             'foreignKey' => 'vendor_factory_id',
         ]);
@@ -81,11 +84,6 @@ class VendorFactoriesTable extends Table
             ->allowEmptyString('address_2');
 
         $validator
-            ->scalar('telephone')
-            ->maxLength('telephone', 10)
-            ->allowEmptyString('telephone');
-
-        $validator
             ->scalar('pincode')
             ->maxLength('pincode', 6)
             ->allowEmptyString('pincode');
@@ -96,14 +94,14 @@ class VendorFactoriesTable extends Table
             ->allowEmptyString('city');
 
         $validator
-            ->scalar('state')
-            ->maxLength('state', 100)
-            ->allowEmptyString('state');
+            ->integer('state')
+            ->requirePresence('state', 'create')
+            ->notEmptyString('state');
 
         $validator
-            ->scalar('country')
-            ->maxLength('country', 50)
-            ->allowEmptyString('country');
+            ->integer('country')
+            ->requirePresence('country', 'create')
+            ->notEmptyString('country');
 
         $validator
             ->scalar('installed_capacity')

@@ -56,6 +56,7 @@ $(document).on("click", ".add", function () {
 
     str = str.replaceAll(clas + "_" + lastid + "_", clas + "_" + nextid + "_"); // Change id
     str = str.replaceAll(" hide", ""); // Show Delete
+    str = str.replaceAll('disabled="disabled"', ""); // Remove Disabled
     str = str.replaceAll("[" + clas + "]" + "[" + lastid + "]", "[" + clas + "]" + "[" + nextid + "]"); // Change name
     str = str.replaceAll('data-id="' + lastid + '"', 'data-id="' + nextid + '"'); // Change data-id
 
@@ -179,7 +180,7 @@ $.ajax({
                         </div>
                         <div class="col-3 mt-3 col-md-3">
                             <div class="form-group">
-                                <div class="input number"><label for="branch_office_`+ j + `_pincode">Pincode</label><input type="number" name="branch[branch_office][` + j + `][pincode]" value="` + w.pincode + `"  class="form-control pincode-input branch_office_` + j + `_pincode" id="branch_office_` + j + `_pincode" maxlength="6"></div>
+                                <div class="input number"><label for="branch_office_`+ j + `_pincode">Pincode</label><input type="number" name="branch[branch_office][` + j + `][pincode]" value="` + w.pincode + `"  class="form-control maxlength_validation pincode-input branch_office_` + j + `_pincode" id="branch_office_` + j + `_pincode" maxlength="6"></div>
                             </div>
                         </div>
                         <div class="col-3 mt-3 col-md-3">
@@ -215,8 +216,9 @@ $.ajax({
                         <div class="col-sm-12 col-md-3 mt-3">
                             <label class="form-label">Registration Certificate</label>
                             <div class="custom-file">
-                                <input name="branch[branch_office][`+ j + `][registration_certificate]" type="file" accept=".pdf" class="custom-file-input branch_office_` + j + `_registration_certificate">
+                                <input name="branch[branch_office][`+ j + `][registration_certificate]" disabled="disabled" type="file" accept=".pdf" class="custom-file-input branch_office_` + j + `_registration_certificate">
                                 <label class="custom-file-label">Choose File</label>
+                                <a class="branch_office_` + j + `_registration_certificate"></a>
                             </div>
                         </div>
                         <div class="col-3 col-md-3 mt-4 pt-4 hide">
@@ -229,7 +231,12 @@ $.ajax({
                         setTimeout(function () { $(".branch_office_" + j + "_state").val(w.state); }, 4000);
                     })
                 }
-                $.each(v, function (j, w) { $.each(w, function (k, x) { if (k != "registration_certificate") { $(".branch_office_" + j + "_" + k).val(x); } }) })
+                $.each(v, function (j, w) {
+                    $.each(w, function (k, x) {
+                        if (k != "registration_certificate") { $(".branch_office_" + j + "_" + k).val(x); }
+                        else { $(".branch_office_" + j + "_" + k).attr('href', x).text(x.split('/')[x.split('/').length - 1]); }
+                    })
+                })
             }
             else if (i == "factory") {
                 if (v.length > 0) {
@@ -398,8 +405,9 @@ $.ajax({
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="custom-file">
-                                        <input name="prdflt[factory_office][`+ j + `][installed_capacity_file]" required="true" type="file" accept=".pdf" class="custom-file-input">
-                                        <label class="custom-file-label">Choose File</label>
+                                    <input name="prdflt[factory_office][`+ j + `][installed_capacity_file]" disabled="disabled" required="true" type="file" accept=".pdf" class="custom-file-input">
+                                    <label class="custom-file-label">Choose File</label>
+                                    <a id="branch_office_` + j + `_installed_capacity_file" href="` + w.installed_capacity_file + `">` + (w.installed_capacity_file).split('/')[(w.installed_capacity_file).split('/').length - 1] + `</a>
                                     </div>
                                 </div>
                             </div>
@@ -415,8 +423,9 @@ $.ajax({
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="custom-file">
-                                        <input name="prdflt[factory_office][`+ j + `][power_available_file]" required="true" type="file" accept=".pdf" class="custom-file-input">
-                                        <label class="custom-file-label">Choose File</label>
+                                    <input name="prdflt[factory_office][`+ j + `][power_available_file]" disabled="disabled" required="true" type="file" accept=".pdf" class="custom-file-input">
+                                    <label class="custom-file-label">Choose File</label>
+                                    <a id="branch_office_` + j + `_power_available_file" href="` + w.power_available_file + `">` + (w.power_available_file).split('/')[(w.power_available_file).split('/').length - 1] + `</a>
                                     </div>
                                 </div>
                             </div>
@@ -432,8 +441,9 @@ $.ajax({
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="custom-file">
-                                        <input name="prdflt[factory_office][`+ j + `][machinery_available_file]" required="true" type="file" accept=".pdf" class="custom-file-input">
-                                        <label class="custom-file-label">Choose File</label>
+                                    <input name="prdflt[factory_office][`+ j + `][machinery_available_file]" disabled="disabled" required="true" type="file" accept=".pdf" class="custom-file-input">
+                                    <label class="custom-file-label">Choose File</label>
+                                    <a id="branch_office_` + j + `_machinery_available_file" href="` + w.machinery_available_file + `">` + (w.machinery_available_file).split('/')[(w.machinery_available_file).split('/').length - 1] + `</a>
                                     </div>
                                 </div>
                             </div>
@@ -449,17 +459,17 @@ $.ajax({
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="custom-file">
-                                        <input name="prdflt[factory_office][`+ j + `][raw_material_file]" required="true" type="file" accept=".pdf" class="custom-file-input">
-                                        <label class="custom-file-label">Choose
-                                            File</label>
+                                    <input name="prdflt[factory_office][`+ j + `][raw_material_file]" required="true" disabled="disabled" type="file" accept=".pdf" class="custom-file-input">
+                                    <label class="custom-file-label">Choose File</label>
+                                    <a id="branch_office_` + j + `_raw_material_file" href="` + w.raw_material_file + `">` + (w.raw_material_file).split('/')[(w.raw_material_file).split('/').length - 1] + `</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         `+ commencement + `
                     </div><hr class="factory_office_`+ j + `" style="border: revert;">`);
-                    setTimeout(function () { $(".factory_" + j + "_country").val(w.country).trigger('change'); }, 1000);
-                    setTimeout(function () { $(".factory_" + j + "_state").val(w.state); }, 4000);
+                        setTimeout(function () { $(".factory_" + j + "_country").val(w.country).trigger('change'); }, 1000);
+                        setTimeout(function () { $(".factory_" + j + "_state").val(w.state); }, 4000);
                     })
                 }
             }
@@ -522,8 +532,8 @@ $.ajax({
                                 <div class="input number"><label for="id_faxno">Fax No.</label><input type="number" value="` + w.fax_no + `" name="other_address[partner][` + j + `][fax_no]" id="id_faxno" class="form-control maxlength_validation" maxlength="10"></div></div>
                         </div>
                     </div><hr class="other_address_`+ j + `" style="border: revert;">`);
-                    setTimeout(function () { $(".other_address_partner_" + j + "_country").val(w.country).trigger('change'); }, 1000);
-                    setTimeout(function () { $(".other_address_partner_" + j + "_state").val(w.state); }, 4000);
+                        setTimeout(function () { $(".other_address_partner_" + j + "_country").val(w.country).trigger('change'); }, 1000);
+                        setTimeout(function () { $(".other_address_partner_" + j + "_state").val(w.state); }, 4000);
                     })
                 }
             }
@@ -573,12 +583,12 @@ $.ajax({
                             </span>
                         </div>
                     </div><hr class="customer_`+ j + `" style="border: revert;">`);
-                    setTimeout(function () { $(".reputed_customer_" + j + "_country").val(w.country).trigger('change'); }, 1000);
-                    setTimeout(function () { $(".reputed_customer_" + j + "_state").val(w.state); }, 4000);
+                        setTimeout(function () { $(".reputed_customer_" + j + "_country").val(w.country).trigger('change'); }, 1000);
+                        setTimeout(function () { $(".reputed_customer_" + j + "_state").val(w.state); }, 4000);
                     });
                 }
             }
-            else if (i == "facility") { $.each(v, function (j, a) { $.each(a, function (k, b) { if(k.slice(k.length - 4, k.length) != 'file'){$(".facility_" + k + "_" + b).prop('checked', true).trigger('click');} }) }) }
+            else if (i == "facility") { $.each(v, function (j, a) { $.each(a, function (k, b) { if (k.slice(k.length - 4, k.length) != 'file') { $(".facility_" + k + "_" + b).prop('checked', true).trigger('click'); } }) }) }
             else if (i == "other_details") { $.each(v, function (j, a) { $(".other_details_" + j).val(a); }) }
             else if (i == "questionnaire") {
                 if (v.length > 0) {

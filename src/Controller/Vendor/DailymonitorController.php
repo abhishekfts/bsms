@@ -187,6 +187,9 @@ class DailymonitorController extends VendorAppController
         $this->loadModel("Materials");
         $this->loadModel("LineMasters");
         $this->loadModel("Dailymonitor");
+        $this->loadModel('VendorFactories');
+        $factory = $this->VendorFactories->find('list',['keyField' => 'id', 'valueField' => 'factory_code']);
+
 
         $dailymonitor = $this->Dailymonitor->newEmptyEntity();
         $session = $this->getRequest()->getSession();
@@ -196,9 +199,9 @@ class DailymonitorController extends VendorAppController
                 $requestData = $this->request->getData();
                 $requestData['sap_vendor_code'] = $session->read('vendor_code');
                 $requestData['status'] = 1;
+                
                 $dailymonitor = $this->Dailymonitor->patchEntity($dailymonitor, $requestData);
-                // echo '<pre>';
-                // print_r($dailymonitor);exit;
+                //echo '<pre>';  print_r($dailymonitor);exit;
 
                 if ($this->Dailymonitor->save($dailymonitor)) {
                   
@@ -210,15 +213,16 @@ class DailymonitorController extends VendorAppController
                 $this->set('flash', $flash);
             
             } catch (\Exception $e) {
+
+            }catch (\Exception $e) {
                 $flash['msg'] = 0;
                 $flash['type'] = $e->getMessage();
             }
         }
 
-        $vendor_mateial = $this->Materials->find('list', ['conditions' => ['Materials.sap_vendor_code' => $session->read('vendor_code')], 'keyField' => 'id', 'valueField' => 'description'])->all();
-        $productionline = $this->LineMasters->find('list', ['conditions' => ['sap_vendor_code' => $session->read('vendor_code')], 'keyField' => 'id', 'valueField' => 'name'])->all();
+        
 
-        $this->set(compact('dailymonitor', 'vendor_mateial', 'productionline'));
+        $this->set(compact('dailymonitor', 'factory'));
     }
 
     /**

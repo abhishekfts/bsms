@@ -79,15 +79,15 @@ class DailymonitorTable extends Table
             ->allowEmptyDate('plan_date');
 
         $validator
-            ->integer('target_production')
-            ->allowEmptyString('target_production');
+            ->decimal('target_production')
+            ->requirePresence('target_production', 'create')
+            ->notEmptyString('target_production');
 
         $validator
-            ->integer('confirm_production')
+            ->decimal('confirm_production')
             ->allowEmptyString('confirm_production');
 
         $validator
-            ->integer('status')
             ->allowEmptyString('status');
 
         $validator
@@ -110,7 +110,7 @@ class DailymonitorTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        // $rules->add($rules->existsIn('production_line_id', 'ProductionLines'), ['errorField' => 'production_line_id']);
+        $rules->add($rules->existsIn('production_line_id', 'ProductionLines'), ['errorField' => 'production_line_id']);
         $rules->add($rules->existsIn('material_id', 'Materials'), ['errorField' => 'material_id']);
 
         return $rules;
