@@ -9,7 +9,7 @@ thead {
 }
 
 .table>tbody {
-    background-color: #f5f7fd !important;
+    background-color: #fafafa !important;
     vertical-align: inherit;
 }
 
@@ -44,7 +44,7 @@ th {
 
 .purchase-order .po-list {
     border: 1px solid #ddd;
-    background-color: #F4F6F9;
+    background-color: #fafafa;
 }
 
 .search-bar {

@@ -127,7 +127,7 @@
           Stock By Material
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-bordered table-hover table-striped" style="border-top: 1px solid #dee2e6">
+          <table class="table table-bordered table-hover table-striped">
             <thead>
               <tr>
                 <th>Material</th>

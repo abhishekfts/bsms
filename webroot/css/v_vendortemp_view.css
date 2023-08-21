@@ -7,21 +7,27 @@ label { font-size: 15px !important; color: #333;}
 
 .card-header .nav-link { color: #7F7F7F !important;}
 
-.card-primary.card-outline { border-top: 3px solid #F7941D !important;}
-
-.btn-info {
-    background-color: #F7941D;
-    border: none;
+.card-primary.card-outline { 
+    border-top: 3px solid #F7941D !important;
+    background-color: #fff !important;
 }
+
+
 
 a.text-info:hover { color: #333 !important;}
 .btn-info:hover{
     color: #F7941D;
-    border: 1px solid #F7941D;
-    background-color: #fff;
+    border: 1px solid #F7941D !important;
+    background-color: #fff !important;
+}
+.btn-info {
+    background-color: #F7941D !important;
+    border: none !important;
 }
 
-.text-info { color: #F7941D!important;}
+.text-info { color: #F7941D!important; }
+
+.dropdown-menu-lg .dropdown-item  { background-color: #fff !important; color: #F7941D !important;}
 
 .card .nav-tabs .nav-link {
     font-size: 0.9rem;
@@ -60,3 +66,5 @@ a.text-info:hover { color: #333 !important;}
 #custom-tabs-four-branch tr{
     font-size: 1rem;
 }
+
+#questionnaireAll .text-info { color: #333 !important; font-size: medium !important;}

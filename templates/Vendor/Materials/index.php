@@ -31,6 +31,7 @@
                             <th>Material Code</th>
                             <th>Description</th>
                             <th>Minimum Stock</th>
+                            <th>UOM</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,7 +45,10 @@
                                     <?= h($vendorMaterials->description) ?>
                                 </td>
                                 <td>
-                                    <?= h($vendorMaterials->minimum_stock . " " . $vendorMaterials->uom) ?>
+                                    <?= h($vendorMaterials->minimum_stock) ?>
+                                </td>
+                                <td>
+                                    <?= h($vendorMaterials->uom) ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -80,9 +84,8 @@
                 },
                 {
                     "data": "minimum_stock",
-                    // "render": function(data, type, row) {
-                    //     return data + " " + row.uom;
-                    // }
+                },{
+                    "data": "uom",
                 }
             ]
         });
@@ -100,7 +103,7 @@
         $(document).on("click", "#reload_stocks", function () {
             $.ajax({
                 type: "get",
-                url: "<?php echo \Cake\Routing\Router::url(array('prefix' => false, 'controller' => 'api', 'action' => 'get-material-masters')); ?> ",
+                url: "<?php echo \Cake\Routing\Router::url(array('prefix' => false, 'controller' => 'api/sync', 'action' => 'get-material-min-stock')); ?> ",
 
                 dataType: 'json',
                 success: function (response) {

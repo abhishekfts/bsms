@@ -589,12 +589,17 @@ td.ponum {
     padding: 10px 20px;
 }
 
-.btn-custom-2 {
-    background-color: #08132F;
-    color: #fff;
+.modal-footer .btn-custom-2 {
+    background-color: #F7941D !important;
+    color: #fff !important;
     font-size: 14px;
     line-height: 1.1rem;
     padding: 10px 20px;
+}
+
+.modal-footer .btn-custom-2:hover {
+    background-color: #fff !important;
+    color: #F7941D !important;
 }
 
 a.back-btn:hover {
@@ -819,7 +824,7 @@ div#past_messages::-webkit-scrollbar-track {
 
 .purchase-order .po-list {
     border: 1px solid #ddd;
-    background-color: #f5f7fd;
+    background-color: #fafafa;
 
 
 }
@@ -850,20 +855,22 @@ div#past_messages::-webkit-scrollbar-track {
 }
 
 .purchase-order .po-box:hover {
-    background-color: #d4ddf7;
+    background-color: #f4f6f9;
 }
 
+#poItemss .active { background-color: #fff !important;}
+
 .purchase-order .pono b {
-    color: #004d87;
+    color: #F7941D !important;
 }
 
 .purchase-order .po-box .pono {
     padding-bottom: 5px;
 }
 
-.purchase-order #example2 thead {
+/* .purchase-order #example2 thead {
     background-color: #b0c235 !important
-}
+} */
 
 .purchase-order #example2 tbody {
     background-color: #fff !important;
@@ -929,7 +936,7 @@ p.po-no {
 }
 
 .btn:hover{ color: #F7941D!important;}
-.btn { color: #F7941D!important;}
+/* .btn { color: #F7941D!important;} */
 #OpenImgUpload { color: #fff !important;}
 #OpenImgUpload:hover {
     color: #F7941D !important;

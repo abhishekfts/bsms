@@ -204,13 +204,13 @@ th {
     background-image: none !important;
 }
 
-.bg-gradient-reject.btn:hover {
+/* .bg-gradient-reject.btn:hover {
     background: #F1F4FFFF linear-gradient(180deg, #ffc8be, #F1F4FFFF) repeat-x !important;
     border-color: #F1F4FFFF;
     color: #990011FF;
-}
+} */
 
-.bg-gradient-reject.btn:not(:disabled):not(.disabled):active,
+/* .bg-gradient-reject.btn:not(:disabled):not(.disabled):active,
 .bg-gradient-reject.btn:not(:disabled):not(.disabled).active,
 .bg-gradient-reject.btn:active,
 .bg-gradient-reject.btn.active {
@@ -224,7 +224,7 @@ th {
     background-image: none !important;
     border-color: #F1F4FFFF;
     color: #990011FF;
-}
+} */
 
 /* Reject Button */
 
@@ -243,26 +243,26 @@ th {
 }
 
 .bg-gradient-cancel.btn:hover {
-    background: #F1F4FFFF linear-gradient(180deg, #ccd7fd, #edeff7) repeat-x !important;
-    border-color: #F1F4FFFF;
-    color: #496e97;
+    background: #F7941D !important;
+    /* border-color: #F1F4FFFF; */
+    color: #fff !important;
 }
 
-.bg-gradient-cancel.btn:not(:disabled):not(.disabled):active,
+/* .bg-gradient-cancel.btn:not(:disabled):not(.disabled):active,
 .bg-gradient-cancel.btn:not(:disabled):not(.disabled).active,
 .bg-gradient-cancel.btn:active,
 .bg-gradient-cancel.btn.active {
     background: #F1F4FFFF linear-gradient(180deg, #ccd7fd, #edeff7) repeat-x !important;
     border-color: #F1F4FFFF;
     color: #496e97;
-}
+} */
 
 .bg-gradient-cancel.btn:disabled,
 .bg-gradient-cancel.btn.disabled {
     background-image: none !important;
     background-color: #F1F4FFFF !important;
     border-color: #F1F4FFFF;
-    color: #496e97;
+    /* color: #496e97; */
 }
 
 /* Cancel Button */
@@ -313,9 +313,9 @@ body {
 
 /* warn Button */
 .bg-gradient-warn {
-    background: #ff2700 linear-gradient(180deg, #ff2700, #c71f00) repeat-x !important;
-    border-color: #ff2700;
-    color: #fff;
+    background: #fff !important;
+    border-color: #F7941D !important;
+    color: #F7941D !important;
 }
 
 .bg-gradient-warn.btn:not(:disabled):not(.disabled):active,
@@ -325,26 +325,28 @@ body {
 }
 
 .bg-gradient-warn.btn:hover {
-    background: #ff2700 linear-gradient(180deg, #ff2700, #ff836c) repeat-x !important;
-    border-color: #ff2700;
-    color: #fff;
+    background: #F7941D !important;
+    border-color: none !important;
+    color: #fff !important;
 }
 
-.bg-gradient-warn.btn:not(:disabled):not(.disabled):active,
+.btn-success:hover { border: none !important;}
+
+/* .bg-gradient-warn.btn:not(:disabled):not(.disabled):active,
 .bg-gradient-warn.btn:not(:disabled):not(.disabled).active,
 .bg-gradient-warn.btn:active,
 .bg-gradient-warn.btn.active {
     background: #ff2700 linear-gradient(180deg, #ff836c, #ff2700) repeat-x !important;
     border-color: #ff2700;
     color: #fff;
-}
+} */
 
-.bg-gradient-warn.btn:disabled,
+/* .bg-gradient-warn.btn:disabled,
 .bg-gradient-warn.btn.disabled {
     background-image: none !important;
     border-color: #ff2700;
     color: #fff;
-}
+} */
 
 /* Reject Button */
 
@@ -372,9 +374,19 @@ body {
 .table-bordered th {
     border: none !important;
 }
-
 .table-striped tbody tr:nth-of-type(odd) {
+    background-color: unset !important;
+}
+
+/* .table-striped tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, .03) !important;
+} */
+.table-striped tbody tr {
+    border-bottom: 1px solid #fafafa !important;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #fafafa !important;
 }
 
 /* table styling end here */
@@ -398,6 +410,9 @@ body {
 /* submit button styling start here */
 #id_fksubmit {
     background: linear-gradient(90deg, #F7941D, #ED1C24) !important;
+}
+#id_fksubmit:hover{
+    color: #fff !important;
 }
 
 
@@ -444,14 +459,26 @@ body {
     background-color: #F79E33 !important;
 }
 
-.table td,
-.table th {
-    border: none !important;
+
+.table td, .table th { border: none !important;}
+#Create-btn {
+    padding: 0.375rem 0.5rem;
 }
 
+.schedule_button { color: #fff !important;}
+.schedule_button:hover { background-color: #fff !important;}
+
+.modal-footer .btn-secondary { 
+    background-color: #fff !important; 
+    border: 1px solid #F7941D !important;
+    color: #F7941D !important;
+}
+
+
+
 .p-2 {
-    background-color: #28a745 !important;
-    color: #fff !important;
+    /* background-color: #28a745 !important; */
+    /* color: #fff !important; */
     padding: .5rem !important;
 }
 

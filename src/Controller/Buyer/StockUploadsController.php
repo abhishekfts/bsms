@@ -290,14 +290,17 @@ class StockUploadsController extends BuyerAppController
                     $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
                     $this->loadModel("Materials");
                     $this->loadModel("VendorFactories");
-                    $tmp = [];
 
-                     $datas = [];
+                    $tmp = [];
+                    $datas = [];
                     
 
                     // echo "<pre>";
                     for ($row = 2; $row <= $highestRow; $row++) {
+                        $facError = false;
+                        $matError = false;
                         for ($col = 1; $col <= $highestColumnIndex; ++$col) {
+                            
                             $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                             if($col == 1) {
                                 $tmp['sap_vendor_code'] =$value;
@@ -308,8 +311,13 @@ class StockUploadsController extends BuyerAppController
                                 ->select(['id'])
                                 ->where(['factory_code' => $value])
                                 ->first();
-                                $tmp['factories_id'] = $factory ? $factory : null;
-                                $datas['factories_id'] = $value;
+
+                                //echo '<pre>';  print_r($factory); exit;
+                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $datas['factory_code'] = $value;
+                                if(!$factory) {
+                                    $facError = true;
+                                }
                             } else if($col == 3) {
                                 $datas['po_no'] = $value;
                             }
@@ -322,7 +330,11 @@ class StockUploadsController extends BuyerAppController
                                 ->where(['code IN' => $value])->first();
     
                                $tmp['material_id'] = $materials['id'] ? $materials['id'] : null;
-                               $datas['material_id'] = $value;
+                               $datas['material'] = $value;
+                               if(!$materials['id']) {
+                                $matError = true;
+                                $datas['error'] = 'Invalid material';
+                            }
                             }
                             else if($col == 6) {
                             
@@ -338,23 +350,37 @@ class StockUploadsController extends BuyerAppController
                             }
                             
                         }
+
+                        $datas['error'] = '';
+                        if($facError) {
+                            $datas['error'] = 'Invalid factory code';
+                        } else if($matError) {
+                            $datas['error'] = 'Invalid Material';
+                        }
+
                         $stockData[] = $datas;
                         $tmp['asn_stock'] = 0;
-                        $uploadData[] = $tmp;   
+                        if(!isset($datas['error'])) {
+                            $uploadData[] = $tmp;   
+                        }
                     }
 
       
-                    $columns = array_keys($uploadData[0]);
-                    $upsertQuery = $this->StockUploads->query();
-                    $upsertQuery->insert($columns);
-                    foreach ($uploadData as $data) {
-                        $upsertQuery->values($data);
+                    if(!empty($uploadData)) {
+                        $columns = array_keys($uploadData[0]);
+                        $upsertQuery = $this->StockUploads->query();
+                        $upsertQuery->insert($columns);
+                        foreach ($uploadData as $data) {
+                            $upsertQuery->values($data);
+                        }
                         $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
-                        ->execute();
+                            ->execute();
                     }
-                    $response['status'] = 1;
-                    $response['data'] = $stockData;
-                    $response['message'] = 'uploaded Successfully';
+
+
+                        $response['status'] = 1;
+                        $response['data'] = $stockData;
+                        $response['message'] = 'uploaded Successfully';
                 } else {
                     $response['status'] = 0;
                     $response['message'] = 'file not uploaded';

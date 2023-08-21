@@ -181,15 +181,15 @@
         function poform(search = "", createAsn = "as") {
             $("#poItemss").empty();
             $(".right-side tbody:first").show();
-            var uri = "<?php echo \Cake\Routing\Router::url(array('controller' => '/purchase-orders', 'action' => 'po-api')); ?>";
-            if (search != "") { uri += "/" + search + "/" + createAsn }
+            var uri = "<?php echo \Cake\Routing\Router::url(array('controller' => '/purchase-orders', 'action' => 'po-for-asn')); ?>";
+            if (search != "") { uri += "/" + search}
             $.ajax({
                 type: "GET",
                 url: uri,
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status == 'success') {
-                        $.each(response.message, function (key, val) {
+                    if (response.status) {
+                        $.each(response.data, function (key, val) {
                             $("#poItemss").append(`<div class="po-box details-control  ponum" header-id="` + val.id + `">
                                     <p class="po-no mb-0">PO No.</p>
                                     <b class="text-info">

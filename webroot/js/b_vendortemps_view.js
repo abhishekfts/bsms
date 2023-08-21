@@ -330,24 +330,24 @@ baseurl+                        val.certificate_file
                     // $("#commCountry").text(val.country);
                     // $("#commPincode").text(val.pincode);
                 });
-
-                var factoryMaterialList = `<thead>
-                <tr>
-                    <th>Material</th>
-                    <th>Year Of Commencement Of Production</th>
-                    <th>` +
-                    response.message[0].commencement[0].first_year +
-                    `</th>
-                    <th>` +
-                    response.message[0].commencement[0].second_year +
-                    `</th>
-                    <th>` +
-                    response.message[0].commencement[0].third_year +
-                    `</th>
-                </tr>
-                </thead><tbody>`;
-
-            
+                if(response.message[0].commencement[0] == ""){
+                    var factoryMaterialList = `<thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Year Of Commencement Of Production</th>
+                        <th>` +
+                        response.message[0].commencement[0].first_year +
+                        `</th>
+                        <th>` +
+                        response.message[0].commencement[0].second_year +
+                        `</th>
+                        <th>` +
+                        response.message[0].commencement[0].third_year +
+                        `</th>
+                    </tr>
+                    </thead><tbody>`;
+    
+                }
 
                 $.each(response.message[0].commencement, function (index, val) {
                     factoryMaterialList +=
@@ -472,7 +472,7 @@ baseurl+                        val.certificate_file
                 $("#cancelledCheque").attr("href", baseurl+response.message[0]["bank_file"]);
 
                
-
+             if(response.message[0].other_details[0] == ""){
                 $("#sixSigma").text(
                     response.message[0].other_details[0].six_sigma
                 );
@@ -487,6 +487,7 @@ baseurl+                        val.certificate_file
                 $("#suppliersName").text(
                     response.message[0].other_details[0].suppliers_name
                 );
+             }
 
 
                 $.each(response.message[0].questionnaire, function (index, val) {

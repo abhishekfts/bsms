@@ -247,8 +247,8 @@
         url: uri,
         dataType: 'json',
         success: function(response) {
-          if (response.status == 'success') {
-            $.each(response.message, function(key, val) {
+          if (response.status) {
+            $.each(response.data, function(key, val) {
               $("#poItes").append(`<div class="po-box details-control" data-id="` + val.id + `"> <div class="pono"><small class="mb-0">
                     <?= h('PO No ') ?>
                     <br>

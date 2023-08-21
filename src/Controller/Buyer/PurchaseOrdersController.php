@@ -113,32 +113,27 @@ class PurchaseOrdersController extends BuyerAppController
 
     public function getPoFooters($id = null)
     {
-
         $this->autoRender = false;
         $response = array();
-        $response['status'] = 'fail';
+        $response['status'] = '0';
         $response['message'] = '';
 
-
-        $this->set('headTitle', 'PO Detail');
         $this->loadModel('PoHeaders');
         $poHeader = $this->PoHeaders->get($id, [
             'contain' => ['PoFooters'],
         ]);
 
-        // print_r($poHeader);
-        //echo json_encode($poHeader); exit;
-
-
-        if ($poHeader) {
-
-
-            $response['status'] = 'success';
+        //echo '<pre>'; print_r($poHeader); exit;
+        if (!$poHeader->acknowledge) {
+            $response['status'] = 0;
+            $response['message'] = 'PO not acknowledged by vendor';
+        } else if(!$poHeader->po_footers) {
+            $response['status'] = 0;
+            $response['message'] = 'Line item not found';
+        }else {
+            $response['status'] = 1;
             $response['data'] = $poHeader;
             $response['message'] = '';
-        } else {
-            $response['status'] = 'fail';
-            $response['message'] = 'Material not found';
         }
 
 
@@ -251,7 +246,7 @@ class PurchaseOrdersController extends BuyerAppController
     public function createSchedule()
     {
         $response = array();
-        $response['status'] = 'fail';
+        $response['status'] = 0;
         $response['message'] = '';
         $this->autoRender = false;
         $this->loadModel('PoHeaders');
@@ -262,7 +257,7 @@ class PurchaseOrdersController extends BuyerAppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
-            $status = true;
+            
             foreach ($data as $row) {
                 try {
                     $sapVendorcode = $this->PoHeaders->find()
@@ -270,45 +265,39 @@ class PurchaseOrdersController extends BuyerAppController
                         ->where(['id' => $row['po_header_id']])
                         ->first();
 
-                    $conn = ConnectionManager::get('default');
-                    $query = "SELECT COUNT(update_flag) AS count FROM vendor_temps WHERE update_flag > 0 AND sap_vendor_code = :sapVendorcode";
-                    $params = ['sapVendorcode' => $sapVendorcode['sap_vendor_code']];
-                    $result = $conn->execute($query, $params)->fetch('assoc');
+                        $vendorRecord = $this->VendorTemps->find()
+                        ->where(['sap_vendor_code' => $sapVendorcode->sap_vendor_code])
+                        ->first();
 
-                    if ($result['count'] > 0) {
-                        $response['status'] = 'fail';
+                    if ($vendorRecord->update_flag) {
+                        $response['status'] = 0;
                         $response['message'] = 'Vendor details pending for review';
                     } else {
                         $PoItemSchedule = $this->PoItemSchedules->newEmptyEntity();
                         $PoItemSchedule = $this->PoItemSchedules->patchEntity($PoItemSchedule, $row);
-                        if ($this->PoItemSchedules->save($PoItemSchedule) && $status) {
-                            $status = true;
-                            $poHeader = $this->PoHeaders->get($PoItemSchedule['po_header_id']);
-                            $vt = $this->VendorTemps->find()->where(['sap_vendor_code' => $poHeader['sap_vendor_code']])->limit(1)->toArray();
+                        if ($this->PoItemSchedules->save($PoItemSchedule)) {
                             $visit_url = Router::url('/', true);
                             $mailer = new Mailer('default');
                             $mailer
                                 ->setTransport('smtp')
-                                ->setViewVars([ 'subject' => 'Hi ' . $vt[0]['name'], 'mailbody' => 'A new PO has been schedule. Visit Vekpro for more details.', 'link' => $visit_url, 'linktext' => 'Visit Vekpro' ])
+                                ->setViewVars([ 'subject' => 'Hi ' . $vendorRecord->name, 'mailbody' => 'A new PO has been schedule. Visit Vekpro for more details.', 'link' => $visit_url, 'linktext' => 'Visit Vekpro' ])
                                 ->setFrom(['vekpro@fts-pl.com' => 'FT Portal'])
-                                ->setTo($vt[0]['email'])
+                                ->setTo($vendorRecord->email)
                                 ->setEmailFormat('html')
                                 ->setSubject('Vendor Portal - Schedule created')
                                 ->viewBuilder()
                                     ->setTemplate('mail_template');
                             $mailer->deliver();
-                        }
-                        else{ $status = false; }
+                            $response['status'] = 1;
+                            $response['message'] = "Schedule created successfully";
+                        } 
                     }
                 } catch (\Exception $e) {
-                    $response['status'] = 'fail';
+                    $response['status'] = 0;
                     $response['message'] = $e->getMessage();
                 }
             }
-            if ($status) {
-                $response['status'] = 'success';
-                $response['message'] = 'Record save successfully';
-            }
+            
         }
         echo json_encode($response);
     }

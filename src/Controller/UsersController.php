@@ -158,13 +158,13 @@ class UsersController extends AppController
                         $response['message'] = '';
                         if ($result[0]->group_id == 1) {
                             $response['redirect'] = ['controller' => 'admin/dashboard', 'action' => 'index'];
-                          
                         } else if ($result[0]->group_id == 2) {
                             $response['redirect'] = ['controller' => 'buyer/dashboard', 'action' => 'index'];
                         } else if ($result[0]->group_id == 3) {
                             $result = $this->VendorTemps->find()->where(['email' => $result[0]->username])->limit(1)->toArray();
                             $session->write('vendor_code', $result[0]->sap_vendor_code);
                             $session->write('vendor_id', $result[0]->id);
+                            $session->write('buyer_id', $result[0]->buyer_id);
                             $response['redirect'] = ['controller' => 'vendor/dashboard', 'action' => 'index'];
                         }
                     } else {

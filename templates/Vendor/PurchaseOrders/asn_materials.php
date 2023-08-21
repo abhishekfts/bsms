@@ -106,7 +106,7 @@
 
           <div class="col-sm-8 col-md-2">
             <div class="form-group">
-              <?php echo $this->Form->control('transporter_name', array('type' => 'text', 'class' => 'form-control rounded-0', 'div' => 'form-group', 'required')); ?>
+              <?php echo $this->Form->control('transporter_name', array('type' => 'text', 'class' => 'form-control rounded-0', 'div' => 'form-group')); ?>
             </div>
           </div>
 
@@ -114,14 +114,42 @@
           <div class="col-sm-8 col-md-3">
             <div class="form-group">
               <label for="invoices">Upload Invoice</label>
-              <input type="file" name="invoices[]" accept=".pdf" multiple="multiple" class="pt-1 rounded-0"
+              <input type="file" name="invoice" accept=".pdf" class="pt-1 rounded-0"
                 style="visibility: hidden;position:absolute;" div="form-group" required="required" id="invoices">
               <button id="OpenImgUpload" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
                 Choose File
               </button>
 
-              <p id="files-area"><span id="filesList"><span id="files-names"></span></span></p>
+              <p id="files-area"><span id="invoice_filesList"><span id="files-names"></span></span></p>
             </div>
+            
+          </div>
+
+          <div class="col-sm-8 col-md-3">
+            <div class="form-group">
+              <label for="invoices">Upload E-wayBill</label>
+              <input type="file" name="ewaybill" accept=".pdf" class="pt-1 rounded-0" id="ewaybill"
+                style="visibility: hidden;position:absolute;" div="form-group">
+              <button id="OpenImgUploadEwaybill" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
+                Choose File
+              </button>
+
+              <p id="files-area"><span id="ewaybill_filesList"><span id="files-names"></span></span></p>
+            </div>
+            
+          </div>
+          <div class="col-sm-8 col-md-3">
+            <div class="form-group">
+              <label for="invoices">Other Document</label>
+              <input type="file" name="others" accept=".pdf" class="pt-1 rounded-0" id="others"
+                style="visibility: hidden;position:absolute;" div="form-group">
+              <button id="OpenImgUploadOthers" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
+                Choose File
+              </button>
+
+              <p id="files-area"><span id="others_filesList"><span id="files-names"></span></span></p>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -209,8 +237,8 @@
                     <td class="net_value" id="net_value_<?= h($row['PoFooters']['item']) ?>">
                       <?= ($row['PoFooters']['net_price'] * $row['actual_qty']) ?>
                     </td>
-                    <td><span id="current_stock"><?php echo $materialStock->current_stock?></span></td>
-                    <td><span id="minimum_stock"><?php echo $materialStock->material->minimum_stock?></span></td>
+                    <td><span id="current_stock"><?php echo ($materialStock) ? $materialStock->current_stock : 0?></span></td>
+                    <td><span id="minimum_stock"><?php echo ($materialStock) ? $materialStock->material->minimum_stock : 0 ?></span></td>
                   </tr>
                   <?php endforeach; ?>
                 </tbody>
@@ -269,6 +297,8 @@
 <script>
   $(document).ready(function () {
     const dt = new DataTransfer();
+    const dt2 = new DataTransfer();
+    const dt3 = new DataTransfer();
     $(document).ready(function ($) {
       $('.check_qty').trigger('keyup');
     });
@@ -283,15 +313,15 @@
             class: 'name',
             text: this.files.item(i).name
           });
-        $("#filesList > #files-names").append(fileBloc);
-        fileBloc.append('<span class="file-delete"><span><i class="fas fa-times-circle text-danger"></i></span></span>')
+        $("#invoice_filesList > #files-names").append(fileBloc);
+        fileBloc.append('<span class="file-invoice-delete"><span><i class="fas fa-times-circle text-danger"></i></span></span>')
           .append(fileName);
       };
 
       for (let file of this.files) { dt.items.add(file); }
       this.files = dt.files;
 
-      $('span.file-delete').click(function () {
+      $('span.file-invoice-delete').click(function () {
         let name = $(this).next('span.name').text();
         $(this).parent().remove();
         for (let i = 0; i < dt.items.length; i++) {
@@ -304,8 +334,74 @@
       });
     });
 
+    $('#ewaybill').on('change', function (event) {
+      var files = event.target.files;
+      for (var i = 0; i < this.files.length; i++) {
+        let fileBloc = $('<span/>', {
+          class: 'file-block'
+        }),
+          fileName = $('<span/>', {
+            class: 'name',
+            text: this.files.item(i).name
+          });
+        $("#ewaybill_filesList > #files-names").append(fileBloc);
+        fileBloc.append('<span class="file-ewaybill-delete"><span><i class="fas fa-times-circle text-danger"></i></span></span>')
+          .append(fileName);
+      };
+
+      for (let file of this.files) { dt2.items.add(file); }
+      this.files = dt2.files;
+
+      $('span.file-ewaybill-delete').click(function () {
+        let name = $(this).next('span.name').text();
+        $(this).parent().remove();
+        for (let i = 0; i < dt2.items.length; i++) {
+          if (name === dt2.items[i].getAsFile().name) {
+            dt2.items.remove(i);
+            continue;
+          }
+        }
+        document.getElementById('ewaybill').files = dt2.files;
+      });
+    });
+
+    $('#others').on('change', function (event) {
+      var files = event.target.files;
+      for (var i = 0; i < this.files.length; i++) {
+        let fileBloc = $('<span/>', {
+          class: 'file-block'
+        }),
+          fileName = $('<span/>', {
+            class: 'name',
+            text: this.files.item(i).name
+          });
+        $("#others_filesList > #files-names").append(fileBloc);
+        fileBloc.append('<span class="file-others-delete"><span><i class="fas fa-times-circle text-danger"></i></span></span>')
+          .append(fileName);
+      };
+
+      for (let file of this.files) { dt3.items.add(file); }
+      this.files = dt3.files;
+
+      $('span.file-others-delete').click(function () {
+        let name = $(this).next('span.name').text();
+        $(this).parent().remove();
+        for (let i = 0; i < dt3.items.length; i++) {
+          if (name === dt3.items[i].getAsFile().name) {
+            dt3.items.remove(i);
+            continue;
+          }
+        }
+        document.getElementById('others').files = dt3.files;
+      });
+    });
+
+
     // file upload button
     $('#OpenImgUpload').click(function () { $('#invoices').trigger('click'); });
+    $('#OpenImgUploadEwaybill').click(function () { $('#ewaybill').trigger('click'); });
+    $('#OpenImgUploadOthers').click(function () { $('#others').trigger('click'); });
+
 
     $(document).on('keyup', '.check_qty', function () {
       var id = $(this).attr('data-item');
@@ -347,7 +443,8 @@
         driver_contact: {
           required: true,
           number: true,
-          maxlength: 10
+          maxlength: 10,
+          minlength: 10
         },
         invoices: {
           required: true

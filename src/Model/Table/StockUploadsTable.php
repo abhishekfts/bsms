@@ -47,10 +47,6 @@ class StockUploadsTable extends Table
             'foreignKey' => 'material_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Factories', [
-            'foreignKey' => 'factories_id',
-            'joinType' => 'INNER',
-        ]);
     }
 
     /**
@@ -61,6 +57,20 @@ class StockUploadsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->scalar('sap_vendor_code')
+            ->maxLength('sap_vendor_code', 10)
+            ->requirePresence('sap_vendor_code', 'create')
+            ->notEmptyString('sap_vendor_code');
+
+        $validator
+            ->integer('factory_id')
+            ->allowEmptyString('factory_id');
+
+        $validator
+            ->integer('material_id')
+            ->notEmptyString('material_id');
+
         $validator
             ->decimal('opening_stock')
             ->requirePresence('opening_stock', 'create')
@@ -75,20 +85,6 @@ class StockUploadsTable extends Table
             ->decimal('asn_stock')
             ->requirePresence('asn_stock', 'create')
             ->notEmptyString('asn_stock');
-
-        $validator
-            ->integer('material_id')
-            ->notEmptyString('material_id');
-
-        $validator
-            ->integer('factories_id')
-            ->notEmptyString('factories_id');
-
-        $validator
-            ->scalar('sap_vendor_code')
-            ->maxLength('sap_vendor_code', 10)
-            ->requirePresence('sap_vendor_code', 'create')
-            ->notEmptyString('sap_vendor_code');
 
         $validator
             ->dateTime('added_date')
@@ -111,7 +107,6 @@ class StockUploadsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn('material_id', 'Materials'), ['errorField' => 'material_id']);
-        $rules->add($rules->existsIn('factories_id', 'Factories'), ['errorField' => 'factories_id']);
 
         return $rules;
     }
