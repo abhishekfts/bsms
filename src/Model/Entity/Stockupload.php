@@ -9,17 +9,16 @@ use Cake\ORM\Entity;
  * StockUpload Entity
  *
  * @property int $id
- * @property string $sap_vendor_code
- * @property int|null $factory_id
- * @property int $material_id
  * @property string $opening_stock
  * @property string $current_stock
  * @property string $asn_stock
+ * @property int $material_id
+ * @property int|null $factories_id
+ * @property string $sap_vendor_code
  * @property \Cake\I18n\FrozenTime|null $added_date
  * @property \Cake\I18n\FrozenTime|null $updated_date
  *
  * @property \App\Model\Entity\Material $material
- * @property \App\Model\Entity\Factory $factory
  */
 class StockUpload extends Entity
 {
@@ -33,15 +32,14 @@ class StockUpload extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'sap_vendor_code' => true,
-        'factory_id' => true,
-        'material_id' => true,
         'opening_stock' => true,
         'current_stock' => true,
         'asn_stock' => true,
+        'material_id' => true,
+        'factories_id' => true,
+        'sap_vendor_code' => true,
         'added_date' => true,
         'updated_date' => true,
         'material' => true,
-        'factory' => true,
     ];
 }

@@ -35,13 +35,16 @@ class ApiController extends ApiAppController
         ]);
     }
 
-    public function countryByState($country_code = null)
+    public function countryByState($id = null)
     {
-        $this->autoRender = false;
-        $this->loadModel("Countries");
+        // $this->autoRender = false;
+        $response = ["status"=>0, 'message' =>'Empty request'];
         $this->loadModel("States");
-        $states = $this->States->find('all')->innerJoin(['Countries'=>'Countries'],['Countries.country_code = States.country_code'])->where(['Countries.country_code' => $country_code])->toArray();
-        $response = ["status"=> 1, 'message' =>$states];
+        $this->loadModel("Countries");
+        $states = $this->States->find()->select(['id', 'name'])->innerJoin(['Countries'=>'countries'],['Countries.country_code = States.country_code', 'Countries.id' =>$id])->toArray();
+
+        //print_r($states); exit;
+        $response = ["status"=> 1, 'message' =>['States'=>$states]];
         echo json_encode($response);
     }
 
@@ -95,9 +98,11 @@ class ApiController extends ApiAppController
                             $tmp['gross_value'] = $item['BRTWR'];
 
                             $footerData[] = $tmp;
+                            //print_r($footerData);        
                         }
 
                         $poItemsInstance = $this->PoFooters->newEntities($footerData);
+                        #print_r($poItemsInstance);
                         if ($this->PoFooters->saveMany($poItemsInstance)) {
                             $response['status'] = 1;
                             $response['message'] = 'PO saved successfully';
@@ -108,6 +113,84 @@ class ApiController extends ApiAppController
                     } else {
                         $response['status'] = 0;
                         $response['message'] = 'PO header save fail';
+                    }
+                    //print_r($hederData);
+                }
+            } catch (\PDOException $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            } catch (\Exception $e) {
+                $response['status'] = 0;
+                $response['message'] = $e->getMessage();
+            }
+        }
+
+        echo json_encode($response);
+    }
+
+    public function postPr()
+    {
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = 'Empty request';
+        $request = $this->request->getData();
+
+        $this->loadModel("PrHeaders");
+        $this->loadModel("PrFooters");
+
+        if (!empty($request) && count($request['DATA'])) {
+
+            try {
+                foreach ($request['DATA'] as $key => $row) {
+                    $hederData = array();
+                    $footerData = array();
+
+                    $hederData['pr_no'] = $row['BANFN'];
+                    $hederData['description'] = $row['TXZ01'];
+                    $hederData['pr_type'] = $row['BSART'];
+                    $hederData['purchase_group'] = $row['EKGRP'];
+
+                    $poInstance = $this->PrHeaders->newEmptyEntity();
+                    $poInstance = $this->PrHeaders->patchEntity($poInstance, $hederData);
+
+
+                    if ($this->PrHeaders->save($poInstance)) {
+                        $pr_header_id = $poInstance->id;
+
+                        foreach ($row['ITEMS'] as $no => $item) {
+                            $tmp = array();
+                            $tmp['pr_header_id'] = $pr_header_id;
+                            $tmp['item'] = $item['BNFPO'];
+                            $tmp['material'] = $item['MATNR'];
+                            $tmp['short_text'] = $item['TXZ01'];
+                            $tmp['qty'] = $item['MENGE'];
+                            $tmp['unit'] = $item['MEINS'];
+                            $tmp['delivery_date'] = $item['LFDAT'];
+                            $tmp['plant'] = $item['WERKS'];
+                            $tmp['material_group'] = $item['MATKL'];
+                            $tmp['storage_location'] = $item['LGORT'];
+                            $tmp['purchase_group'] = $item['EKGRP'];
+                            $tmp['requisitioner'] = $item['AFNAM'];
+                            $tmp['total_value'] = $item['RLWRT'];
+                            $tmp['price'] = $item['PEINH'];
+                            $tmp['purchase_organization'] = $item['EKORG'];
+
+                            $footerData[] = $tmp;
+                            //print_r($footerData);        
+                        }
+
+                        $poItemsInstance = $this->PrFooters->newEntities($footerData);
+                        #print_r($poItemsInstance);
+                        if ($this->PrFooters->saveMany($poItemsInstance)) {
+                            $response['status'] = 1;
+                            $response['message'] = 'PR saved successfully';
+                        } else {
+                            $response['status'] = 0;
+                            $response['message'] = 'PR Items save fail';
+                        }
+                    } else {
+                        $response['status'] = 0;
+                        $response['message'] = 'PR header save fail';
                     }
                 }
             } catch (\PDOException $e) {
@@ -121,6 +204,7 @@ class ApiController extends ApiAppController
 
         echo json_encode($response);
     }
+
 
     public function notification()
     {
@@ -146,33 +230,6 @@ class ApiController extends ApiAppController
 
 
         echo json_encode($response);
-    }
-
-    public function countries()
-    {
-        $this->autoRender = false;
-        $this->loadModel("Countries");
-        $countries = $this->Countries->find('all')->toArray();
-        $response = array('status'=>1, 'message'=>$countries);
-        echo json_encode($response); exit;
-    }
-
-    public function getCountryCodeById($country_code=null)
-    {
-        $this->autoRender = false;
-        $this->loadModel("Countries");
-        $countries = $this->Countries->find('all')->where(['id' => $country_code])->toArray()[0];
-        $response = array('status'=>1, 'message'=>$countries);
-        echo json_encode($countries->country_code); exit;
-    }
-
-    public function getStateRegioncodeById($region_code=null)
-    {
-        $this->autoRender = false;
-        $this->loadModel("States");
-        $states = $this->States->find('all')->where(['id' => $region_code])->toArray()[0];
-        $response = array('status'=>1, 'message'=>$states);
-        echo json_encode($states->region_code); exit;
     }
 
     public function vendor($id = null)
@@ -224,24 +281,14 @@ class ApiController extends ApiAppController
         $vendortemp[0]['reputed_customer'] = $query->fetchAll('assoc');
         $vendortemp[0]['commencement'] = $this->VendorCommencements->find('all')->where(['vendor_temp_id' => $id])->toArray();
         $vendortemp[0]['facility'] = $this->VendorFacilities->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        $vendortemp[0]['factory'] = $this->VendorFactories->find('all')->contain(['VendorCommencements'])->where(['vendor_temp_id' => $id])->toArray();
+        $vendortemp[0]['factory'] = $this->VendorFactories->find('all')->where(['vendor_temp_id' => $id])->toArray();
+        $vendortemp[0]['income_tax'] = $this->VendorIncometaxes->find('all')->where(['vendor_temp_id' => $id])->toArray();
+        $vendortemp[0]['other_details'] = $this->VendorOtherdetails->find('all')->where(['vendor_temp_id' => $id])->toArray();
         $vendortemp[0]['questionnaire'] = $this->VendorQuestionnaires->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        
-        $income_tax = $this->VendorIncometaxes->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        if(count($income_tax) > 0){$vendortemp[0]['income_tax']= $income_tax[0]; } else {$vendortemp[0]['income_tax']=[];}
-        
-        $other_details =$this->VendorOtherdetails->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        if(count($other_details) > 0){$vendortemp[0]['other_details']= $other_details[0]; } else {$vendortemp[0]['other_details']=[];}
-        
-        $registered_office = $this->VendorRegisteredOffices->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        if(count($registered_office) > 0){$vendortemp[0]['registered_office']= $registered_office[0]; } else {$vendortemp[0]['registered_office']=[];}
-        
-        $small_scale = $this->VendorSmallScales->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        if(count($small_scale) > 0){$vendortemp[0]['small_scale']= $small_scale[0]; } else {$vendortemp[0]['small_scale']=[];}
-
-        $turnover = $this->VendorTurnovers->find('all')->where(['vendor_temp_id' => $id])->toArray();
-        if(count($turnover) > 0){$vendortemp[0]['turnover']= $turnover[0]; } else {$vendortemp[0]['turnover']=[];}
-
+        $vendortemp[0]['registered_office'] = $this->VendorRegisteredOffices->find('all')->where(['vendor_temp_id' => $id])->toArray();
+        // $vendortemp[0]['reputed_customer'] = $this->VendorReputedCustomers->find('all')->where(['vendor_temp_id' => $id])->toArray();
+        $vendortemp[0]['small_scale'] = $this->VendorSmallScales->find('all')->where(['vendor_temp_id' => $id])->toArray();
+        $vendortemp[0]['turnover'] = $this->VendorTurnovers->find('all')->where(['vendor_temp_id' => $id])->toArray();
         $response = array('status'=>1, 'message'=>$vendortemp);
         echo json_encode($response); exit;
     }
@@ -254,46 +301,80 @@ class ApiController extends ApiAppController
         
         $this->loadModel("Materials");
         $this->loadModel("MaterialHistories");
-        
-        set_time_limit(300);
-        $response = array();
-        $response['message'] = [];
+        $this->loadModel("PrHeaders");
+        $this->loadModel("PrFooters");
 
-        $matStock = [];
-        
-        $ftpConn = $this->Ftp->connection();
-        $data  = $this->Ftp->downloadFile($ftpConn, "MATERIAL_MIN_STOCK.JSON");
-        if($data) {
-            $data = trim(preg_replace('/\s+/', ' ', $data));
-            $d = json_decode($data);
+        $conn = ConnectionManager::get('default');
+        $matlist = $conn->execute("select ph.sap_vendor_code as LIFNR, pf.material as MATNR, pf.short_text as MAKTX, 200 as MIN_STOCK, pf.order_unit as MEINS from po_headers ph inner join po_footers pf on ph.id=pf.po_header_id");
 
-            foreach($d->MIN_STOCK as $key => $row) {
-                $temp = [];
-                $temp['sap_vendor_code'] = $row->LIFNR;
-                $temp['code'] = $row->MATNR;
-                $temp['minimum_stock'] = $row->MIN_STOCK;
-                $temp['uom'] = $row->MEINS;
-                $matStock[] = $tmp;
+        $matlist = $matlist->fetchAll('assoc');
+
+        /*
+        $response = $http->get(
+            'http://123.108.46.252:8000/sap/bc/sftmob/GET_MAT_MST/?sap-client=300',
+            ['type' => 'json', 'auth' => ['username' => 'vcsupport1', 'password' => 'aarti@123']]
+        );
+        */
+
+        try{
+
+            if (true) { //|| $response->isOk()) 
+                //$result = json_decode($response->getStringBody());
+                $result = json_decode('{"RESPONSE":{"SUCCESS":1,"MESSAGE":"Success",
+                    "MAT_LIST" :[{"LIFNR":"0000100186", "MATNR":"PHFG0411", "MAKTX":"Ethyl-2-(3-hydroxyphenyl)acetate", "MIN_STOCK":1200,"MEINS":"KG"},
+                    {"LIFNR":"0000100186", "MATNR":"PHFG0417", "MAKTX":"1-(3-Methyl -1-Phenyl-5-pyrazolyl)piper", "MIN_STOCK":900,"MEINS":"KG"}]
+                    }}');
+
+                $result = ['RESPONSE'=>['SUCCESS'=>1, 'MESSAGE'=>"Success", 'MAT_LIST'=>$matlist]];
+
+                if ($result['RESPONSE']['SUCCESS']) {
+                // if ($result->RESPONSE->SUCCESS) {
+                    $rows = [];
+                    foreach($result['RESPONSE']['MAT_LIST'] as $row) {
+                    // foreach($result->RESPONSE->MAT_LIST as $row) {
+                        $temp = [];
+                        // $temp['sap_vendor_code'] = $row->LIFNR;
+                        // $temp['code'] = $row->MATNR;
+                        // $temp['description'] = $row->MAKTX;
+                        // $temp['minimum_stock'] = $row->MIN_STOCK;
+                        // $temp['uom'] = $row->MEINS;
+
+                        $temp['sap_vendor_code'] = $row['LIFNR'];
+                        $temp['code'] = $row['MATNR'];
+                        $temp['description'] = $row['MAKTX'];
+                        $temp['minimum_stock'] = $row['MIN_STOCK'];
+                        $temp['uom'] = $row['MEINS'];
+
+                        $rows[] = $temp;
+                    }
+
+                    $columns = array_keys($rows[0]);
+                    $upsertQuery = $this->Materials->query();
+                    $upsertQuery->insert($columns);
+
+                    foreach($rows as $row) {
+                        $upsertQuery->values($row);
+                    }
+                    $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `sap_vendor_code`=VALUES(`sap_vendor_code`), `code`=VALUES(`code`),
+                        `description`=VALUES(`description`), `minimum_stock`=VALUES(`minimum_stock`), `uom`=VALUES(`uom`)')
+                        ->execute();
+
+                    $materialHistories = $this->MaterialHistories->newEntities($rows);
+                    $this->MaterialHistories->saveMany($materialHistories);
+
+                    
+                    $response['status'] = '1';
+                    $response['message'] = 'Success';
+                    $response['data'] = $materialHistories;
+
+                } else {
+                    $response['status'] = '0';
+                    $response['message'] = $result->RESPONSE->MESSAGE;
+                }
             }
-
-            $columns = array_keys($rows[0]);
-            $upsertQuery = $this->Materials->query();
-            $upsertQuery->insert($columns);
-
-            foreach($rows as $row) {
-                $upsertQuery->values($row);
-            }
-            $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `sap_vendor_code`=VALUES(`sap_vendor_code`), `code`=VALUES(`code`),
-                `description`=VALUES(`description`), `minimum_stock`=VALUES(`minimum_stock`), `uom`=VALUES(`uom`)')
-                ->execute();
-
-            $materialHistories = $this->MaterialHistories->newEntities($rows);
-            $this->MaterialHistories->saveMany($materialHistories);
-
-            
-            $response['status'] = '1';
-            $response['message'] = 'Success';
-            $response['data'] = $materialHistories;
+        } catch (\Exception $e) {
+            $response['status'] = '0';
+            $response['message'] = $e->getMessage();
         }
 
         echo json_encode($response);

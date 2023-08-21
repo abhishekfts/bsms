@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * VendorRegisteredOffice Entity
  *
  * @property int $id
- * @property int|null $vendor_temp_id
+ * @property int $vendor_temp_id
  * @property string|null $address
  * @property string|null $address_2
  * @property string|null $pincode
@@ -17,7 +17,6 @@ use Cake\ORM\Entity;
  * @property string|null $country
  * @property string|null $state
  * @property string|null $telephone
- * @property string|null $fax_no
  * @property \Cake\I18n\FrozenTime|null $added_date
  * @property \Cake\I18n\FrozenTime|null $updated_date
  *
@@ -43,7 +42,6 @@ class VendorRegisteredOffice extends Entity
         'country' => true,
         'state' => true,
         'telephone' => true,
-        'fax_no' => true,
         'added_date' => true,
         'updated_date' => true,
         'vendor_temp' => true,

@@ -31,7 +31,6 @@
 
     <div class="related card">
       <div class="card-header">
-        <span id="res_message"></span>
         <button type="button" disabled class="btn bg-gradient-button" id="action_schedule" onclick="prepare()" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#scheduleModal">Schedule</button>
       </div>
       <div class="table-responsive card-body" id="id_potableresp" style="display:none;"></div>

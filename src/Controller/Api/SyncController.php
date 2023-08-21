@@ -300,19 +300,18 @@ class SyncController extends ApiAppController
         
         $ftpConn = $this->Ftp->connection();
         $list = $this->Ftp->getList($ftpConn);
-
-        $this->loadModel("PoHeaders");
-        $this->loadModel("PoFooters");
-        $this->loadModel("Materials");
-
         foreach($list as $fileKey => $val) {
             if(str_starts_with($fileKey, 'PO_')) {
                 $data  = $this->Ftp->downloadFile($ftpConn, $fileKey);
                 
                 if($data) {
+                    $this->loadModel("PoHeaders");
+                    $this->loadModel("PoFooters");
+
                     $data = trim(preg_replace('/\s+/', ' ', $data));
                     $d = json_decode($data);
 
+                    //echo '<pre>'; print_r($d); exit;
                     foreach($d->PO_LIST as $key => $row) {
                         $hederData = array();
                         $footerData = array();
@@ -363,14 +362,6 @@ class SyncController extends ApiAppController
                                         $poItemsInstance = $this->PoFooters->newEmptyEntity();
                                         $poItemsInstance = $this->PoFooters->patchEntity($poItemsInstance, $footerData);
                                     }
-
-                                    //sync material master
-                                    $upsertQuery = $this->Materials->query();
-                                    $upsertQuery->insert(['sap_vendor_code', 'code', 'description', 'uom']);
-                                    $upsertQuery->values(['sap_vendor_code' => $row->LIFNR, 'code' => $item->MATNR, 'description' => $item->TXZ01, 'uom' => $item->MEINS]);
-                                    $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `sap_vendor_code`=VALUES(`sap_vendor_code`), `code`=VALUES(`code`),
-                                        `description`=VALUES(`description`), `uom`=VALUES(`uom`)')
-                                        ->execute();
 
                                     if ($this->PoFooters->save($poItemsInstance)) {
                                         $response['message'][] = 'PO : '.$row->EBELN.' Item : '.$item->EBELP.' saved successfully';
@@ -501,58 +492,4 @@ class SyncController extends ApiAppController
             echo json_encode($response);
         }
     }
-
-    public function getMaterialMinStock()
-    {
-        $response = array();
-        $response['status'] = 0;
-        $response['message'] = 'Empty request';
-        
-        $this->loadModel("Materials");
-        $this->loadModel("MaterialHistories");
-        
-        set_time_limit(300);
-        $response = array();
-        $response['message'] = [];
-
-        $matStock = [];
-        
-        $ftpConn = $this->Ftp->connection();
-        $data  = $this->Ftp->downloadFile($ftpConn, "MATERIAL_MIN_STOCK.JSON");
-        if($data) {
-            $data = trim(preg_replace('/\s+/', ' ', $data));
-            $d = json_decode($data);
-
-            foreach($d->MIN_STOCK as $key => $row) {
-                $temp = [];
-                $temp['sap_vendor_code'] = $row->LIFNR;
-                $temp['code'] = $row->MATNR;
-                $temp['description'] = $row->MAKTX;
-                $temp['minimum_stock'] = $row->MIN_STOCK;
-                $temp['uom'] = $row->MEINS;
-                $matStock[] = $temp;
-            }
-
-            $columns = array_keys($matStock[0]);
-            $upsertQuery = $this->Materials->query();
-            $upsertQuery->insert($columns);
-
-            foreach($matStock as $row) {
-                $upsertQuery->values($row);
-            }
-            $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `sap_vendor_code`=VALUES(`sap_vendor_code`), `code`=VALUES(`code`),
-                `description`=VALUES(`description`), `minimum_stock`=VALUES(`minimum_stock`), `uom`=VALUES(`uom`)')
-                ->execute();
-
-            $materialHistories = $this->MaterialHistories->newEntities($matStock);
-            $this->MaterialHistories->saveMany($materialHistories);
-
-            $response['status'] = '1';
-            $response['message'] = 'Success';
-            $response['data'] = $materialHistories;
-        }
-
-        echo json_encode($response);
-    }
-
 }

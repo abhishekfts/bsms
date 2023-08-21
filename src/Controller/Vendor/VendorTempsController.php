@@ -326,7 +326,7 @@ class VendorTempsController extends VendorAppController
                 }
 
                 // Partner Address [Working]
-                foreach ($request["other_address"]["partner"] as $key => $value) {
+                foreach ($request["other_address"] as $key => $value) {
                     $partneraddr = $this->VendorPartnerAddress->newEmptyEntity();
                     $value["vendor_temp_id"] = $id;
                     $partneraddr = $this->VendorPartnerAddress->patchEntity($partneraddr, $value);
@@ -342,7 +342,7 @@ class VendorTempsController extends VendorAppController
                 }
 
                 // Reputed Customers [Working]
-                foreach ($request["reputed"]["customer"] as $key => $value) {
+                foreach ($request["reputed"] as $key => $value) {
                     $partneraddr = $this->VendorReputedCustomers->newEmptyEntity();
                     $value["vendor_temp_id"] = $id;
                     $partneraddr = $this->VendorReputedCustomers->patchEntity($partneraddr, $value);
@@ -377,28 +377,28 @@ class VendorTempsController extends VendorAppController
                 $vendorTemp = $this->VendorTemps->patchEntity($vendorTemp, $data);
                 // print_r($vendorTemp);
                 if ($this->VendorTemps->save($vendorTemp)) {
-                    $flash = ['type' => 'success', 'msg' => 'Successfully Saved'];
+                    $flash = ['type' => 'success', 'msg' => ($e->getMessage())];
                 }
             } catch (\PDOException $e) {
                 $flash = ['type' => 'error', 'msg' => ($e->getMessage())];
             }
         }
 
-        $vt_countries = $this->Countries->find('list', ['keyField' => 'id', 'valueField' => 'country_name'])->toArray();
-        $vt_state = $this->States->find('list', ['keyField' => 'id', 'valueField' => 'name'])->all();
-        $countries = $this->Countries->find('list', ['keyField' => 'country_code', 'valueField' => 'country_name'])->toArray();
-        $states = $this->States->find('list', ['keyField' => 'region_code', 'valueField' => 'name'])->all();
+
+        $countries = $this->Countries->find('list', ['keyField' => 'id', 'valueField' => 'country_name'])->toArray();
 
         $currencies = $this->Currencies->find('list', ['keyField' => 'code', 'valueField' => 'name'])->toArray();
 
-        // $hasIndia = array_key_exists('IN', $countries);
+        $hasIndia = array_key_exists('IN', $countries);
         
-        // if ($hasIndia) {
-        //     unset($countries['India']);
-        //     $countries = ['India' => 'India'] + $countries;
-        // }
+        if ($hasIndia) {
+            unset($countries['India']);
+            $countries = ['India' => 'India'] + $countries;
+        }
 
-        $this->set(compact('vendorTemp', 'vt_countries', 'vt_state', 'countries', 'states','currencies'));
+        $states = $this->States->find('list', ['keyField' => 'region_code', 'valueField' => 'name'])->all();
+
+        $this->set(compact('vendorTemp',  'countries', 'states','currencies'));
     }
 
 }

@@ -85,11 +85,9 @@ $("#purViewId").on("click", ".po-box", function () {
                                                             </thead>
                                                             <tbody id="id_pofooter"></tbody>
                                                         </table>`);
-            if (response.status) {
+            if (response.status == "success") {
                 $.each(response.data.po_footers, function (key, val) {
                     var poHeaderId = response.data.po_header;
-                    $("#action_schedule").show();
-                    $("#res_message").html('');
                     $("#id_pofooter").append(
                         `<tr class="odd" data-trid="id_tr` +
                         val.id +
@@ -172,9 +170,6 @@ $("#purViewId").on("click", ".po-box", function () {
                         searching: false,
                     });
                 }, 500);
-            } else {
-                $("#action_schedule").hide();
-                $("#res_message").html(response.message);
             }
         },
         complete: function () {
@@ -184,7 +179,6 @@ $("#purViewId").on("click", ".po-box", function () {
 });
 
 $(document).on("click", ".schedule_item", function () {
-    $("#error_msg").html("");
     var id = $(this).attr("footer-id");
     $(".check").prop("checked", false);
     if (!$("#check_" + id).is(":checked")) {
@@ -310,7 +304,6 @@ $(".search-box").on("keydown", function (event) {
 });
 
 $(document).on("click", ".flu", function () {
-    $("#error_msg").html("");
     var id = $(this).attr("data-id");
     var po_no = $("#schedulebutton_" + id).attr("po-no");
     var item_no = $("#schedulebutton_" + id).attr("item-no");
@@ -415,14 +408,13 @@ $(document).ready(function () {
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
-                    if (response.status) {
+                    if (response.status == "success") {
                         Toast.fire({
                             icon: "success",
                             title: response.message,
                         });
                         $("#scheduleModal").modal("toggle");
                     } else {
-                        $("#scheduleModal").modal("toggle");
                         Toast.fire({ icon: "error", title: response.message });
                     }
                 },

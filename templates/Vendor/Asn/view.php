@@ -46,14 +46,14 @@
                                 <?php $files = json_decode($deliveryDetails[0]->invoice_path, true);
 
                                     if (!empty($files)) {
-                                        foreach ($files as $key => $file) {
-                                            echo $this->Html->link(' ' .$key, '/' . $file, ['style' => 'display:block; margin-left:5px;', 'target' => '_blank', 'class' => 'btn btn-custom mb-0 invoicefiles']);
+                                        foreach ($files as $file) {
+                                            echo $this->Html->link('View invoice', '/' . $file, ['style' => 'display:none', 'class' => 'btn btn-custom mb-0 invoicefiles']);
                                         }
                                     }
 
 
                                     ?>
-                                
+                                <button class="btn btn-custom mb-0 invoiceButton">View invoice</button>
                             </div>
                         </div>
                         <!-- modal -->

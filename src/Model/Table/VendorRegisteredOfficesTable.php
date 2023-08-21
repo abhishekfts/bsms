@@ -45,6 +45,7 @@ class VendorRegisteredOfficesTable extends Table
 
         $this->belongsTo('VendorTemps', [
             'foreignKey' => 'vendor_temp_id',
+            'joinType' => 'INNER',
         ]);
     }
 
@@ -58,8 +59,7 @@ class VendorRegisteredOfficesTable extends Table
     {
         $validator
             ->integer('vendor_temp_id')
-            ->allowEmptyString('vendor_temp_id')
-            ->add('vendor_temp_id', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('vendor_temp_id');
 
         $validator
             ->scalar('address')
@@ -95,11 +95,6 @@ class VendorRegisteredOfficesTable extends Table
             ->scalar('telephone')
             ->maxLength('telephone', 15)
             ->allowEmptyString('telephone');
-
-        $validator
-            ->scalar('fax_no')
-            ->maxLength('fax_no', 15)
-            ->allowEmptyString('fax_no');
 
         $validator
             ->dateTime('added_date')

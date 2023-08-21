@@ -100,7 +100,6 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                             <th>Material Description</th>
                             <th>Opening Stock</th>
                             <th>Uom</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -323,14 +322,13 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     $.each(response.data, function (key, val) { 
                         var rowHtml = `<tr>
                         <td>` + val.sap_vendor_code + `</td>
-                        <td> `+ val.factory_code + `</td>
+                        <td> `+ val.factories_id + `</td>
                         <td> `+ val.po_no +` </td>
-                        <td> `+ val.material +` </td>
+                        <td> `+ val.material_id +` </td>
                         <td> `+ val.line_item +`</td>
                         <td> `+ val.description + `</td>
                         <td> `+ val.opening_stock + `</td>
                         <td> `+ val.uom + `</td>
-                        <td> `+ val.error + `</td>
                         </tr>`;
                         $("#example1 tbody").append(rowHtml);
                     });

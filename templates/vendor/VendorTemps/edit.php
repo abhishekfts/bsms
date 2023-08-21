@@ -1,3 +1,5 @@
+
+
 <!-- <?= $this->Html->css('cstyle.css') ?> -->
 <!-- <?= $this->Html->css('table.css') ?> -->
 <!-- <?= $this->Html->css('listing.css') ?> -->
@@ -6,6 +8,203 @@
 <?= $this->Html->css('v_vendortemp_view') ?>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css" /> -->
 
+<style>
+    .hide {
+        display: none;
+    }
+
+    /* Default Button */
+    .bg-gradient-button {
+        background: #F2EDD7FF linear-gradient(180deg, #F2EDD7FF, #e5e1cc) repeat-x !important;
+        color: #755139FF !important;
+    }
+
+    .bg-gradient-button.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-button.btn:not(:disabled):not(.disabled).active,
+    .show>.bg-gradient-button.btn.dropdown-toggle {
+        background-image: none !important;
+    }
+
+    .bg-gradient-button.btn:hover {
+        background: #F2EDD7FF linear-gradient(180deg, #e5e1cc, #F2EDD7FF) repeat-x !important;
+        border-color: #F2EDD7FF;
+        color: #755139FF !important;
+    }
+
+    .bg-gradient-button.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-button.btn:not(:disabled):not(.disabled).active,
+    .bg-gradient-button.btn:active,
+    .bg-gradient-button.btn.active {
+        background: #F2EDD7FF linear-gradient(180deg, #e5e1cc, #e5e1cc) repeat-x !important;
+        border-color: #F2EDD7FF;
+        color: #755139FF !important;
+    }
+
+    .bg-gradient-button.btn:disabled,
+    .bg-gradient-button.btn.disabled {
+        background-image: none !important;
+        border-color: #F2EDD7FF;
+        color: #755139FF !important;
+    }
+
+    /* Default Button */
+
+
+    /* Submit Button */
+    .bg-gradient-submit {
+        background: #08132f linear-gradient(180deg, #5b8aff, #102b71) repeat-x !important;
+        border-color: #ffffff;
+        color: #fff;
+    }
+
+    .bg-gradient-submit.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-submit.btn:not(:disabled):not(.disabled).active,
+    .show>.bg-gradient-submit.btn.dropdown-toggle {
+        background-image: none !important;
+    }
+
+    .bg-gradient-submit.btn:hover {
+        background: #08132f linear-gradient(180deg, #102b71, #5b8aff) repeat-x !important;
+        border-color: #ffffff;
+        color: #fff;
+    }
+
+    .bg-gradient-submit.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-submit.btn:not(:disabled):not(.disabled).active,
+    .bg-gradient-submit.btn:active,
+    .bg-gradient-submit.btn.active {
+        background: #08132f linear-gradient(180deg, #5b8aff, #102b71) repeat-x !important;
+        border-color: #ffffff;
+        color: #fff;
+    }
+
+    .bg-gradient-submit.btn:disabled,
+    .bg-gradient-submit.btn.disabled {
+        background-image: none !important;
+        border-color: #ffffff;
+        color: #fff;
+    }
+
+    /* Submit Button */
+
+    /* Reject Button */
+    .bg-gradient-reject {
+        background: #F1F4FFFF linear-gradient(180deg, #F1F4FFFF, #ffc8be) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #990011FF;
+    }
+
+    .bg-gradient-reject.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-reject.btn:not(:disabled):not(.disabled).active,
+    .show>.bg-gradient-reject.btn.dropdown-toggle {
+        background-image: none !important;
+    }
+
+    .bg-gradient-reject.btn:hover {
+        background: #F1F4FFFF linear-gradient(180deg, #ffc8be, #F1F4FFFF) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #990011FF;
+    }
+
+    .bg-gradient-reject.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-reject.btn:not(:disabled):not(.disabled).active,
+    .bg-gradient-reject.btn:active,
+    .bg-gradient-reject.btn.active {
+        background: #F1F4FFFF linear-gradient(180deg, #ffc8be, #F1F4FFFF) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #990011FF;
+    }
+
+    .bg-gradient-reject.btn:disabled,
+    .bg-gradient-reject.btn.disabled {
+        background-image: none !important;
+        border-color: #F1F4FFFF;
+        color: #990011FF;
+    }
+
+    /* Reject Button */
+
+
+    /* Cancel Button */
+    .bg-gradient-cancel {
+        background: #F1F4FFFF linear-gradient(180deg, #edeff7, #ccd7fd) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #496e97;
+    }
+
+    .bg-gradient-cancel.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-cancel.btn:not(:disabled):not(.disabled).active,
+    .show>.bg-gradient-cancel.btn.dropdown-toggle {
+        background-image: none !important;
+    }
+
+    .bg-gradient-cancel.btn:hover {
+        background: #F1F4FFFF linear-gradient(180deg, #ccd7fd, #edeff7) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #496e97;
+    }
+
+    .bg-gradient-cancel.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-cancel.btn:not(:disabled):not(.disabled).active,
+    .bg-gradient-cancel.btn:active,
+    .bg-gradient-cancel.btn.active {
+        background: #F1F4FFFF linear-gradient(180deg, #ccd7fd, #edeff7) repeat-x !important;
+        border-color: #F1F4FFFF;
+        color: #496e97;
+    }
+
+    .bg-gradient-cancel.btn:disabled,
+    .bg-gradient-cancel.btn.disabled {
+        background-image: none !important;
+        background-color: #F1F4FFFF !important;
+        border-color: #F1F4FFFF;
+        color: #496e97;
+    }
+
+    /* Cancel Button */
+
+    /* warn Button */
+    .bg-gradient-warn {
+        background: #ff2700 linear-gradient(180deg, #ff2700, #c71f00) repeat-x !important;
+        border-color: #ff2700;
+        color: #fff;
+    }
+
+    .bg-gradient-warn.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-warn.btn:not(:disabled):not(.disabled).active,
+    .show>.bg-gradient-warn.btn.dropdown-toggle {
+        background-image: none !important;
+    }
+
+    .bg-gradient-warn.btn:hover {
+        background: #ff2700 linear-gradient(180deg, #ff2700, #ff836c) repeat-x !important;
+        border-color: #ff2700;
+        color: #fff;
+    }
+
+    .bg-gradient-warn.btn:not(:disabled):not(.disabled):active,
+    .bg-gradient-warn.btn:not(:disabled):not(.disabled).active,
+    .bg-gradient-warn.btn:active,
+    .bg-gradient-warn.btn.active {
+        background: #ff2700 linear-gradient(180deg, #ff836c, #ff2700) repeat-x !important;
+        border-color: #ff2700;
+        color: #fff;
+    }
+
+    .bg-gradient-warn.btn:disabled,
+    .bg-gradient-warn.btn.disabled {
+        background-image: none !important;
+        border-color: #ff2700;
+        color: #fff;
+    }
+
+    #onbordingSubmit .form-control[disabled] {
+        padding: 0 !important;
+        line-height: 1.45 !important;
+    }
+
+    /* Reject Button */
+</style>
 
 <div class="row">
     <div class="col-sm-12 col-md-3 col-lg-3">
@@ -17,8 +216,6 @@
                         <li>
                             <p>Name :
                                 <b>
-                                    <input type="hidden" id="vendor_id" value="<?= h($vendorTemp->id) ?>"
-                                        disabled="true">
                                     <?= h($vendorTemp->name) ?>
                                 </b>
                             </p>
@@ -160,35 +357,45 @@
                                 <div class="row">
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('address', ['name' => 'vendor[address]', 'class' => 'form-control id_address permanent_address_address', 'id' => 'id_permanent_address_address', 'label' => "Address"]); ?>
+                                            <?php echo $this->Form->control('address', ['name' => 'vendor[address]', 'class' => 'form-control ', 'id' => 'id_permanent_address_address1', 'label' => "Address"]); ?>
                                         </div>
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('address_2', ['name' => 'vendor[address_2]', 'label' => 'Address 1', 'id' => 'id_permanent_address_address_2', 'class' => 'form-control permanent_address_address_2']); ?>
+                                            <?php echo $this->Form->control('address_2', ['name' => 'vendor[address_2]', 'label' => 'Address 1', 'id' => 'id_permanent_address_address2', 'class' => 'form-control']); ?>
                                         </div>
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('pincode', ['name' => 'vendor[pincode]', 'class' => 'form-control id_pincode permanent_address_pincode', 'id' => 'id_permanent_address_pincode']); ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-3 mt-3 col-md-3">
-                                        <div class="form-group">
-                                            <?php echo $this->Form->control('city', ['type' => 'text', 'name' => 'vendor[city]', 'class' => 'form-control alphaonly capitalize id_city', 'id' => 'id_permanent_address_city']); ?>
+                                            <?php echo $this->Form->control('pincode', ['name' => 'vendor[pincode]', 'class' => 'form-control ', 'id' => 'id_permanent_address_pincode']); ?>
                                         </div>
                                     </div>
 
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('country', ['name' => 'vendor[country]', 'id' => 'id_permanent_address_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select my-country id_country_id', 'options' => $vt_countries, 'data-live-search' => 'true', 'empty' => 'Select Country', 'title' => 'Select Country']); ?>
+                                            <?php echo $this->Form->control('city', ['type' => 'text', 'name' => 'vendor[city]', 'class' => 'form-control alphaonly capitalize', 'id' => 'id_permanent_address_city']); ?>
                                         </div>
                                     </div>
 
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('state', ['name' => 'vendor[state]', 'id' => 'id_permanent_address_state', 'class' => 'selectpicker form-control my-select id_state_id', 'options' => $vt_state, 'data-live-search' => 'true', 'empty' => 'Select State', 'title' => 'Select State']); ?>
+                                            <?php echo $this->Form->control('country', ['name' => 'vendor[country]', 'id' => 'id_permanent_address_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-3 mt-3 col-md-3">
+                                        <div class="form-group">
+                                            <?php echo $this->Form->control('state', ['name' => 'vendor[state]', 'id' => 'id_permanent_address_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State']); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 mt-3 col-md-3">
+                                        <div class="form-group">
+                                            <?php echo $this->Form->control('Telephone', ['name' => 'vendor[telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'maxlength' => '10', 'id' => 'id_permanent_address_telephone']); ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-3 mt-3">
+                                        <div class="form-group">
+                                            <?php echo $this->Form->control('register_office_faxno', ['name' => 'vendor[fax_no]', 'id' => 'id_permanent_address_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -201,46 +408,41 @@
                                 <div class="row">
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[address]', ['id' => 'register_office_address', 'class' => 'form-control registered_office_address', 'label' => "Address"]); ?>
+                                            <?php echo $this->Form->control('registered_office[address]', ['id' => 'register_office_address1', 'class' => 'form-control', 'label' => "Address"]); ?>
                                         </div>
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[address_2]', ['label' => 'Address 1', 'class' => 'form-control registered_office_address_2', 'id' => 'register_office_address_2']); ?>
+                                            <?php echo $this->Form->control('registered_office[address_2]', ['label' => 'Address 1', 'class' => 'form-control', 'id' => 'register_office_address2']); ?>
                                         </div>
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
                                             <?php echo $this->Form->control(
                                                 'registered_office[pincode]',
-                                                ['type' => 'number', 'name' => 'registered_office[pincode]', 'label' => 'Pincode', 'class' => 'form-control maxlength_validation registered_office_pincode', 'id' => 'register_office_pincode', 'maxlength' => '6']
+                                                ['type' => 'number', 'name' => 'registered_office[pincode]', 'label' => 'Pincode', 'class' => 'form-control maxlength_validation', 'id' => 'register_office_pincode', 'maxlength' => '6']
                                             ); ?>
                                         </div>
 
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[city]', ['type' => 'text', 'name' => 'registered_office[city]', 'class' => 'form-control alphaonly capitalize registered_office_city', 'label' => 'City', 'id' => 'register_office_city']); ?>
+                                            <?php echo $this->Form->control('registered_office[city]', ['type' => 'text', 'name' => 'registered_office[city]', 'class' => 'form-control alphaonly capitalize', 'label' => 'City', 'id' => 'register_office_city']); ?>
                                         </div>
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[country]', ['data-state' =>'register_office_state', 'class' => 'selectpicker show-menu-arrow form-control my-select1 my-country registered_office_country', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'register_office_country']); ?>
+                                            <?php echo $this->Form->control('registered_office[country]', ['data-state' =>'register_office_state', 'class' => 'selectpicker show-menu-arrow form-control my-select1 my-country', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'register_office_country']); ?>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-3 mt-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[state]', ['class' => 'selectpicker registered_office_state form-control my-select1', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'register_office_state']); ?>
+                                            <?php echo $this->Form->control('registered_office[state]', ['class' => 'selectpicker form-control my-select1', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'register_office_state']); ?>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-3 mt-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[telephone]', [ 'type' => 'number', 'class' => 'form-control registered_office_telephone maxlength_validation', 'id' => 'register_office_telephone', 'label' => 'Telephone', 'maxlength' => '10']); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-3 mt-3">
-                                        <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[fax_no]', ['name' => 'registered_office[fax_no]', 'id' => 'register_office_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation registered_office_fax_no', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
+                                            <?php echo $this->Form->control('registered_office[telephone]', [ 'type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'register_office_telephone', 'maxlength' => '10']); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -261,58 +463,55 @@
                                         <div class="row branch_office branch_office_0" data-id="0" id="branch_office_0">
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_address', ['type' => 'text', 'name' => 'branch[branch_office][0][address]', 'id' => 'branch_office_0_address', 'class' => 'form-control branch_office_0_address', 'label' => "Address"]); ?>
+                                                    <?php echo $this->Form->control('register_office_address1', ['type' => 'text', 'name' => 'branch[branch_office][0][address]', 'id' => 'branch_office_0_address1', 'class' => 'form-control', 'label' => "Address"]); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_address2', ['type' => 'text', 'name' => 'branch[branch_office][0][address_2]', 'id' => 'branch_office_0_address2', 'label' => 'Address 1',  'class' => 'form-control branch_office_0_address_2']); ?>
+                                                    <?php echo $this->Form->control('register_office_address2', ['type' => 'text', 'name' => 'branch[branch_office][0][address_2]', 'id' => 'branch_office_0_address2', 'label' => 'Address 1',  'class' => 'form-control']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_pincode', ['type' => 'number', 'name' => 'branch[branch_office][0][pincode]', 'label' => 'Pincode', 'class' => 'form-control pincode-input branch_office_0_pincode',  'id' => 'branch_office_0_pincode', 'maxlength' => '6']); ?>
+                                                    <?php echo $this->Form->control('register_office_pincode', ['type' => 'number', 'name' => 'branch[branch_office][0][pincode]', 'label' => 'Pincode', 'class' => 'form-control pincode-input',  'id' => 'branch_office_0_pincode', 'maxlength' => '6']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_city', ['type' => 'text', 'name' => 'branch[branch_office][0][city]', 'class' => 'form-control alphaonly capitalize branch_office_0_city', 'label' => 'City',  'id' => 'branch_office_0_city']); ?>
+                                                    <?php echo $this->Form->control('register_office_city', ['type' => 'text', 'name' => 'branch[branch_office][0][city]', 'class' => 'form-control alphaonly capitalize', 'label' => 'City',  'id' => 'branch_office_0_city']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_country', ['name' => 'branch[branch_office][0][country]','data-state' =>'branch_office_0_state', 'class' => 'selectpicker form-control my-select my-country branch_office_0_country_name', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country',  'id' => 'branch_office_0_country']); ?>
+                                                    <?php echo $this->Form->control('register_office_country', ['name' => 'branch[branch_office][0][country]','data-state' =>'branch_office_0_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country',  'id' => 'branch_office_0_country']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_state', ['name' => 'branch[branch_office][0][state]', 'class' => 'selectpicker form-control my-select branch_office_0_state_name', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State',  'id' => 'branch_office_0_state']); ?>
+                                                    <?php echo $this->Form->control('register_office_state', ['name' => 'branch[branch_office][0][state]', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State',  'id' => 'branch_office_0_state']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_telephone', ['name' => 'branch[branch_office][0][telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation branch_office_0_telephone', 'id' => 'branch_office_0_telephone', 'label' => 'Tel No', 'maxlength' => '10']); ?>
+                                                    <?php echo $this->Form->control('register_office_telno', ['name' => 'branch[branch_office][0][telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'branch_office_0_telno', 'label' => 'Tel No', 'maxlength' => '10']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <label>Year of Registration:</label>
-                                                <input name="branch[branch_office][0][registration_year]" type="number"
-                                                    class="form-control maxlength_validation branch_office_0_registration_year"
-                                                    maxlength="4">
+                                                <input name="branch[branch_office][0][registration_year]" type="number"  class="form-control maxlength_validation" maxlength="4">
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <label>Registration No.</label>
-                                                <input name="branch[branch_office][0][registration_no]" type="text"
-                                                    class="form-control branch_office_0_registration_no">
+                                                <input name="branch[branch_office][0][registration_no]" type="text" 
+                                                    class="form-control">
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <label class="form-label">Registration Certificate</label>
                                                 <div class="custom-file">
-                                                    <input name="branch[branch_office][0][registration_certificate]"
-                                                        type="file" accept=".pdf"
-                                                        class="custom-file-input branch_office_0_registration_certificate">
+                                                    <input name="branch[branch_office][0][registration_certificate]" 
+                                                        type="file" accept=".pdf" class="custom-file-input">
                                                     <label class="custom-file-label">Choose File</label>
                                                 </div>
                                             </div>
@@ -337,22 +536,20 @@
                                             <div class="col-sm-12 col-lg-4">
                                                 <label>Year:</label>
                                                 <input type="number" name="small_scale[year]"
-                                                    class="form-control maxlength_validation small_scale_year"
-                                                    maxlength="4">
+                                                    class="form-control maxlength_validation" maxlength="4">
                                             </div>
 
                                             <div class="col-sm-4 col-lg-4">
                                                 <label>Registration No.</label>
                                                 <input type="text" name="small_scale[registration_no]"
-                                                    class="form-control small_scale_registration_no">
+                                                    class="form-control">
                                             </div>
 
                                             <div class="col-sm-4 col-lg-4">
                                                 <label class="form-label">Upload File</label>
                                                 <div class="custom-file">
                                                     <input name="small_scale[certificate_file]" type="file"
-                                                        accept=".pdf"
-                                                        class="custom-file-input small_scale_certificate_file">
+                                                        accept=".pdf" class="custom-file-input">
                                                     <label class="custom-file-label">Choose File</label>
                                                 </div>
                                             </div>
@@ -369,15 +566,11 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-md-4 col-lg-4 mb-5">
                                         <label>Laboratory facilities available:</label><br>
-                                        <input type="radio" id="facility_lab_facility_yes"
-                                            name="production_facility[lab_facility]" value="yes"
-                                            class="showme facility_lab_facility_yes" data-trigger="yes"
-                                            data-show="lab_facilities">
+                                        <input type="radio" name="production_facility[lab_facility]" value="yes"
+                                            class="showme" data-trigger="yes" data-show="lab_facilities">
                                         <label>Yes</label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" id="facility_lab_facility_no"
-                                            name="production_facility[lab_facility]" value="no"
-                                            class="showme facility_lab_facility_no" data-trigger="yes"
-                                            data-show="lab_facilities">
+                                        <input type="radio" name="production_facility[lab_facility]" value="no"
+                                            class="showme" data-trigger="yes" data-show="lab_facilities">
                                         <label>No</label><br>
                                         <div id="lab_facilities" style="display: none;">
                                             <div class="text-container" id="lab_facilities_text">
@@ -392,15 +585,11 @@
 
                                     <div class="col-sm-12 col-md-4 col-lg-4 mb-5">
                                         <label>Whether there is any ISI registration :</label><br>
-                                        <input type="radio" id="facility_isi_registration_yes"
-                                            name="production_facility[isi_registration]" value="yes"
-                                            class="showme facility_isi_registration_yes" data-trigger="yes"
-                                            data-show="isi_registration">
+                                        <input type="radio" name="production_facility[isi_registration]" value="yes"
+                                            class="showme" data-trigger="yes" data-show="isi_registration">
                                         <label>Yes</label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" id="facility_isi_registration_no"
-                                            name="production_facility[isi_registration]" value="no"
-                                            class="showme facility_isi_registration_no" data-trigger="yes"
-                                            data-show="isi_registration">
+                                        <input type="radio" name="production_facility[isi_registration]" value="no"
+                                            class="showme" data-trigger="yes" data-show="isi_registration">
                                         <label>No</label>
                                         <div id="isi_registration" style="display: none;">
                                             <div class="text-container" id="isi_registration-text">
@@ -415,15 +604,11 @@
 
                                     <div class="col-sm-12 col-md-4 col-lg-4 mb-5">
                                         <label>Test facilities available</label><br>
-                                        <input type="radio" id="facility_test_facility_yes"
-                                            name="production_facility[test_facility]" value="yes"
-                                            class="showme facility_test_facility_yes" data-trigger="yes"
-                                            data-show="test_facilities">
+                                        <input type="radio" name="production_facility[test_facility]" value="yes"
+                                            class="showme" data-trigger="yes" data-show="test_facilities">
                                         <label>Yes</label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" id="facility_test_facility_no"
-                                            name="production_facility[test_facility]" value="no"
-                                            class="showme facility_test_facility_no" data-trigger="yes"
-                                            data-show="test_facilities">
+                                        <input type="radio" name="production_facility[test_facility]" value="no"
+                                            class="showme" data-trigger="yes" data-show="test_facilities">
                                         <label>No</label>
                                         <div id="test_facilities" style="display: none;">
                                             <div class="text-container" id="test_facilities-info">
@@ -438,15 +623,11 @@
 
                                     <div class="col-sm-12 col-md-4 col-lg-4 mb-5">
                                         <label>Facilities for effective after sales services</label><br>
-                                        <input type="radio" id="facility_sales_services_yes"
-                                            name="production_facility[sales_services]" value="yes"
-                                            class="showme facility_sales_services_yes" data-trigger="yes"
-                                            data-show="sales_services">
+                                        <input type="radio" name="production_facility[sales_services]" value="yes"
+                                            class="showme" data-trigger="yes" data-show="sales_services">
                                         <label>Yes</label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" id="facility_sales_services_no"
-                                            name="production_facility[sales_services]" value="no"
-                                            class="showme facility_sales_services_no" data-trigger="yes"
-                                            data-show="sales_services">
+                                        <input type="radio" name="production_facility[sales_services]" value="no"
+                                            class="showme" data-trigger="yes" data-show="sales_services">
                                         <label>No</label>
                                         <div id="sales_services" style="display: none;">
                                             <div class="text-container" id="sales_services_text">
@@ -461,15 +642,11 @@
 
                                     <div class="col-sm-12 col-md-4 col-lg-4 mb-5">
                                         <label>Quality control procedure adopted.</label><br>
-                                        <input type="radio" id="facility_quality_control_yes"
-                                            name="production_facility[quality_control]" value="yes"
-                                            class="showme facility_quality_control_yes" data-trigger="yes"
-                                            data-show="quality_control">
+                                        <input type="radio" name="production_facility[quality_control]" value="yes"
+                                            class="showme" data-trigger="yes" data-show="quality_control">
                                         <label>Yes</label>&nbsp; &nbsp; &nbsp; &nbsp;
-                                        <input type="radio" id="facility_quality_control_no"
-                                            name="production_facility[quality_control]" value="no"
-                                            class="showme facility_quality_control_no" data-trigger="yes"
-                                            data-show="quality_control">
+                                        <input type="radio" name="production_facility[quality_control]" value="no"
+                                            class="showme" data-trigger="yes" data-show="quality_control">
                                         <label>No</label>
                                         <div id="quality_control" style="display: none;">
                                             <div class="text-container" id="quality-control_text">
@@ -487,24 +664,18 @@
                                         <label>Annual turn over in last 3 years (In Rupee):</label>
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <input type="hidden" name="annual_turnover[first_year]"
-                                            class="year1 turnover_first_year">
-                                        <input type="number"
-                                            class="form-control placeholder1 turnover_first_year_turnover"
+                                        <input type="hidden" name="annual_turnover[first_year]" class="year1">
+                                        <input type="number" class="form-control placeholder1"
                                             name="annual_turnover[first_year_turnover]">
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <input type="hidden" name="annual_turnover[second_year]"
-                                            class="year2 annual_turnover_second_year">
-                                        <input type="number"
-                                            class="form-control placeholder2 turnover_second_year_turnover"
+                                        <input type="hidden" name="annual_turnover[second_year]" class="year2">
+                                        <input type="number" class="form-control placeholder2"
                                             name="annual_turnover[second_year_turnover]">
                                     </div>
                                     <div class="col-sm-12 col-md-4 col-lg-4">
-                                        <input type="hidden" name="annual_turnover[third_year]"
-                                            class="year3 turnover_third_year">
-                                        <input type="number"
-                                            class="form-control placeholder3 turnover_third_year_turnover"
+                                        <input type="hidden" name="annual_turnover[third_year]" class="year3">
+                                        <input type="number" class="form-control placeholder3"
                                             name="annual_turnover[third_year_turnover]">
                                     </div>
                                 </div>
@@ -517,12 +688,12 @@
                                             <div class="col-lg-3">
                                                 <label>Certificate No</label>
                                                 <input type="number" name="income_tax[certificate_no]"
-                                                    class="form-control income_tax_certificate_no">
+                                                    class="form-control">
                                             </div>
                                             <div class="col-lg-3">
                                                 <label>Date</label>
                                                 <input type="date" id="datePickerId" name="income_tax[certificate_date]"
-                                                    class="form-control income_tax_certificate_date">
+                                                    class="form-control">
                                             </div>
                                             <div class="col-lg-3">
                                                 <label class="form-label">Documents</label>
@@ -565,50 +736,50 @@
                                             id="factory_office_0">
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_address', ['name' => 'prdflt[factory_office][0][address]', 'id' => 'factory_0_address', 'required' => 'true', 'class' => 'form-control', 'label' => "Address"]); ?>
+                                                    <?php echo $this->Form->control('register_office_address1', ['name' => 'prdflt[factory_office][0][address]', 'id' => 'factory_0_address1', 'class' => 'form-control', 'label' => "Address"]); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_address_2', ['name' => 'prdflt[factory_office][0][address_2]', 'id' => 'factory_0_address_2', 'required' => 'true', 'label' => 'Address 1', 'class' => 'form-control']); ?>
+                                                    <?php echo $this->Form->control('register_office_address2', ['name' => 'prdflt[factory_office][0][address1]', 'id' => 'factory_0_address2', 'label' => 'Address 1', 'class' => 'form-control']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_pincode', ['type' => 'number', 'name' => 'prdflt[factory_office][0][pincode]', 'label' => 'Pincode', 'required' => 'true', 'class' => 'form-control maxlength_validation', 'id' => 'factory_0_pincode', 'maxlength' => '6']); ?>
+                                                    <?php echo $this->Form->control('register_office_pincode', ['type' => 'number', 'name' => 'prdflt[factory_office][0][pincode]', 'label' => 'Pincode', 'class' => 'form-control maxlength_validation', 'id' => 'factory_0_pincode', 'maxlength' => '6']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_city', ['type' => 'text', 'name' => 'prdflt[factory_office][0][city]', 'class' => 'form-control alphaonly capitalize', 'required' => 'true', 'label' => 'City', 'id' => 'factory_0_city']); ?>
+                                                    <?php echo $this->Form->control('register_office_city', ['type' => 'text', 'name' => 'prdflt[factory_office][0][city]', 'class' => 'form-control alphaonly capitalize', 'label' => 'City', 'id' => 'factory_0_city']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('register_office_country', ['name' => 'prdflt[factory_office][0][country]','data-state' =>'factory_0_state', 'class' => 'selectpicker form-control factory_0_country my-select my-country', 'options' => $countries, 'label' => 'Country', 'required' => 'true', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'factory_0_country']); ?>
+                                                    <?php echo $this->Form->control('register_office_country', ['name' => 'prdflt[factory_office][0][country]','data-state' =>'factory_0_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'factory_0_country']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_state', ['name' => 'prdflt[factory_office][0][state]', 'class' => 'selectpicker form-control my-select factory_0_state', 'required' => 'true', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'factory_0_state']); ?>
+                                                    <?php echo $this->Form->control('register_office_state', ['name' => 'prdflt[factory_office][0][state]', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'factory_0_state']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_telephone', ['name' => 'prdflt[factory_office][0][telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'required' => 'true', 'id' => 'factory_0_telephone', 'label' => 'Tel No', 'maxlength' => '10']); ?>
+                                                    <?php echo $this->Form->control('register_office_telephone', ['name' => 'prdflt[factory_office][0][telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'factory_0_telephone', 'label' => 'Tel No', 'maxlength' => '10']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-4 pt-4 hide">
                                                 <span class="badge redbadge delete" data-toggle="tooltip" data-id="0"
                                                     data-placement="right" data-class="factory_office"
-                                                    data-original-title="Delete Address" required="true">
+                                                    data-original-title="Delete Address">
                                                     <i class="fas fa-trash"></i>
                                                 </span>
                                             </div>
@@ -621,14 +792,13 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <input type="text" class="form-control"
                                                             name="prdflt[factory_office][0][installed_capacity]"
-                                                            placeholder="Installed Capacity" required="true">
+                                                            placeholder="Installed Capacity" id="">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <div class="custom-file">
                                                             <input
                                                                 name="prdflt[factory_office][0][installed_capacity_file]"
-                                                                type="file" accept=".pdf" class="custom-file-input"
-                                                                required="true">
+                                                                type="file" accept=".pdf" class="custom-file-input">
                                                             <label class="custom-file-label">Choose
                                                                 File</label>
                                                         </div>
@@ -644,14 +814,13 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <input type="text" class="form-control"
                                                             name="prdflt[factory_office][0][power_available]"
-                                                            placeholder="Power Available" required="true">
+                                                            placeholder="Power Available" id="">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <div class="custom-file">
                                                             <input
                                                                 name="prdflt[factory_office][0][power_available_file]"
-                                                                type="file" accept=".pdf" class="custom-file-input"
-                                                                required="true">
+                                                                type="file" accept=".pdf" class="custom-file-input">
                                                             <label class="custom-file-label">Choose
                                                                 File</label>
                                                         </div>
@@ -667,14 +836,13 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <input type="text" class="form-control"
                                                             name="prdflt[factory_office][0][machinery_available]"
-                                                            placeholder="Machinery Available" required="true">
+                                                            placeholder="Machinery Available" id="">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <div class="custom-file">
                                                             <input
                                                                 name="prdflt[factory_office][0][machinery_available_file]"
-                                                                type="file" accept=".pdf" class="custom-file-input"
-                                                                required="true">
+                                                                type="file" accept=".pdf" class="custom-file-input">
                                                             <label class="custom-file-label">Choose
                                                                 File</label>
                                                         </div>
@@ -690,13 +858,12 @@
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <input type="text" class="form-control"
                                                             name="prdflt[factory_office][0][raw_material]"
-                                                            placeholder="Raw Material Avi. and Source" required="true">
+                                                            placeholder="Raw Material Avi. and Source" id="">
                                                     </div>
                                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                                         <div class="custom-file">
                                                             <input name="prdflt[factory_office][0][raw_material_file]"
-                                                                type="file" accept=".pdf" class="custom-file-input"
-                                                                required="true">
+                                                                type="file" accept=".pdf" class="custom-file-input">
                                                             <label class="custom-file-label">Choose
                                                                 File</label>
                                                         </div>
@@ -730,47 +897,41 @@
                                                                 <label for="">Year Of Commencement Of Production</label>
                                                                 <input type="number" class="form-control"
                                                                     name="prdflt[factory_office][0][commencement][0][commencement_year]"
-                                                                    id="factory_office_0_commencement_0_commencement_year"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_commencement_year">
                                                             </div>
                                                             <div class="col-sm-12 col-md-2 col-lg-2">
                                                                 <label for="">Material</label>
                                                                 <input type="text" class="form-control"
                                                                     name="prdflt[factory_office][0][commencement][0][commencement_material]"
                                                                     id="factory_office_0_commencement_0_commencement_material"
-                                                                    placeholder="Material" required="true">
+                                                                    placeholder="Material">
                                                             </div>
                                                             <div class="col-sm-12 col-md-2 col-lg-2">
                                                                 <label id="productionyear1">2020-2021</label>
                                                                 <input type="hidden" class="year1"
                                                                     name="prdflt[factory_office][0][commencement][0][first_year]"
-                                                                    id="factory_office_0_commencement_0_first_year"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_first_year">
                                                                 <input type="number" class="form-control placeholder1"
                                                                     name="prdflt[factory_office][0][commencement][0][first_year_qty]"
-                                                                    id="factory_office_0_commencement_0_first_year_qty"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_first_year_qty">
                                                             </div>
                                                             <div class="col-sm-12 col-md-2 col-lg-2">
                                                                 <label id="productionyear2">2021-2022</label>
                                                                 <input type="hidden" class="year2"
                                                                     name="prdflt[factory_office][0][commencement][0][second_year]"
-                                                                    id="" required="true">
+                                                                    id="">
                                                                 <input type="number" class="form-control placeholder2"
                                                                     name="prdflt[factory_office][0][commencement][0][second_year_qty]"
-                                                                    id="factory_office_0_commencement_0_second_year_qty"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_second_year_qty">
                                                             </div>
                                                             <div class="col-sm-12 col-md-2 col-lg-2">
                                                                 <label id="productionyear3">2022-2023</label>
                                                                 <input type="hidden" class="year3"
                                                                     name="prdflt[factory_office][0][commencement][0][third_year]"
-                                                                    id="factory_office_0_commencement_0_third_year"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_third_year">
                                                                 <input type="number" class="form-control placeholder3"
                                                                     name="prdflt[factory_office][0][commencement][0][third_year_qty]"
-                                                                    id="factory_office_0_commencement_0_third_year_qty"
-                                                                    required="true">
+                                                                    id="factory_office_0_commencement_0_third_year_qty">
                                                             </div>
                                                             <div class="col-sm-12 col-md-1 col-lg-1 mt-3 pt-3 hide">
                                                                 <span class="badge redbadge delete"
@@ -782,12 +943,13 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <!-- <hr class="factory_office_0_commencement_0"> -->
+                                                        <hr class="factory_office_0_commencement_0"
+                                                            style="border: revert;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <hr class="factory_office_0" > -->
+                                        <hr class="factory_office_0" style="border: revert;">
                                     </div>
                                 </div>
                             </div>
@@ -827,33 +989,31 @@
                                 <div class="card card-primary card-outline">
                                     <div class="card-header">
                                         Address of Proprietor / Partner / Director
-                                        <span data-class="partner" class="badge lgreenbadge mt-2 add"
-                                            id="id_partner_add" data-toggle="tooltip" data-placement="right" title=""
-                                            data-original-title="Add Proprietor / Partner / Director">
+                                        <span data-class="other_address" class="badge lgreenbadge mt-2 add"
+                                            id="id_other_address_add" data-toggle="tooltip" data-placement="right"
+                                            title="" data-original-title="Add Proprietor / Partner / Director">
                                             <i class="fas fa-plus-circle"></i>
                                         </span>
                                     </div>
-                                    <div class="card-body partner_card_body">
-                                        <div class="row partner partner_0" data-id="0" id="partner_0">
+                                    <div class="card-body other_address_card_body">
+                                        <div class="row other_address other_address_0" data-id="0" id="other_address_0">
                                             <div class="col-2 mt-1">
-                                                <input type="radio" name="other_address[partner][0][type]"
-                                                    id="partner_0_type1" value="Proprietor">
+                                                <input type="radio" name="other_address[0][type]" value="Proprietor">
                                                 <label>Proprietor</label>
                                             </div>
                                             <div class="col-2 mt-1">
-                                                <input type="radio" name="other_address[partner][0][type]"
-                                                    id="partner_0_type2" value="Partner">
+                                                <input type="radio" name="other_address[0][type]" value="Partner">
                                                 <label>Partner</label>
                                             </div>
                                             <div class="col-2 mt-1">
-                                                <input type="radio" name="other_address[partner][0][type]"
-                                                    id="partner_0_type3" checked value="Director">
+                                                <input type="radio" name="other_address[0][type]" checked
+                                                    value="Director">
                                                 <label>Director</label>
                                             </div>
 
                                             <div class="col-3 col-md-3 hide">
                                                 <span class="badge redbadge delete" data-toggle="tooltip" data-id="0"
-                                                    data-class="partner" data-placement="right"
+                                                    data-class="other_address" data-placement="right"
                                                     data-original-title="Delete">
                                                     <i class="fas fa-trash"></i>
                                                 </span>
@@ -861,55 +1021,55 @@
 
                                             <div class="col-12 mt-1">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][name]', ['class' => 'form-control form-control-sm alphaonly capitalize', 'label' => "Name"]); ?>
+                                                    <?php echo $this->Form->control('other_address[0][name]', ['class' => 'form-control form-control-sm alphaonly capitalize', 'label' => "Name"]); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][address]', ['class' => 'form-control', 'id' => 'id_address', 'label' => "Address"]); ?>
+                                                    <?php echo $this->Form->control('other_address[0][address]', ['class' => 'form-control', 'id' => 'id_address1', 'label' => "Address"]); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][address_2]', ['label' => 'Address 1', 'id' => 'id_address_2', 'class' => 'form-control']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][address1]', ['label' => 'Address 1', 'id' => 'id_address2', 'class' => 'form-control']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][pincode]', ['type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'id_pincode', 'label' => 'Pincode', 'maxlength' => '6']); ?>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-3 mt-3 col-md-3">
-                                                <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][city]', ['class' => 'form-control alphaonly capitalize', 'id' => 'id_city', 'label' => 'City']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][pincode]', ['type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'id_pincode', 'label' => 'Pincode', 'maxlength' => '6']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][country]', ['id' => 'id_country','data-state' =>'partner_0_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Please select', 'label' => 'Country', '    empty' => '']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][city]', ['class' => 'form-control alphaonly capitalize', 'id' => 'id_city', 'label' => 'City']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][state]', ['id' => 'partner_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][country]', ['id' => 'id_country','data-state' =>'id_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Please select', 'label' => 'Country', '    empty' => '']); ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 mt-3 col-md-3">
+                                                <div class="form-group">
+                                                    <?php echo $this->Form->control('other_address[0][state]', ['id' => 'id_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][telephone]', ['id' => 'id_telephone', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Telephone', 'maxlength' => '10']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][telephone]', ['id' => 'id_telephone', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Telephone', 'maxlength' => '10']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][fax_no]', ['id' => 'id_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
+                                                    <?php echo $this->Form->control('other_address[0][fax_no]', ['id' => 'id_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <hr class="other_address_0" style="border: revert;"> -->
+                                        <hr class="other_address_0" style="border: revert;">
                                     </div>
                                 </div>
                             </div>
@@ -925,64 +1085,60 @@
                                             <div class="col-3 mb-3">
                                                 <label for="id_bank_name">Bank name</label>
                                                 <input type="text" name="vendor[bank_name]"
-                                                    class="form-control alphaonly capitalize id_bank_name"
-                                                    id="id_bank_name">
+                                                    class="form-control alphaonly capitalize" id="id_bank_name">
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <label for="id_bank_branch">Bank Branch</label>
-                                                <input type="text"
-                                                    class="form-control alphaonly capitalize id_bank_branch"
+                                                <input type="text" class="form-control alphaonly capitalize"
                                                     id="id_bank_branch" name="vendor[bank_branch]">
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <label for="id_bank_no">Bank number</label>
                                                 <input type="number" maxlength="18"
-                                                    class="form-control maxlength_validation id_bank_number"
-                                                    id="id_bank_no" name="vendor[bank_number]">
+                                                    class="form-control maxlength_validation" id="id_bank_no"
+                                                    name="vendor[bank_number]">
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <label for="id_bank_ifsc">IFSC Code</label>
                                                 <input type="text" maxlength="11" name="vendor[bank_ifsc]"
-                                                    class="form-control maxlength_validation UpperCase id_bank_ifsc"
+                                                    class="form-control maxlength_validation UpperCase"
                                                     id="id_bank_ifsc">
                                             </div>
 
                                             <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('bank_country', ['name' => 'vendor[bank_country]', 'id' => 'id_bank_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select id_bank_country_name', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                                <?php echo $this->Form->control('bank_country', ['name' => 'vendor[bank_country]', 'id' => 'id_bank_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select ', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <label for="id_bank_city">City</label>
-                                                <input type="text" class="form-control capitalize id_bank_city"
-                                                    id="id_bank_city" name="vendor[bank_city]">
+                                                <input type="text" class="form-control capitalize" id="id_bank_city" name="vendor[bank_city]">
                                             </div>
 
                                             <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('order_currency', ['name' => 'bank[order_currency]', 'class' => 'selectpicker form-control my-select id_order_currency', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                                <?php echo $this->Form->control('order_currency', ['name' => 'bank[order_currency]', 'class' => 'selectpicker form-control my-select ', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
                                             </div>
 
                                             <!-- <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('order_currency', ['name' => 'order_currency', 'readonly' => 'readonly', 'class' => 'form-control id_order_currency']); ?>
+                                                <?php echo $this->Form->control('order_currency', ['name' => 'order_currency', 'readonly' => 'readonly', 'class' => 'form-control']); ?>
                                             </div> -->
 
                                             <div class="col-3 mb-3">
                                                 <label for="id_swift_bic">SWIFT/BIC</label>
-                                                <input type="text" class="form-control id_bank_swift" id="id_swift_bic"
-                                                    name="vendor[bank_swift]">
+                                                <input type="text" class="form-control" id="id_swift_bic" name="vendor[bank_swift]">
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('tan_no', ['name' => 'vendor[tan_no]', 'class' => 'form-control UpperCase id_tan_no', 'label' => 'TAN No']); ?>
+                                                    <?php echo $this->Form->control('tan_no', ['name' => 'vendor[tan_no]', 'class' => 'form-control UpperCase', 'label' => 'TAN No']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mb-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('cin_no', ['name' => 'vendor[cin_no]', 'class' => 'form-control UpperCase id_cin_no', 'label' => 'CIN No.']); ?>
+                                                    <?php echo $this->Form->control('cin_no', ['name' => 'vendor[cin_no]', 'class' => 'form-control UpperCase', 'label' => 'CIN No.']); ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -993,8 +1149,8 @@
                                         <div class="card card-primary card-outline">
                                             <div class="card-body p-2">
                                                 <label for="">GST No</label>
-                                                <input type="text" name="vendor[gst_no]"
-                                                    class="form-control UpperCase id_gst_no" id='gst-no'>
+                                                <input type="text" name="vendor[gst_no]" class="form-control UpperCase"
+                                                    id='gst-no'>
                                             </div>
                                             <div class="card-footer p-2" style="background-color: whitesmoke;">
                                                 <div class="custom-file">
@@ -1009,8 +1165,8 @@
                                         <div class="card card-primary card-outline">
                                             <div class="card-body p-2">
                                                 <label for="">PAN No</label>
-                                                <input type="text" name="vendor[pan_no]"
-                                                    class="form-control UpperCase id_pan_no" id="pan-no">
+                                                <input type="text" name="vendor[pan_no]" class="form-control UpperCase"
+                                                    id="pan-no">
                                             </div>
                                             <div class="card-footer p-2" style="background-color: whitesmoke;">
                                                 <div class="custom-file">
@@ -1044,7 +1200,7 @@
                                         <div class="form-group">
                                             <label for="id_sigma">Six Sigma</label>
                                             <textarea id="id_sigma" name="other[six_sigma]" cols="30" rows="1"
-                                                class="form-control other_details_six_sigma"></textarea>
+                                                class="form-control"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
@@ -1057,7 +1213,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
                                         <label>Registration No.</label>
-                                        <input type="number" class="form-control other_details_iso" name="other[iso]">
+                                        <input type="number" class="form-control" name="other[iso]">
                                     </div>
 
                                     <div class="col-sm-12 col-md-3 col-lg-3 mt-3">
@@ -1117,7 +1273,7 @@
                                     <div class="col-lg-12 mt-1">
                                         <div class="sub-contractors-info" style="display: none;">
                                             <div class="form-group">
-                                                <?php echo $this->Form->control('sub-contractor', ['id' => 'other_manufacturer', 'name' => 'other[suppliers_name]', 'class' => 'form-control other_details_suppliers_name', 'label' => 'Suppliers Name']); ?>
+                                                <?php echo $this->Form->control('sub-contractor', ['id' => 'other_manufacturer', 'name' => 'other[suppliers_name]', 'class' => 'form-control', 'label' => 'Suppliers Name']); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -1127,7 +1283,7 @@
                             <div class="tab-pane fade" id="custom-tabs-four-questionnaire" role="tabpanel"
                                 aria-labelledby="tab_questionnaire" style="background-color: white;">
                                 <h5>Other information considered relevent to be furnished by supplier</h5>
-                                <div class="row questionnaire">
+                                <div class="row">
                                     <div class="col-lg-12 mt-3">
                                         <label>Does the company have any policy wrt to child labour appoint in
                                             work
@@ -1173,8 +1329,9 @@
                                 aria-labelledby="tab_customerAddress" style="background-color: white;">
                                 <div class="card card-primary card-outline">
                                     <div class="card-header">
-                                        <h5 class="modal-title" style="text-transform: inherit;">
-                                            Address of your reputed customers to whom reference can be made if necessary
+                                        <h5 class="modal-title" style="text-transform: lowercase;">
+                                            Address of your reputed customers to whom reference can be made (use
+                                            separate sheet) if necessary
                                             <span data-class="customer" class="badge lgreenbadge mt-2 add"
                                                 id="id_customer_add" data-toggle="tooltip" data-placement="right"
                                                 title="Add Reputed Customer">
@@ -1186,48 +1343,48 @@
                                         <div class="row customer customer_0" data-id="0" id="customer_0">
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][customer_name]', ['class' => 'form-control alphaonly capitalize', 'id' => 'id_name', 'label' => "Customer Name"]); ?>
+                                                    <?php echo $this->Form->control('reputed[0][customer_name]', ['class' => 'form-control alphaonly capitalize', 'id' => 'id_name', 'label' => "Customer Name"]); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][address]', ['label' => 'Address', 'class' => 'form-control']); ?>
+                                                    <?php echo $this->Form->control('reputed[0][address]', ['label' => 'Address', 'class' => 'form-control']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][pincode]', ['type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'reputed_pincode', 'label' => 'Pincode', 'maxlength' => '6']); ?>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-3 mt-3 col-md-3">
-                                                <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][city]', ['class' => 'form-control alphaonly capitalize', 'id' => '', 'label' => 'City']); ?>
+                                                    <?php echo $this->Form->control('reputed[0][pincode]', ['type' => 'number', 'class' => 'form-control maxlength_validation', 'id' => 'reputed_pincode', 'label' => 'Pincode', 'maxlength' => '6']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed_0_state', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country']); ?>
+                                                    <?php echo $this->Form->control('reputed[0][city]', ['class' => 'form-control alphaonly capitalize', 'id' => '', 'label' => 'City']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][state]', ['name' => 'reputed[0][state]', 'id' => 'reputed_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
+                                                    <?php echo $this->Form->control('reputed[0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed[0][state]', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country']); ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 mt-3 col-md-3">
+                                                <div class="form-group">
+                                                    <?php echo $this->Form->control('reputed[0][state]', ['name' => 'reputed[0][state]', 'id' => 'reputed[0][state]', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
                                                     <label for="id_telephone">Telephone</label>
                                                     <input type="number" id="reputed_telephone"
-                                                        name="reputed[customer][0][telephone]"
+                                                        name="reputed[0][telephone]"
                                                         class="form-control maxlength_validation" maxlength="10">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-2 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('register_office_faxno', ['name' => 'reputed[customer][0][fax_no]', 'id' => 'reputed_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
+                                                    <?php echo $this->Form->control('register_office_faxno', ['name' => 'reputed[0][fax_no]', 'id' => 'reputed_faxno', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'label' => 'Fax No.', 'maxlength' => '10']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-1 mt-4 pt-4 hide">
@@ -1238,14 +1395,14 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <!-- <hr class="customer_0" style="border: revert;"> -->
+                                        <hr class="customer_0" style="border: revert;">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer p-3" style="background-color: whitesmoke;">
-                        <?php echo $this->Form->button('Submit', array('class' => 'btn bg-gradient-submit mb-0', 'type' => 'button', 'id' => 'id_fksubmit')); ?>
+                        <?php echo $this->Form->button('Submit', array('class' => 'btn bg-gradient-submit mb-0', 'type' => 'submit', 'id' => 'id_fksubmit')); ?>
                     </div>
                 </div>
                 <div class="modal fade" id="modal-sm" style="display: none;" aria-hidden="true">
@@ -1257,7 +1414,7 @@
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn cancelButton" style="border:1px solid #6610f2"
                                     data-dismiss="modal">Cancel</button>
-                                <?php echo $this->Form->button('Ok', array('class' => 'btn mt-3', 'style' => "border:1px solid #28a745", 'type'=>'submit', 'id' => 'id_ogsubmit')); ?>
+                                <?php echo $this->Form->button('Ok', array('class' => 'btn mt-3', 'style' => "border:1px solid #28a745", 'id' => 'id_ogsubmit')); ?>
 
                             </div>
                         </div>
@@ -1269,14 +1426,8 @@
     </div>
 </div>
 <script>
-    var countryByState = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'countryByState')); ?>';
-    var vendorView = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'vendor')); ?>';
-    var getCountries = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'countries')); ?>';
-    var getCountryCodeById = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'getCountryCodeById')); ?>';
-    var getStateRegioncodeById = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'getStateRegioncodeById')); ?>';
-    $(document).on("click", "#id_fksubmit", function () {
-        $("#tab_productionfaculty").trigger('click');
-        $('#id_ogsubmit').trigger('click');
-    });
+    var vendorLink = '<?php echo \Cake\Routing\Router::url(array('controller' => '/VendorTemps', 'action' => 'state-by-countryId')); ?>';
 </script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> -->
 <?= $this->Html->script('v_vendortemps_edit') ?>
