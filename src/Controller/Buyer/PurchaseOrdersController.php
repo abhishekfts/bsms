@@ -391,7 +391,7 @@ class PurchaseOrdersController extends BuyerAppController
         $this->autoRender = false;
         $this->loadModel("PoItemSchedules");
         $response = ['status' => 0, 'message' => '', 'totalQty' => ''];
-        $data = $this->PoItemSchedules->find('all', ['conditions' => ['po_footer_id' => $id]]);
+        $data = $this->PoItemSchedules->find('all', ['conditions' => ['po_footer_id' => $id, 'status' => 1]]);
 
         if ($data->count() > 0) {
             $totalQty = 0;
