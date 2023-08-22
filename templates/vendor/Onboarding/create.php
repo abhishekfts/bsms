@@ -350,6 +350,7 @@
         "<?php echo \Cake\Routing\Router::url(array('prefix' => false, 'controller' => 'msgchat-headers', 'action' => 'add')); ?>";
     var seengeturl =
         "<?php echo \Cake\Routing\Router::url(array('prefix' => false, 'controller' => 'msgchat-headers', 'action' => 'seen-update')); ?>";
+    var stateByCountry = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'stateByCountryID')); ?>';
     var chatdata, user_id = "<?= h($vendorTemp->id) ?>",
         sender_id, table_pk;
     
@@ -368,14 +369,10 @@
 
     $(document).on("change", '.my-country', function() {
         var id = $(this).val();
-        var resp = getRemote(baseurl + "api/api/country-by-state/" + id);
-        var opt = "<option selected='' value=''>Please Select</option>";
-        resp = resp["message"];
-        $.each(resp["States"], function(i, v) {
-            opt += `<option value="` + v.id + `">` + v.name + `</option>`;
-        })
-       
-        $("#" + $(this).data('state')).html(opt);
+        var r = getRemote(stateByCountry+"/" + id);
+        var state_options = "<option selected=''>Please Select</option>";
+        $.each(r["message"], function (i, v) { state_options += `<option value="` + v.id + `">` + v.name + `</option>`; });
+        $("#" + $(this).data("state")).empty().append(state_options);
     });
 
 

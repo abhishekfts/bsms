@@ -64,84 +64,32 @@ class DashboardController extends VendorAppController
         $this->loadModel('PoHeaders');
         $this->loadModel('VendorTemps');
 
-        $this->loadModel('RfqDetails');
-        $this->loadModel('RfqInquiries');
-        $this->loadModel('Products');
-
         $this->loadModel('PoHeaders');
         $this->loadModel('PoItemSchedules');
-
         $this->loadModel('DeliveryDetails');
+        $this->loadModel('StockUploads');
 
-
-        $rfqnewDetails = $conn->execute("SELECT RfqDetails.*,Products.name product, Uoms.description uom FROM `rfq_details` RfqDetails
-        join products Products on Products.id = RfqDetails.product_id
-        join uoms Uoms on Uoms.id = RfqDetails.uom_code
-        join vendor_temps VendorTemps on RfqDetails.buyer_seller_user_id = VendorTemps.buyer_id
-        where RfqDetails.status = 1 and VendorTemps.sap_vendor_code = '" . $session->read('vendor_code') . "' and RfqDetails.id not in (select rfq_item_id from rfq_inquiries where seller_id = " . $session->read('id') . ")");
-
-        $rfqRequested = $conn->execute("SELECT RfqDetails.*, Products.name product, Uoms.description uom FROM `rfq_details` RfqDetails
-        join products Products on Products.id = RfqDetails.product_id
-        join uoms Uoms on Uoms.id = RfqDetails.uom_code
-        join vendor_temps VendorTemps on RfqDetails.buyer_seller_user_id = VendorTemps.buyer_id
-        where RfqDetails.status = 1 and VendorTemps.sap_vendor_code = '" . $session->read('vendor_code') . "' and RfqDetails.id in (select rfq_item_id from rfq_inquiries where seller_id = " . $session->read('id') . ")");
-
-        $query = $conn->execute("SELECT po_header_id FROM db_bsms.po_item_schedules GROUP BY po_header_id");
-        $totalPos = $query->count();
-
+        $totalPos = $this->PoHeaders->find('all', ['condition' => ['sap_vendor_code' => $session->read('vendor_code')]]);
+        $totalPos = $totalPos->count();
+        
         $this->loadModel('AsnHeaders');
 
-        $intraQry = $this->AsnHeaders->find()
-            ->select(['AsnHeaders.id', 'AsnHeaders.invoice_no', 'AsnHeaders.status', 'AsnHeaders.asn_no', 'AsnHeaders.invoice_value', 'PoHeaders.po_no', 'AsnHeaders.added_date', 'AsnHeaders.updated_date'])
+        $intraQry = $this->AsnHeaders->find('all')
             ->contain(['PoHeaders'])
             ->where(['PoHeaders.sap_vendor_code' => $session->read('vendor_code'), 'AsnHeaders.status' => '2']);
         $totalIntransit = $intraQry->count();
 
-        //echo '<pre>';print_r($intraQry); exit;
-
-        //$totalIntransit = $this->DeliveryDetails->find('all', array('conditions'=>array('status'=>0)))->count();
-
-        $totalRfqDetails = $this->RfqDetails->find('all', array('conditions' => array('status' => 1)))->count();
-
-
-
-        $this->set(compact('totalPos', 'totalIntransit', 'totalRfqDetails', 'rfqnewDetails', 'rfqRequested'));
-    }
-
-    public function rfqView($id = null)
-    {
-        $session = $this->getRequest()->getSession();
-        $this->loadModel('RfqDetails');
-        $this->loadModel('RfqInquiries');
-
-        $rfqDetails = $this->RfqDetails->get($id, [
-            'contain' => ['Products', 'Uoms'],
-        ]);
-
-        $inquired = $this->RfqInquiries->exists(['rfq_id' => $id, 'seller_id' => $session->read('id')]);
-
-        $isResponded = 'no';
-        if ($inquired) {
-            $isResponded = 'yes';
-        }
-
-        $userType = 'seller';
-        if ($userType == 'seller') {
-            $RfqInquiry = $this->RfqInquiries->newEmptyEntity();
-            $data = array();
-            $data['rfq_id'] = $id;
-            $data['seller_id'] = $session->read('id');
-            $RfqInquiry = $this->RfqInquiries->patchEntity($RfqInquiry, $data);
-            $results = $this->RfqInquiries->save($RfqInquiry);
-        }
-
-        $this->set(compact('rfqDetails', 'userType', 'results', 'isResponded'));
+        $stocks = $this->StockUploads->find()
+        ->select(['VendorFactories.factory_code', 'Materials.description', 'opening_stock', 'current_stock', 'asn_stock', 'closing_stock' => "(current_stock - asn_stock)"])
+        ->contain(['Materials', 'VendorFactories'])
+        ->where(['StockUploads.sap_vendor_code' => $session->read('vendor_code')])->toArray();
+        
+        //echo '<pre>'; print_r($stocks); exit;
+        $this->set(compact('totalPos', 'totalIntransit', 'stocks'));
     }
 
     public function getlist()
     {
-
-
         $this->autoRender = false;
         $this->loadModel('PoHeaders');
         $this->loadModel('VendorTemps');

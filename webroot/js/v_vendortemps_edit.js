@@ -146,7 +146,7 @@ function getRemote(remote_url, method = "GET", type = "json", convertapi = true)
 }
 
 $(document).on("change", ".my-country", function () {
-    var r = getRemote(countryByState + '/' + $(this).val());
+    var r = getRemote(stateByCountry + '/' + $(this).val());
     var state_options = "<option selected=''>Please Select</option>";
     $.each(r["message"], function (i, v) { state_options += `<option value="` + v.region_code + `">` + v.name + `</option>`; });
     $("#" + $(this).data("state")).empty().append(state_options);

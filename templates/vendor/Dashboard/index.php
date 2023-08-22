@@ -130,6 +130,7 @@
           <table class="table table-bordered table-hover table-striped">
             <thead>
               <tr>
+                <th>Factory</th>
                 <th>Material</th>
                 <th>Opening Stock</th>
                 <th>Production Stock</th>
@@ -138,34 +139,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Coarse Aggregate 60mm</td>
-                <td>30</td>
-                <td>22</td>
-                <td>50</td>
-                <td>2</td>
+              <?php if(count($stocks)) :  ?>
+                <?php foreach($stocks as $stock) :  ?>
+                <tr>
+                <td><?= $stock->vendor_factory->factory_code; ?></td>
+                <td><?= $stock->material->description; ?></td>
+                <td><?= $stock->opening_stock; ?></td>
+                <td><?= $stock->current_stock; ?></td>
+                <td><?= $stock->asn_stock; ?></td>
+                <td><?= $stock->closing_stock; ?></td>
               </tr>
-              <tr>
-                <td>Coarse Aggregate 10mm</td>
-                <td>30</td>
-                <td>22</td>
-                <td>50</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Coarse Aggregate 20mm</td>
-                <td>30</td>
-                <td>22</td>
-                <td>50</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Coarse Aggregate 40mm</td>
-                <td>30</td>
-                <td>22</td>
-                <td>50</td>
-                <td>2</td>
-              </tr>
+              <?php endforeach; ?>
+              <?php else :?>
+                <tr><td cols="6">No record found</td></tr>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>

@@ -4,28 +4,6 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\VendorTemp $vendorTemp
  */
-
-switch ($vendorTemp->status) {
-    case 0:
-        $status = '<span class="badge bg-warning">Sent to Vendor</span>';
-        break;
-    case 1:
-        $status = '<span class="badge bg-info">Pending for approval</span>';
-        break;
-    case 2:
-        $status = '<span class="badge bg-info">Sent to SAP</span>';
-        break;
-    case 3:
-        $status = '<span class="badge bg-success">Approved</span>';
-        break;
-    case 4:
-        $status = '<span class="badge bg-danger">Rejected</span>';
-        break;
-    case 5:
-        $status = '<span class="badge bg-info">Sap Import</span>';
-        break;
-}
-
 ?>
 <!-- <?= $this->Html->css('cstyle.css') ?> -->
 <!-- <style>
@@ -70,7 +48,7 @@ switch ($vendorTemp->status) {
                         </li>
                         <li>
                             <p>Status : <b>
-                                    <?= $status ?>
+                                    <?= $vendorTemp->vendor_status->description ?>
                                 </b></p>
                         </li>
                     </ul>

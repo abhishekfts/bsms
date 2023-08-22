@@ -69,13 +69,20 @@
     </table>
   </div>
 
+  
   <div class="row">
+  <?php if($factoryExists) : ?>
     <div class="col-lg-12 mb-2 pe-4 d-flex justify-content-end flagButton">
       <button type="button" data-id="" class="btn bg-gradient-button notify mb-0">
         <i class="fa fa-envelope"></i> Acknowledge
       </button>
     </div>
+    <?php else : ?>
+       Please add Factory details to Acknowledge PO
+    <?php endif; ?>
   </div>
+  
+  
 </div>
 
 <script>

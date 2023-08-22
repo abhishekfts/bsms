@@ -35,11 +35,17 @@ class PurchaseOrdersController extends VendorAppController
         $this->set('headTitle', 'Purchase Order List');
         $this->loadModel('PoHeaders');
         $this->loadModel('PoItemSchedules');
+        $this->loadModel('VendorFactories');
+
+
         $session = $this->getRequest()->getSession();
         $poHeaders = $this->paginate($this->PoHeaders->find()
             ->where(['sap_vendor_code' => $session->read('vendor_code'), '(select count(1) from po_item_schedules PoItemSchedules where po_header_id = PoHeaders.id) > 0']));
 
-        $this->set(compact('poHeaders'));
+        $venFac = $this->VendorFactories->find()->where(['vendor_temp_id' => $session->read('vendor_id')]);
+        $factoryExists = $venFac->count() ? 1 :  0;
+
+        $this->set(compact('poHeaders', 'factoryExists'));
     }
 
     public function poNotify($id = null)

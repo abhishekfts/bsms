@@ -201,7 +201,7 @@
                         $("#modal-confirm").modal('hide');
                         $(".mrk").hide();
 
-                        $(".asnstatus").html('Delivered');
+                        $(".asnstatus").html('In-Transit');
                     } else {
                         alert('Please try again...');
                     }

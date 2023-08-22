@@ -596,6 +596,8 @@ $(".btnSub").click(function (event) {
 
     // jthayil
     $(".act_qty").each(function (key, obj) {
+
+        console.log("QTY="+$(obj).attr("max")+"="+$(obj).val());
         if (
             $(obj).val() == "" ||
             $(obj).val() == null ||
@@ -604,7 +606,7 @@ $(".btnSub").click(function (event) {
             $("#error_msg").text("Actual Qty Mandatory");
             status = false;
             $(obj).focus();
-        } else if ($(obj).attr("max") < $(obj).val()) {
+        } else if (parseFloat($(obj).attr("max")) < parseFloat($(obj).val())) {
             $("#error_msg").text("Actual Qty exceeds pending max PO Qty");
             status = false;
             $(obj).focus();

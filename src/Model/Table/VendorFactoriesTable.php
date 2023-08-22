@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * VendorFactories Model
  *
  * @property \App\Model\Table\VendorTempsTable&\Cake\ORM\Association\BelongsTo $VendorTemps
+ * @property \App\Model\Table\StockUploadsTable&\Cake\ORM\Association\HasMany $StockUploads
  * @property \App\Model\Table\VendorCommencementsTable&\Cake\ORM\Association\HasMany $VendorCommencements
  *
  * @method \App\Model\Entity\VendorFactory newEmptyEntity()
@@ -46,6 +47,9 @@ class VendorFactoriesTable extends Table
 
         $this->belongsTo('VendorTemps', [
             'foreignKey' => 'vendor_temp_id',
+        ]);
+        $this->hasMany('LineMasters', [
+            'foreignKey' => 'vendor_factory_id',
         ]);
         $this->hasMany('StockUploads', [
             'foreignKey' => 'vendor_factory_id',
@@ -94,12 +98,14 @@ class VendorFactoriesTable extends Table
             ->allowEmptyString('city');
 
         $validator
-            ->integer('state')
+            ->scalar('state')
+            ->maxLength('state', 100)
             ->requirePresence('state', 'create')
             ->notEmptyString('state');
 
         $validator
-            ->integer('country')
+            ->scalar('country')
+            ->maxLength('country', 100)
             ->requirePresence('country', 'create')
             ->notEmptyString('country');
 

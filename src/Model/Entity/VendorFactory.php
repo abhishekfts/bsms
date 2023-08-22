@@ -62,6 +62,8 @@ class VendorFactory extends Entity
         'added_date' => true,
         'updated_date' => true,
         'vendor_temp' => true,
+        'line_masters' => true,
+        'stock_uploads' => true,
         'vendor_commencements' => true,
     ];
 }

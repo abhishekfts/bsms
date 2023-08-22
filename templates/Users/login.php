@@ -324,7 +324,7 @@
                         <p class="material-rightLabel"><i class="fa fa-eye-slash" id="eye" aria-hidden="true"
                             style="cursor: pointer;"></i></p>
 
-                        <p class="material-rightBottomLabel" style="text-decoration:none !important;"><a href="/bsms/users/forget_pwd"
+                        <p class="material-rightBottomLabel" style="text-decoration:none !important;"><a href="users/forget_pwd"
                             class="forget-pwd">Forgot
                             Password ?</a></p>
                       </div>

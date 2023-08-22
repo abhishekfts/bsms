@@ -35,7 +35,17 @@ class ApiController extends ApiAppController
         ]);
     }
 
-    public function countryByState($country_code = null)
+    public function stateByCountryID($id = null)
+    {
+        $this->autoRender = false;
+        $this->loadModel("Countries");
+        $this->loadModel("States");
+        $states = $this->States->find('all')->innerJoin(['Countries'=>'Countries'],['Countries.country_code = States.country_code'])->where(['Countries.id' => $id])->toArray();
+        $response = ["status"=> 1, 'message' =>$states];
+        echo json_encode($response);
+    }
+
+    public function stateByCountryCode($country_code = null)
     {
         $this->autoRender = false;
         $this->loadModel("Countries");

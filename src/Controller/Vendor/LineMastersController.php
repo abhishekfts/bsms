@@ -51,7 +51,7 @@ class LineMastersController extends VendorAppController
              //echo '<pre>'; print_r($lineMaster); exit;
             try {
                 if ($this->LineMasters->save($lineMaster)) {
-                    $this->Flash->success(__('The line master has been saved.'));
+                    $flash = ['type'=>'success' , 'msg'=>'The line master has been saved'];
                     return $this->redirect(['action' => 'index']);
                 }
                 $flash = ['type'=>'error', 'msg'=>'The line master could not be saved. Please, try again.'];
@@ -72,8 +72,7 @@ class LineMastersController extends VendorAppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $lineMaster = $this->LineMasters->patchEntity($lineMaster, $this->request->getData());
             if ($this->LineMasters->save($lineMaster)) {
-                $this->Flash->success(__('The line master has been saved.'));
-
+                $flash = ['type'=>'success' , 'msg'=>'The line master has been saved'];
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The line master could not be saved. Please, try again.'));
@@ -87,7 +86,8 @@ class LineMastersController extends VendorAppController
         $this->request->allowMethod(['post', 'delete']);
         $lineMaster = $this->LineMasters->get($id);
         if ($this->LineMasters->delete($lineMaster)) {
-            $this->Flash->success(__('The line master has been deleted.'));
+            // $this->Flash->success(__('The line master has been deleted.'));
+            $flash = ['type'=>'success' , 'msg'=>'The line master has been deleted'];
         } else {
             $this->Flash->error(__('The line master could not be deleted. Please, try again.'));
         }

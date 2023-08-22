@@ -161,9 +161,8 @@ class StockUploadsController extends BuyerAppController
                     }
                 }
             }
-
-            $this->set('stockuploadData', $stockView);
         }
+        $this->set('stockuploadData', $stockView);
 
         $vendor_mateial = $this->Materials->find('list', ['keyField' => 'id', 'valueField' => 'code'])->all();
         $this->set(compact('stockupload', 'vendor_mateial'));

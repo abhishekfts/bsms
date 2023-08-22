@@ -35,7 +35,7 @@ class VendorTempsController extends VendorAppController
 
         $this->loadModel('VendorTemps');
         $vendorTemp = $this->VendorTemps->get($session->read('vendor_id'), [
-            'contain' => ['PurchasingOrganizations', 'AccountGroups', 'SchemaGroups'],
+            'contain' => ['VendorStatus','PurchasingOrganizations', 'AccountGroups', 'SchemaGroups'],
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -82,17 +82,7 @@ class VendorTempsController extends VendorAppController
     }
 
 
-    public function countryByState($id = null)
-    {
-        $this->autoRender = false;
-        $response = ["status"=>0, 'message' =>'Empty request'];
-        $this->loadModel("States");
-        $states = $this->States->find()->select(['id', 'name'])->innerJoin(['Countries'=>'countries'],['Countries.country_code = States.country_code', 'Countries.id' =>$id])->toArray();
 
-        //print_r($states); exit;
-        $response = ["status"=> 1, 'message' =>['States'=>$states]];
-        echo json_encode($response);
-    }
 
     public function edit($id = null)
     {
@@ -116,7 +106,9 @@ class VendorTempsController extends VendorAppController
         $this->loadModel("States");
         $this->loadModel("Users");
         $session = $this->getRequest()->getSession();
-        $vendorTemp = $this->VendorTemps->get($id, ['contain' => ['CompanyCodes','ReconciliationAccounts','AccountGroups', 'PaymentTerms','SchemaGroups', 'PurchasingOrganizations']]);
+        $vendorTemp = $this->VendorTemps->get($id, ['contain' => ['VendorStatus','CompanyCodes','ReconciliationAccounts','AccountGroups', 'PaymentTerms','SchemaGroups', 'PurchasingOrganizations']]);
+
+        //echo '<pre>'; print_r($vendorTemp); exit;
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $request = $this->request->getData();
@@ -135,14 +127,12 @@ class VendorTempsController extends VendorAppController
                     $branch = $this->VendorBranchOffices->newEmptyEntity();
                     $value["vendor_temp_id"] = $id;
 
-                    if($value["registration_certificate"]->getSize() > 0) {
+                    if(isset($value["registration_certificate"]) && $value["registration_certificate"]->getSize() > 0) {
                         $fileName = $value["registration_certificate"]->getClientFilename();
                         $imagePath = WWW_ROOT . "uploads/vendor/" . $fileName;
                         $value["registration_certificate"]->moveTo($imagePath);
                         $value["registration_certificate"]= "uploads/vendor/" . $fileName;
-                    } else {
-                        $value["registration_certificate"]="";
-                    }
+                    } else { $value["registration_certificate"]=""; }
 
                     $branch = $this->VendorBranchOffices->patchEntity($branch, $value);
                     if ($this->VendorBranchOffices->save($branch)) { }
@@ -153,7 +143,7 @@ class VendorTempsController extends VendorAppController
                 $data = $request["small_scale"];
                 $data["vendor_temp_id"] = $id;
 
-                if($data["certificate_file"]->getSize() > 0) {
+                if( isset($data["certificate_file"]) && $data["certificate_file"]->getSize() > 0 ) {
                     $fileName = $data["certificate_file"]->getClientFilename();
                     if($fileName){
                         $imagePath = WWW_ROOT . "uploads/smallscale/" . $fileName;
@@ -172,35 +162,35 @@ class VendorTempsController extends VendorAppController
                 $data["vendor_temp_id"] = $id;
 
                 
-                if($data["quality_control_file"]->getSize() > 0) {
+                if(isset($data["quality_control_file"]) && $data["quality_control_file"]->getSize() > 0) {
                     $fileName = $data["quality_control_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/quality_control/" . $fileName;
                     $data["quality_control_file"]->moveTo($imagePath);
                     $data["quality_control_file"]= "uploads/quality_control/" . $fileName;
                 } else { $data["quality_control_file"]= ""; }
 
-                if($data["lab_facility_file"]->getSize() > 0) {
+                if($data["lab_facility_file"] && $data["lab_facility_file"]->getSize() > 0) {
                     $fileName = $data["lab_facility_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/lab_facility/" . $fileName;
                     $data["lab_facility_file"]->moveTo($imagePath);
                     $data["lab_facility_file"]= "uploads/lab_facility/" . $fileName;
                 } else { $data["lab_facility_file"]= ""; }
 
-                if($data["isi_registration_file"]->getSize() > 0) {
+                if($data["isi_registration_file"] && $data["isi_registration_file"]->getSize() > 0) {
                     $fileName = $data["isi_registration_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/isi_registration/" . $fileName;
                     $data["isi_registration_file"]->moveTo($imagePath);
                     $data["isi_registration_file"]= "uploads/isi_registration/" . $fileName;
                  } else { $data["isi_registration_file"]= ""; }
 
-                if($data["test_facility_file"]->getSize() > 0) {
+                if($data["test_facility_file"] && $data["test_facility_file"]->getSize() > 0) {
                     $fileName = $data["test_facility_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/test_facility/" . $fileName;
                     $data["test_facility_file"]->moveTo($imagePath);
                     $data["test_facility_file"]= "uploads/test_facility/" . $fileName;
                 } else { $data["test_facility_file"]= ""; }
 
-                if($data["sales_services_file"]->getSize() > 0) {
+                if($data["sales_services_file"] && $data["sales_services_file"]->getSize() > 0) {
                     $fileName = $data["sales_services_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/sales_services/" . $fileName;
                     $data["sales_services_file"]->moveTo($imagePath);
@@ -223,28 +213,28 @@ class VendorTempsController extends VendorAppController
                 $data = $request["other"];
                 $data["vendor_temp_id"] = $id;
 
-                if($data["six_sigma_file"]->getSize() > 0) {
+                if($data["six_sigma_file"] && $data["six_sigma_file"]->getSize() > 0) {
                     $fileName = $data["six_sigma_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/six_sigma/" . $fileName;
                     $data["six_sigma_file"]->moveTo($imagePath);
                     $data["six_sigma_file"]= "uploads/six_sigma/" . $fileName;
                 } else  { $data["six_sigma_file"]= ""; }
 
-                if($data["halal_file"]->getSize() > 0) {
+                if($data["halal_file"] && $data["halal_file"]->getSize() > 0) {
                     $fileName = $data["halal_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/halal/" . $fileName;
                     $data["halal_file"]->moveTo($imagePath);
                     $data["halal_file"]= "uploads/halal/" . $fileName;
                 } else { $data["halal_file"]= ""; }
 
-                if($data["iso_file"]->getSize() > 0) {
+                if($data["iso_file"] && $data["iso_file"]->getSize() > 0 ) {
                     $fileName = $data["iso_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/iso/" . $fileName;
                     $data["iso_file"]->moveTo($imagePath);
                     $data["iso_file"]= "uploads/iso/" . $fileName;
                 } else { $data["iso_file"]= ""; }
 
-                if($data["declaration_file"]->getSize() > 0) {
+                if($data["declaration_file"] && $data["declaration_file"]->getSize() > 0) {
                     $fileName = $data["declaration_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/declaration/" . $fileName;
                     $data["declaration_file"]->moveTo($imagePath);
@@ -259,14 +249,14 @@ class VendorTempsController extends VendorAppController
                 $data = $request["income_tax"];
                 $data["vendor_temp_id"] = $id;
 
-                if($data["certificate_file"]->getSize() > 0) {
+                if(isset($data["certificate_file"]) && $data["certificate_file"]->getSize() > 0 ) {
                     $fileName = $data["certificate_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/certificate/" . $fileName;
                     $data["certificate_file"]->moveTo($imagePath);
                     $data["certificate_file"]= "uploads/certificate/" . $fileName;
                 } else  { $data["certificate_file"]= ""; }
 
-                if($data["balance_sheet_file"]->getSize() > 0) {
+                if(isset($data["balance_sheet_file"]) && $data["balance_sheet_file"]->getSize() > 0) {
                     $fileName = $data["balance_sheet_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/balance_sheet/" . $fileName;
                     $data["balance_sheet_file"]->moveTo($imagePath);
@@ -283,30 +273,31 @@ class VendorTempsController extends VendorAppController
                 foreach ($request["prdflt"]["factory_office"] as $key => $value) {
                     $factory = $this->VendorFactories->newEmptyEntity();
                     $value["vendor_temp_id"] = $id;
-                    $value["factory_code"] = substr(strtoupper($value['country']), 0, 2)."_".substr(strtoupper($value['state']), 0, 2)."_".substr(strtoupper($value['city']), 0, 2)."_Unit".($key+1);
+                    // $value["factory_code"] = substr(strtoupper($value['country']), 0, 2)."_".substr(strtoupper($value['state']), 0, 2)."_".substr(strtoupper($value['city']), 0, 2)."_Unit".($key+1);
+                    $value["factory_code"] = $value['country']."_".$value['state']."_".$value['city']."_Unit".($key+1);
                     
-                    if($value["installed_capacity_file"]->getSize() > 0) {
+                    if(isset($value["installed_capacity_file"]) && $value["installed_capacity_file"]->getSize() > 0) {
                             $fileName = $value["installed_capacity_file"]->getClientFilename();
                             $imagePath = WWW_ROOT . "uploads/installed_capacity/" . $fileName;
                             $value["installed_capacity_file"]->moveTo($imagePath);
                             $value["installed_capacity_file"]= "uploads/installed_capacity/" . $fileName;
                     } else  { $value["installed_capacity_file"]= ""; }
 
-                    if($value["machinery_available_file"]->getSize() > 0) {
+                    if(isset($value["machinery_available_file"]) && $value["machinery_available_file"]->getSize() > 0) {
                         $fileName = $value["machinery_available_file"]->getClientFilename();
                         $imagePath = WWW_ROOT . "uploads/machinery_available/" . $fileName;
                         $value["machinery_available_file"]->moveTo($imagePath);
                         $value["machinery_available_file"]= "uploads/machinery_available/" . $fileName;
                     } else { $value["machinery_available_file"]= ""; }
 
-                    if($value["power_available_file"]->getSize() > 0) {
+                    if(isset($value["power_available_file"]) && $value["power_available_file"]->getSize() > 0) {
                         $fileName = $value["power_available_file"]->getClientFilename();
                         $imagePath = WWW_ROOT . "uploads/power_available/" . $fileName;
                         $value["power_available_file"]->moveTo($imagePath);
                         $value["power_available_file"]= "uploads/power_available/" . $fileName;
                     } else { $value["power_available_file"]= ""; }
 
-                    if($value["raw_material_file"]->getSize() > 0) {
+                    if(isset($value["raw_material_file"]) && $value["raw_material_file"]->getSize() > 0) {
                         $fileName = $value["raw_material_file"]->getClientFilename();
                         $imagePath = WWW_ROOT . "uploads/raw_material/" . $fileName;
                         $value["raw_material_file"]->moveTo($imagePath);
@@ -352,21 +343,21 @@ class VendorTempsController extends VendorAppController
                 // Basic details
                 $data = $request["vendor"];
 
-                if($data["gst_file"]->getSize() > 0) {
+                if(isset($data["gst_file"]) && $data["gst_file"]->getSize() > 0) {
                     $fileName = $data["gst_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/gst/" . $fileName;
                     $data["gst_file"]->moveTo($imagePath);
                     $data["gst_file"]= "uploads/gst/" . $fileName;
                 } else { $data["gst_file"]= ""; }
 
-                if($data["pan_file"]->getSize() > 0) {
+                if(isset($data["pan_file"]) && $data["pan_file"]->getSize() > 0) {
                     $fileName = $data["pan_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/pan/" . $fileName;
                     $data["pan_file"]->moveTo($imagePath);
                     $data["pan_file"]= "uploads/pan/" . $fileName;
                 } else { $data["pan_file"]= ""; }
 
-                if($data["bank_file"]->getSize() > 0) {
+                if( isset($data["bank_file"]) && $data["bank_file"]->getSize() > 0) {
                     $fileName = $data["bank_file"]->getClientFilename();
                     $imagePath = WWW_ROOT . "uploads/bank/" . $fileName;
                     $data["bank_file"]->moveTo($imagePath);

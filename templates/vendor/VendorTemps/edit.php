@@ -47,7 +47,7 @@
                         <li>
                             <p>Status :
                                 <b>
-                                    <?= $status ?>
+                                    <?= $vendorTemp->vendor_status->description ?>
                                 </b>
                             </p>
                         </li>
@@ -115,22 +115,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="tab_productionfaculty" data-toggle="pill"
                                     href="#custom-tabs-four-productionfaculty" role="tab"
-                                    aria-controls="custom-tabs-four-productionfaculty" aria-selected="false">Production
-                                    Facility</a>
+                                    aria-controls="custom-tabs-four-productionfaculty" aria-selected="false">
+                                    Production Facility</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" id="tab_contactperson" data-toggle="pill"
                                     href="#custom-tabs-four-contactperson" role="tab"
-                                    aria-controls="custom-tabs-four-contactperson" aria-selected="false">Contact
-                                    Person</a>
+                                    aria-controls="custom-tabs-four-contactperson" aria-selected="false">
+                                    Contact Person</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" id="tab_paymentdetails" data-toggle="pill"
                                     href="#custom-tabs-four-home" role="tab" aria-controls="custom-tabs-four-home"
-                                    aria-selected="false">Payment
-                                    Details</a>
+                                    aria-selected="false">
+                                    Payment Details</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tab_certificate" data-toggle="pill"
@@ -147,8 +147,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" id="tab_customerAddress" data-toggle="pill"
                                     href="#custom-tabs-four-customerAddress" role="tab"
-                                    aria-controls="custom-tabs-four-customerAddress" aria-selected="false">Reputed
-                                    Customer</a>
+                                    aria-controls="custom-tabs-four-customerAddress" aria-selected="false">
+                                    Reputed Customer</a>
                             </li>
                         </ul>
                     </div>
@@ -225,12 +225,12 @@
                                     </div>
                                     <div class="col-3 mt-3 col-md-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[country]', ['data-state' =>'register_office_state', 'class' => 'selectpicker show-menu-arrow form-control my-select1 my-country registered_office_country', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'register_office_country']); ?>
+                                            <?php echo $this->Form->control('registered_office[country]', ['data-state' =>'register_office_state', 'class' => 'selectpicker show-menu-arrow form-control my-select1 my-country registered_office_country', 'options' => $countries, 'empty' => 'Select Country', 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'register_office_country']); ?>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-3 mt-3">
                                         <div class="form-group">
-                                            <?php echo $this->Form->control('registered_office[state]', ['class' => 'selectpicker registered_office_state form-control my-select1', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'register_office_state']); ?>
+                                            <?php echo $this->Form->control('registered_office[state]', ['class' => 'selectpicker registered_office_state form-control my-select1', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'empty' => 'Select State', 'title' => 'Select State', 'id' => 'register_office_state']); ?>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-3 mt-3">
@@ -281,12 +281,12 @@
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_country', ['name' => 'branch[branch_office][0][country]','data-state' =>'branch_office_0_state', 'class' => 'selectpicker form-control my-select my-country branch_office_0_country_name', 'options' => $countries, 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country',  'id' => 'branch_office_0_country']); ?>
+                                                    <?php echo $this->Form->control('branch_office_country', ['name' => 'branch[branch_office][0][country]','data-state' =>'branch_office_0_state', 'class' => 'selectpicker form-control my-select my-country branch_office_0_country_name', 'options' => $countries, 'empty' => 'Select Country', 'label' => 'Country', 'data-live-search' => 'true', 'title' => 'Select Country',  'id' => 'branch_office_0_country']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('branch_office_state', ['name' => 'branch[branch_office][0][state]', 'class' => 'selectpicker form-control my-select branch_office_0_state_name', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State',  'id' => 'branch_office_0_state']); ?>
+                                                    <?php echo $this->Form->control('branch_office_state', ['name' => 'branch[branch_office][0][state]', 'class' => 'selectpicker form-control my-select branch_office_0_state_name', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'empty' => 'Select State', 'title' => 'Select State',  'id' => 'branch_office_0_state']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-3 mt-3">
@@ -589,13 +589,13 @@
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('register_office_country', ['name' => 'prdflt[factory_office][0][country]','data-state' =>'factory_0_state', 'class' => 'selectpicker form-control factory_0_country my-select my-country', 'options' => $countries, 'label' => 'Country', 'required' => 'true', 'data-live-search' => 'true', 'title' => 'Select Country', 'id' => 'factory_0_country']); ?>
+                                                    <?php echo $this->Form->control('register_office_country', ['name' => 'prdflt[factory_office][0][country]','data-state' =>'factory_0_state', 'class' => 'selectpicker form-control factory_0_country my-select my-country', 'options' => $countries, 'label' => 'Country', 'required' => 'true', 'data-live-search' => 'true', 'empty' => 'Please select', 'title' => 'Select Country', 'empty' => 'Select Country', 'id' => 'factory_0_country']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-12 col-md-3 mt-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_state', ['name' => 'prdflt[factory_office][0][state]', 'class' => 'selectpicker form-control my-select factory_0_state', 'required' => 'true', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'title' => 'Select State', 'id' => 'factory_0_state']); ?>
+                                                    <?php echo $this->Form->control('factory_office_state', ['name' => 'prdflt[factory_office][0][state]', 'class' => 'selectpicker form-control my-select factory_0_state', 'required' => 'true', 'options' => $states, 'label' => 'State', 'data-live-search' => 'true', 'empty' => 'Select State', 'title' => 'Select State', 'id' => 'factory_0_state']); ?>
                                                 </div>
                                             </div>
 
@@ -889,13 +889,13 @@
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][country]', ['id' => 'id_country','data-state' =>'partner_0_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Please select', 'label' => 'Country', '    empty' => '']); ?>
+                                                    <?php echo $this->Form->control('other_address[partner][0][country]', ['id' => 'id_country','data-state' =>'partner_0_state', 'class' => 'selectpicker form-control my-select my-country', 'options' => $countries, 'data-live-search' => 'true', 'empty' => 'Select Country', 'title' => 'Please select', 'label' => 'Country', 'empty' => 'Please select']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('other_address[partner][0][state]', ['id' => 'partner_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
+                                                    <?php echo $this->Form->control('other_address[partner][0][state]', ['id' => 'partner_0_state', 'class' => 'selectpicker form-control my-select', 'empty' => 'Select State', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
@@ -951,7 +951,7 @@
                                             </div>
 
                                             <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('bank_country', ['name' => 'vendor[bank_country]', 'id' => 'id_bank_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select id_bank_country_name', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                                <?php echo $this->Form->control('bank_country', ['name' => 'vendor[bank_country]', 'id' => 'id_bank_country','data-state' =>'id_permanent_address_state', 'class' => 'selectpicker form-control my-select id_bank_country_name', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'empty' => 'Please select']); ?>
                                             </div>
 
                                             <div class="col-3 mb-3">
@@ -961,7 +961,7 @@
                                             </div>
 
                                             <div class="col-3 mb-3">
-                                                <?php echo $this->Form->control('order_currency', ['name' => 'vendor[order_currency]', 'class' => 'selectpicker form-control my-select id_order_currency', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country']); ?>
+                                                <?php echo $this->Form->control('order_currency', ['name' => 'vendor[order_currency]', 'class' => 'selectpicker form-control my-select id_order_currency', 'options' => $currencies, 'data-live-search' => 'true', 'title' => 'Select Country', 'empty' => 'Please select']); ?>
                                             </div>
 
                                             <!-- <div class="col-3 mb-3">
@@ -1208,13 +1208,13 @@
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed_customer_0_state', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country']); ?>
+                                                    <?php echo $this->Form->control('reputed[customer][0][country]', ['class' => 'selectpicker form-control my-select my-country','data-state' =>'reputed_customer_0_state', 'options' => $countries, 'data-live-search' => 'true', 'title' => 'Select Country', 'label' => 'Country', 'empty' => 'Please select']); ?>
                                                 </div>
                                             </div>
 
                                             <div class="col-3 mt-3 col-md-3">
                                                 <div class="form-group">
-                                                    <?php echo $this->Form->control('reputed[customer][0][state]', ['name' => 'reputed[customer][0][state]', 'id' => 'reputed_customer_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'label' => 'State']); ?>
+                                                    <?php echo $this->Form->control('reputed[customer][0][state]', ['name' => 'reputed[customer][0][state]', 'id' => 'reputed_customer_0_state', 'class' => 'selectpicker form-control my-select', 'options' => $states, 'data-live-search' => 'true', 'title' => 'Select State', 'empty' => 'Select State', 'label' => 'State']); ?>
                                                 </div>
                                             </div>
                                             <div class="col-3 mt-3 col-md-3">
@@ -1269,7 +1269,7 @@
     </div>
 </div>
 <script>
-    var countryByState = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'countryByState')); ?>';
+    var stateByCountry = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'stateByCountryCode')); ?>';
     var vendorView = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'vendor')); ?>';
     var getCountries = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'countries')); ?>';
     var getCountryCodeById = '<?php echo \Cake\Routing\Router::url(array('prefix'=>false,'controller' => 'api/api', 'action' => 'getCountryCodeById')); ?>';
