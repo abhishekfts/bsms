@@ -61,9 +61,8 @@
                     <table class="table table-bordered material-list" id="example2">
                         <thead>
                             <tr>
-                                <th>
-                                    <input type="checkbox" class="form-control form-control-sm" style="max-width: 20px;"
-                                        id="ckbCheckAll">
+                                <th class="py-0">
+                                    <input type="checkbox" class="form-control form-control-sm mb-1" style="max-width: 20px;" id="ckbCheckAll">
                                 </th>
                                 <th>Item</th>
                                 <th>Material</th>
@@ -75,9 +74,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="6" class="text-center">
-                                    <p>No data found !</p>
-                                </td>
+                                <td colspan="7" class="text-center">No data found !</td>
                             </tr>
                         </tbody>
                     </table>

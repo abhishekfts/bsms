@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (isset($lineMasters)) : ?>
+                            <?php if (count($lineMasters)) : ?>
                                 <?php foreach ($lineMasters as $lineMaster): ?>
                                 <tr class="redirect"
                                     data-href="<?= $this->Url->build('/') ?>vendor/line-masters/edit/<?= $lineMaster->id ?>">
@@ -54,7 +54,7 @@
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="5" class="text-center">
                                         No Records Found
                                     </td>
                                 </tr>
