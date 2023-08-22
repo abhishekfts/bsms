@@ -599,12 +599,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-12 col-md-3 mt-3">
-                                                <div class="form-group">
-                                                    <?php echo $this->Form->control('factory_office_telephone', ['name' => 'prdflt[factory_office][0][telephone]', 'type' => 'number', 'class' => 'form-control maxlength_validation', 'required' => 'true', 'id' => 'factory_0_telephone', 'label' => 'Tel No', 'maxlength' => '10']); ?>
-                                                </div>
-                                            </div>
-
                                             <div class="col-sm-12 col-md-3 mt-4 pt-4 hide">
                                                 <span class="badge redbadge delete" data-toggle="tooltip" data-id="0"
                                                     data-placement="right" data-class="factory_office"

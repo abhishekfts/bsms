@@ -379,15 +379,6 @@ $.ajax({
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-3 mt-3">
-                            <div class="form-group">
-                                <div class="input number">
-                                    <label for="factory_`+ j + `_telephone">Tel No</label>
-                                    <input type="number" name="prdflt[factory_office][`+ j + `][telephone]" required="true" class="form-control maxlength_validation" value="` + w.telephone + `" id="factory_` + j + `_telephone" maxlength="10">
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col-sm-12 col-md-3 mt-4 pt-4 hide">
                             <span class="badge redbadge delete" data-toggle="tooltip" data-id="`+ j + `" data-placement="right" data-class="factory_office"
                                 data-original-title="Delete Address">
