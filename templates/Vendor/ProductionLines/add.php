@@ -176,7 +176,7 @@
         }
     });
 
-    $("#factory-id").change(function () {
+    $("#vendor-factory-id").change(function () {
         var lineId = $(this).val();
         $("#line-master-id").empty().append("<option value=''>Please Select</option>");
         $("#material-id").empty().append("<option value=''>Please Select</option>");
@@ -213,7 +213,7 @@
     
     function checkRecordExists() {
 
-        var factory = $("#factory-id").val();
+        var factory = $("#vendor-factory-id").val();
         var line = $("#line-master-id").val();
         var material = $("#material-id").val()
 
