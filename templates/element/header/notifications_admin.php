@@ -55,7 +55,7 @@
     }
 
     .navbar.card-header h4 {
-        color: #004d87;
+        /* color: #004d87; */
         text-transform: uppercase;
         font-size: 20px;
         letter-spacing: 0.04rem;
@@ -130,7 +130,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right notification-list" style="left: inherit; right: 0px;cursor: pointer;">
             <div class="d-flex justify-content-between">
                 <span class="dropdown-header notifyView"> Notifications</span>
-                <span class="dropdown-header clearNotifications" style="color:#004d87">Clear</span>
+                <span class="dropdown-header clearNotifications">Clear</span>
             </div>
 
             <div class="dropdown-divider"></div>

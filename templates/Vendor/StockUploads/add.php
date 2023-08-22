@@ -150,8 +150,8 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                 <h6>Are you sure you want to Add?</h6>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn" style="border:1px solid #6610f2" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn addSubmit" style="border:1px solid #28a745">Ok</button>
+                <button type="button" class="btn addCancel"  data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn addSubmit">Ok</button>
             </div>
         </div>
     </div>

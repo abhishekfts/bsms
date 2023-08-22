@@ -15,7 +15,7 @@
 <?php $intransit = ($controller == 'DeliveryDetails') ? 'active' : ''; ?>
 <?php $lineMaster = ($controller == 'LineMaters') ? 'active' : ''; ?>
 
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white sticky-top">
     <div class="container-fluid">
         <a href="" class="navbar-brand pl-4 ml-4">
             <?= $this->Html->image('apar_logo.png', ['width' => '110', 'class' => 'ml-5 ft-text', 'data-image' => '2']) ?>
@@ -95,7 +95,7 @@
                     style="left: inherit; right: 0px;cursor: pointer;">
                     <div class="d-flex justify-content-between">
                         <span class="dropdown-header notifyView"> Notifications</span>
-                        <span class="dropdown-header  clearNotificationsAll" style="color:#004d87">Clear All</span>
+                        <span class="dropdown-header  clearNotificationsAll">Clear All</span>
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="notification-lists">

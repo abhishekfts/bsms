@@ -47,7 +47,7 @@ div#past_messages::-webkit-scrollbar-track {
 .create-asn td.details-control.ponum { padding: 20px;}
 
 .create-asn .po-box {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #e2e2e2;
     padding: 10px 20px;
     width: 135px;
     cursor: pointer;
@@ -63,12 +63,12 @@ div#past_messages::-webkit-scrollbar-track {
 }
 
 .create-asn .polist {
-    border: 1px solid #ddd;
+    border: 1px solid #e2e2e2;
     background-color: #fafafa;
 }
 
 .search-bar {
-    border: 1px solid #ddd;
+    border: 1px solid #e2e2e2;
     border-radius: 30px;
     width: 260px;
     padding: 5px 10px;

@@ -79,7 +79,7 @@
     <div class="wrapper">
         <?= $this->element('header/main') ?>
 
-        <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>" style="background-color:#482668;">
+        <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>">
             <a href="<?= $this->Url->build('/buyer/dashboard') ?>" class="brand-link"
                 style="background-color:#ffffff; text-align-last:center;">
                 <?= $this->Html->image('ft-icon.png', ['width' => '110', 'class' => 'mt-1 ft_rect_logo brand-image', 'data-image' => '2']) ?>

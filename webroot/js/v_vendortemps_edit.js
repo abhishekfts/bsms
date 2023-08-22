@@ -560,12 +560,12 @@ $.ajax({
                         </div>
                         <div class="col-3 mt-3 col-md-3">
                             <div class="form-group">
-                                <div class="input select"><label for="reputed-`+ j + `-country">Country</label><select name="reputed[customer][` + j + `][country]" class="selectpicker form-control my-select my-country" data-state="reputed_customer_` + j + `_state" data-live-search="true" title="Select Country" id="reputed-` + j + `-country">` + country_option + `</select></div></div>
+                                <div class="input select"><label for="reputed-`+ j + `-country">Country</label><select name="reputed[customer][` + j + `][country]" class="selectpicker form-control my-select my-country reputed_customer_` + j + `_country" data-state="reputed_customer_` + j + `_state" data-live-search="true" title="Select Country" id="reputed-` + j + `-country">` + country_option + `</select></div></div>
                         </div>
 
                         <div class="col-3 mt-3 col-md-3">
                             <div class="form-group">
-                                <div class="input select"><label for="reputed[customer][`+ j + `][state]">State</label><select name="reputed[customer][` + j + `][state]" id="reputed_customer_` + j + `_state" class="selectpicker form-control my-select" data-live-search="true" title="Select State"></select></div></div>
+                                <div class="input select"><label for="reputed[customer][`+ j + `][state]">State</label><select name="reputed[customer][` + j + `][state]" id="reputed_customer_` + j + `_state" class="selectpicker form-control my-select reputed_customer_` + j + `_state" data-live-search="true" title="Select State"></select></div></div>
                         </div>
                         <div class="col-3 mt-3 col-md-3">
                             <div class="form-group">

@@ -43,12 +43,12 @@ th {
 }
 
 .purchase-order .po-list {
-    border: 1px solid #ddd;
+    border: 1px solid #e2e2e2;
     background-color: #fafafa;
 }
 
 .search-bar {
-    border: 1px solid #ddd;
+    border: 1px solid #e2e2e2;
     border-radius: 30px;
     width: 260px;
     padding: 5px 10px;
@@ -88,7 +88,7 @@ th {
 }
 
 .purchase-order .po-box {
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #e2e2e2;
     padding: 5px 20px;
     width: 170px;
     cursor: pointer;
@@ -108,17 +108,17 @@ th {
     background-color: #F4F6F9;
 }
 
-.purchase-order .pono b {
+/* .purchase-order .pono b {
     color: #004d87;
-}
+} */
 
 .purchase-order .po-box .pono {
     padding-bottom: 5px;
 }
 
-.purchase-order #example2 thead {
+/* .purchase-order #example2 thead {
     background-color: #B9E0F5 !important;
-}
+} */
 
 .purchase-order #example2 tbody {
     background-color: #fff !important;
@@ -128,13 +128,13 @@ th {
     font-size: 11px;
 }
 
-.purchase-order .po-box {
+/* .purchase-order .po-box {
     border-right: 1px solid #ccc;
     padding: 5px 20px;
     width: 170px;
     cursor: pointer;
     color: #444;
-}
+} */
 
 .purchase-order .po-code {
     font-size: 0.8rem;
@@ -157,9 +157,9 @@ th {
     padding-bottom: 5px;
 }
 
-.purchase-order #example2 thead {
+/* .purchase-order #example2 thead {
     background-color: #b0c235 !important
-}
+} */
 
 .purchase-order #example2 tbody {
     background-color: #fff !important;
@@ -169,3 +169,4 @@ th {
     font-size: 11px;
 }
 
+/* .purchase-order-card, .related-card { box-shadow: none !important;} */

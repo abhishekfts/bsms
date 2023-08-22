@@ -70,8 +70,8 @@
                         <h6>Are you sure you want to Add?</h6>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn" style="border:1px solid #6610f2" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn" style="border:1px solid #28a745">Ok</button>
+                        <button type="button" class="btn addCancel"  data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn addSubmit" >Ok</button>
                     </div>
                 </div>
             </div>
@@ -80,39 +80,42 @@
         <?= $this->Form->end() ?>
     </div>
     <div class="col-12">
-        <?= $this->Form->create($dailymonitor) ?>
+        <?= $this->Form->create(null, ['id' => 'formUpload', 'url' => ['controller' => '/dailymonitor', 'action' => 'upload']]) ?>
         <div class="card">
             <div class="card-header">
                 <h5><b>Bulk Production Planner</b></h5>
             </div>
+
             <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-6 col-md-4 col-lg-2">
-                        <?= $this->Form->control('vendor_code', [
-                                'type' => 'file', 'label' => false, 'class' => 'pt-1 rounded-0', 'style' => 'visibility: hidden; position: absolute;', 'div' => 'form-group', 'id' => 'vendorCodeInput']); ?>
-                        <?= $this->Form->button('Choose File', ['id' => 'OpenImgUpload','type' => 'button','class' => 'd-block btn bg-gradient-button btn-block mb-0 file-upld-btn'
-                            ]); ?>
-                        <span id="filessnames"></span>
-                    </div>
-                    <div class="col-sm-6 col-md-4 col-lg-2">
-                        <button type="submit" class="btn bg-gradient-submit" id="id_exportme">IMPORT FILE</button>
-                    </div>
-                    <div class="col-12 pt-2">
-                        <i style="color: black;">
-                            <a href="<?= $this->Url->build('/') ?>webroot/templates/production_planner_template.xlsx"
-                                target="_blank" rel="noopener noreferrer">Sample_Excel_Template.xlsx</a>
-                        </i>
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-2">
+
+                <?= $this->Form->control('upload_file', ['type' => 'file', 'label' => false, 'class' => 'pt-1 rounded-0', 'style' => 'visibility: hidden; position: absolute;', 'div' => 'form-group', 'id' => 'bulk_file']); ?>
+                <?= $this->Form->button('Upload File', ['id' => 'OpenImgUpload', 'type' =>
+                'button', 'label' => 'Upload File', 'class' => 'd-block btn btn-block bg-gradient-button mb-0 file-upld-btn']); ?>
+                <span id="filessnames"></span>
             </div>
+            <div class="col-sm-6 col-md-4 col-lg-2">
+                <button type="button" class="btn bg-gradient-submit" id="id_exportme">IMPORT FILE</button>
+            </div>
+            <div class="col-12 pt-2">
+                <i style="color: black;">
+                <a href="<?= $this->Url->build('/') ?>webroot/templates/production_planner_template.xlsx"
+                                target="_blank" rel="noopener noreferrer">Sample_Excel_Template.xlsx</a>
+                </i>
+            </div>
+        </div>
+    </div>
+
             <div class="card-footer table-responsive">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="example1">
                     <thead>
                         <tr>
-                            <th>Plan Date</th>
+                            <th>Factory</th>
                             <th>Production Line</th>
                             <th>Material</th>
                             <th>Target Production</th>
+                            <th>Plan Date</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -199,5 +202,61 @@ $("#production-line-id").change(function () {
         $("#target-production").val(capacity);
     });
 
+    $('#OpenImgUpload').click(function() {
+        $('#bulk_file').trigger('click');
+    });
+    $('#bulk_file').change(function() {
+        var file = $(this).prop('files')[0].name;
+        $("#filessnames").append(file);
+    });
+
+    $("#id_exportme").click(function() {
+        var fd = new FormData($('#formUpload')[0]);
+
+        $.ajax({
+            url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/dailymonitor', 'action' => 'upload')); ?>",
+            type: "post",
+            dataType: 'json',
+            processData: false, // important
+            contentType: false, // important
+            data: fd,
+            success: function(response) {
+                if (response.status) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.message
+                    });
+
+                    $("#example1 tbody").empty();
+
+                    // Loop through the response data and build the table rows dynamically
+                    $.each(response.data, function (key, val) { 
+                        var rowHtml = `<tr>
+                        <td> `+ val.factory_code + `</td>
+                        <td> `+ val.line + `</td>
+                        <td> `+ val.material +`</td>
+                        <td> `+ val.target_production + `</td>
+                        <td> `+ val.plan_date + `</td>
+                        <td> `+ val.error + `</td>
+                        </tr>`;
+                        $("#example1 tbody").append(rowHtml);
+                    });
+
+                } else {
+                    Toast.fire({
+                        icon: 'error',
+                        title: response.message
+                    });
+                }
+            },
+            error: function() {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'An error occured, please try again.'
+                });
+            }
+        });
+    });
+    
 </script>
 

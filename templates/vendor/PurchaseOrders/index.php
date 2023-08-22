@@ -10,7 +10,7 @@
 <!-- <?= $this->Html->css('listing.css') ?> -->
 <?= $this->Html->css('v_purchaseorder_index') ?>
 <!-- <?= $this->Html->css('v_vendorCustom') ?> -->
-<div class="poHeaders index content card purchase-order">
+<div class="poHeaders index content card purchase-order purchase-order-card">
   <div class="card-body">
     <div class="table-responsive">
       <div class="table-responsive" id="purViewId">
@@ -47,7 +47,7 @@
     </div>
   </div>
 </div>
-<div class="related card">
+<div class="related card related-card">
    <div class="card-header p-2" id="id_pohead"></div>
   <div class="right-side p-2"> 
     <table class="table table-bordered">

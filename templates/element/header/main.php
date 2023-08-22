@@ -21,7 +21,7 @@
 <?php $settingVendorActive = ($controller == 'Settings' && $action == 'vendorManagement') ? 'active' : ''; 
 ?>
 
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white sticky-top">
     <div class="container-fluid">
         <a href="" class="navbar-brand pl-5 ml-4">
             <?= $this->Html->image('apar_logo.png', ['width' => '110', 'class' => 'ml-5 ft-text', 'data-image' => '2']) ?>

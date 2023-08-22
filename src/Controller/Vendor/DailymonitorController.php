@@ -77,7 +77,7 @@ class DailymonitorController extends VendorAppController
         $this->loadModel("ProductionLines");
 
         $dailymonitor = $this->Dailymonitor->find('all', ['conditions' => ['Dailymonitor.sap_vendor_code' => $session->read('vendor_code'), 'Dailymonitor.plan_date <=' => date('y-m-d')]])
-            ->contain(['ProductionLines', 'ProductionLines.LineMasters', 'Materials'])
+            ->contain(['ProductionLines', 'ProductionLines.LineMasters', 'ProductionLines.LineMasters.VendorFactories', 'Materials'])
             ->order(['Dailymonitor.plan_date' => 'DESC']);
         $this->set(compact('dailymonitor'));
     }
@@ -87,6 +87,8 @@ class DailymonitorController extends VendorAppController
         $this->loadModel("Materials");
         $this->loadModel("ProductionLines");
         $this->loadModel("LineMasters");
+        $this->loadModel("VendorFactories");
+
         $response['status'] = 0;
         $response['message'] = 'upload fail';
         $this->autoRender = false;
@@ -105,69 +107,116 @@ class DailymonitorController extends VendorAppController
                     $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
 
                     $tmp = [];
+
                     for ($row = 2; $row <= $highestRow; $row++) {
                         $tmp['sap_vendor_code']  = $session->read('vendor_code');
+                        $tmp['status'] = 1;
+                        if($highestColumnIndex == 6) {
+                            $tmp['status'] = 3;
+                        }
                         $status = true;
+                        $facError = false;
+                        $target = true;
+                        $confirm = true;
                         for ($col = 1; $col <= $highestColumnIndex; $col++) {
                             $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
-                            if ($col == 1) {
-                                $lm = $this->LineMasters->find()
-                                    ->where([
-                                        'sap_vendor_code' => $session->read('vendor_code'),
-                                        'name' => $value
-                                    ])->first();
-                                if ($lm) {
-                                    $pl = $this->ProductionLines->find()
+                            if($col == 1) {
+                                $factory = $this->VendorFactories->find('list')
+                                ->select(['id'])
+                                ->where(['factory_code' => $value])
+                                ->first();
+                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $datas['factory_code'] = $value;
+                                if(!$factory) {
+                                    $facError = true;
+                                }
+
+                            } else if ($col == 2) {
+                                if(!$facError) {
+                                    $lm = $this->LineMasters->find()
                                         ->where([
                                             'sap_vendor_code' => $session->read('vendor_code'),
-                                            'line_master_id' => $lm->id
+                                            'vendor_factory_id' => $tmp['factory_id'],
+                                            'name' => $value
                                         ])->first();
-                                    if ($pl) {
-                                        $tmp['production_line_id'] = $pl->id;
-                                    } else {
-                                        break;
+                                        unset($tmp['factory_id']);
+                                    if ($lm) {
+                                        $pl = $this->ProductionLines->find()
+                                            ->where([
+                                                'sap_vendor_code' => $session->read('vendor_code'),
+                                                'line_master_id' => $lm->id
+                                            ])->first();
+                                            $tmp['production_line_id'] = $pl ? $pl->id : null;
                                     }
                                 }
-                            } else if ($col == 2) {
+                                $datas['line'] = $value;
+                            } else if ($col == 3) {
                                 $mat = $this->Materials->find()
                                     ->where([
                                         'sap_vendor_code' => $session->read('vendor_code'),
-                                        'description' => $value
+                                        'code' => $value
                                     ])->first();
-                                if ($mat) {
-                                    $tmp['material_id'] = $mat->id;
-                                } else {
-                                    break;
-                                }
-                            } else if ($col == 3) {
+                                
+                                $tmp['material_id'] = $mat ? $mat->id : null;
+                                $datas['material'] = $value;
+
+                            } else if ($col == 4) {
+                                $tmp['target_production'] = $value;
+                                $datas['target_production'] = $value;
                                 if ($value < 1 || $value == "" || $value == null) {
-                                    break;
-                                } else {
-                                    $tmp['target_production'] = $value;
-                                }
-                            } else {
-                                $mat = $this->Dailymonitor->find()
-                                    ->where([
-                                        'sap_vendor_code' => $session->read('vendor_code'),
-                                        'production_line_id' => $tmp['production_line_id'],
-                                        'material_id' => $tmp['material_id'],
-                                        'target_production' => $tmp['target_production'],
-                                        'plan_date' => date('y-m-d')
-                                    ])->first();
-                                $mat->confirm_production = $value;
-                                $mat->status = 3;
-                                if ($this->Dailymonitor->save($mat)) {
-                                    $response['status'] = 1;
-                                    $response['message'] = 'uploaded Successfully';
-                                } else {
-                                    $status = false;
-                                    $response['status'] = 0;
-                                    $response['message'] = 'file not uploaded';
-                                    break;
-                                }
+                                    $target = false;
+                                } 
+                            } else if ($col == 5) {
+                                $tmp['plan_date'] = date('Y-m-d', strtotime($value));
+                                $datas['plan_date'] = date('Y-m-d', strtotime($value));
+                            } else if($highestColumnIndex == 6 && $col == 6) {
+                                $tmp['confirm_production'] = $value;
+                                $datas['confirm_production'] = $value;
+                                if ($value < 1 || $value == "" || $value == null) {
+                                    $confirm = false;
+                                } 
                             }
                         }
+
+                        $datas['error'] = '';
+                        if($facError) {
+                            $datas['error'] = 'Invalid factory code';
+                        }
+                        if(!$target) {
+                            $datas['error'] = 'Invalid target value';
+                        }
+                        if($highestColumnIndex == 6 && !$confirm) {
+                            $datas['error'] = 'Invalid confirm value';
+                        } 
+
+                        $planner[] = $datas;
+                        if(empty($datas['error'])) {
+                            $uploadData[] = $tmp;   
+                        }
                     }
+
+                    if(!empty($uploadData)) {
+                        $columns = array_keys($uploadData[0]);
+                        $upsertQuery = $this->Dailymonitor->query();
+                        $upsertQuery->insert($columns);
+
+                        foreach($uploadData as $row) {
+                            $upsertQuery->values($row);
+                        }
+                        if($highestColumnIndex == 6) {
+                            $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `confirm_production`=VALUES(`confirm_production`)')
+                            ->execute();
+                        } else {
+                            $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `target_production`=VALUES(`target_production`)')
+                            ->execute();
+                        }
+                        
+                    }
+
+                    $response['status'] = 1;
+                    $response['data'] = $planner;
+                    $response['message'] = 'file uploaded successfully';
+
                 } else {
                     $response['status'] = 0;
                     $response['message'] = 'file not uploaded';

@@ -493,3 +493,30 @@ body {
     align-items: flex-end !important;
     justify-content: flex-end !important;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #fff !important;
+    color: #F7941D !important;
+}
+
+.addSubmit {
+    background-color: #fff !important;
+    border: 1px solid #F7941D !important;
+    color: #F7941D !important;
+}
+
+.addSubmit:hover {
+    background-color: #F7941D !important;
+    color: #fff !important;
+}
+
+.addCancel {
+    background-color: #fff !important;
+    border: 1px solid #ED1C24 !important;
+    color: #ED1C24 !important;
+}
+
+.addCancel:hover{
+    background-color: #ED1C24 !important;
+    color: #fff !important;
+}

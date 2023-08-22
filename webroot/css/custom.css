@@ -54,7 +54,7 @@ body {
     padding-left: 10px;
     padding-top: 12px;
     padding-bottom: 8px;
-    color: #004d87;
+    color: #F7941D;
     text-transform: uppercase;
     font-size: 16px;
 }
@@ -70,10 +70,10 @@ body {
     cursor: pointer;
 }
 
-.poHeaders .table-responsive {
+/* .poHeaders .table-responsive {
     border: 1px solid #ddd !important;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px !important;
-}
+} */
 
 .poHeaders table th {
     padding-top: 10px;
@@ -103,7 +103,7 @@ body {
     padding: 20px 10px !important;
     border-radius: 30px !important;
     margin-left: -10px !important;
-    border-color: #989090 !important;
+    border-color: #eee !important;
 }
 
 #example1_filter label {
@@ -127,7 +127,7 @@ table#example1 span.material-symbols-outlined.flu {
 
 #example1,
 #example2 {
-    border: 1px solid #ddd;
+    border: 1px solid #eee;
 }
 
 div#scheduleModal .btn,div#modal-sm .btn {
@@ -189,7 +189,7 @@ table#example1 tr td {
     padding-left: 8px;
     padding-top: 12px;
     padding-bottom: 8px;
-    color: #004d87;
+    color: #F7941D;
     text-transform: uppercase;
 }
 
@@ -218,7 +218,7 @@ table#example1 tr td {
 }
 
 .setting-fm h5 {
-    color: #004d87;
+    color: #F7941D;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -245,7 +245,7 @@ table#example1 tr td {
 
 .card-body.rfq-editor label,
 .gate-entry-haed {
-    color: #004d87 !important;
+    color: #F7941D !important;
 }
 
 .gate-entry { margin-left: 0px;}
@@ -274,7 +274,7 @@ table#example1 tr td {
 }
 
 .commu-review h5 {
-    color: #004d87;
+    color: #F7941D;
 
 }
 
@@ -299,7 +299,7 @@ table#example1 tr td {
 
 .vendorTemps .table.vendor-info span.badge.bg-info {
     background-color: unset !important;
-    color: #004d87 !important;
+    color: #F7941D !important;
     font-size: 14px;
     padding: 0px;
 }
@@ -330,7 +330,7 @@ table#example1 tr td {
 }
 
 .sap-vendor label {
-    color: #004d87 !important;
+    color: #F7941D !important;
     font-size: 16px;
     text-transform: uppercase;
 }
@@ -341,7 +341,7 @@ table#example1 tr td {
 }
 
 .gate-entry .card-header h3 {
-    color: #004d87;
+    color: #F7941D;
     text-transform: uppercase;
     font-size: 1.25rem;
 }
@@ -378,7 +378,7 @@ table#example1 tr td {
 }
 
 #notifyModal .modal-title {
-    color: #004d87;
+    color: #F7941D;
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -530,7 +530,7 @@ a.back-btn {
 }
 
 .settings .card-header h5 {
-    color: #004d87 !important;
+    color: #F7941D !important;
 }
 
 .settings table.users-tbl td,

@@ -85,7 +85,7 @@
             <?= $this->element('header/vendor/main') ?>
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>" style="background-color:#482668;">
+        <aside class="main-sidebar <?= $this->CakeLte->getSidebarClass() ?>">
             <!-- Brand Logo -->
             <a href="<?= $this->Url->build('/buyer/dashboard') ?>" class="brand-link"
                 style="background-color:#ffffff; text-align-last:center;">

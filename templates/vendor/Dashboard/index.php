@@ -122,7 +122,7 @@
 <div class="row p-1">
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
-      <div class="card">
+      <div class="card material-stock">
         <div class="card-header camelcaps">
           Stock By Material
         </div>
@@ -176,7 +176,7 @@
 
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 mb-3">
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-3">
-      <div class="card">
+      <div class="card intransit-stock">
         <div class="card-header camelcaps">
           Stock Intransit
         </div>
@@ -259,7 +259,7 @@
   <div class="card-header">
     <div class="row">
       <div class="col-sm-12 col-lg-10">
-        <h3 class="mb-0" style="color:navy;"><b>Open RFQs</b></h3>
+        <h3 class="mb-0" ><b>Open RFQs</b></h3>
       </div>
     </div>
   </div>
@@ -268,7 +268,7 @@
       <table class="table table-hover" id="newrfqlist"
         style="border-left: .5px solid lightgray;border-right: .5px solid lightgray;border-bottom: .5px solid lightgray;">
         <thead>
-          <tr style="background-color: #d3d3d36e;">
+          <tr>
             <th>
               <?= h('RFQ No.') ?>
             </th>

@@ -12,6 +12,11 @@
     font-size: 21px;
 }
 
+.i .fas.fa-truck:hover{
+    background-color: #ED1C24 !important;
+    color: #fff !important;
+}
+
 .i .fa-cart-plus {
     border: 1px solid #F7941D;
     color: #F7941D;
@@ -19,6 +24,11 @@
     padding: 15px;
     border-radius: 8px;
     font-size: 21px;
+}
+
+.i .fa-cart-plus:hover {
+    background-color: #F7941D !important;
+    color: #fff !important;
 }
 
 .i {
@@ -32,10 +42,12 @@
 }
 
 .btn-action {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #eee;
     margin-top: 15px;
     text-align: right;
 }
+
+.card-header { border-bottom: 1px solid #eee !important;}
 
 .btn-action .btn {
     color: #F7941D !important;
@@ -57,6 +69,8 @@
     background-color: #fff;
     padding: 25px;
     justify-content: space-between;
-    box-shadow: 0 3px 3px rgba(56, 65, 74, 0.1);
+    /* box-shadow: 0 3px 3px rgba(56, 65, 74, 0.1); */
     border-radius: 5px;
 }
+
+.material-stock, .intransit-stock { box-shadow: none !important;}
