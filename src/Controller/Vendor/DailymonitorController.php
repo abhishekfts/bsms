@@ -125,7 +125,7 @@ class DailymonitorController extends VendorAppController
                                 ->select(['id'])
                                 ->where(['factory_code' => $value])
                                 ->first();
-                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $tmp['vendor_factory_id'] = $factory ? $factory : null;
                                 $datas['factory_code'] = $value;
                                 if(!$factory) {
                                     $facError = true;
@@ -136,10 +136,10 @@ class DailymonitorController extends VendorAppController
                                     $lm = $this->LineMasters->find()
                                         ->where([
                                             'sap_vendor_code' => $session->read('vendor_code'),
-                                            'vendor_factory_id' => $tmp['factory_id'],
+                                            'vendor_factory_id' => $tmp['vendor_factory_id'],
                                             'name' => $value
                                         ])->first();
-                                        unset($tmp['factory_id']);
+                                        unset($tmp['vendor_factory_id']);
                                     if ($lm) {
                                         $pl = $this->ProductionLines->find()
                                             ->where([

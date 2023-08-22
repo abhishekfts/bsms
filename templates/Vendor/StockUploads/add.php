@@ -24,29 +24,31 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                 <div class="row dgf m-0">
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('code', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe', 'style' => "height: unset !important;", 'value' => $this->getRequest()->getData('vendor_material_code'), 'empty' => 'Please Select', 'label' => 'Material Code')); ?>
+                            <?php echo $this->Form->control('code', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe', 'value' => $this->getRequest()->getData('vendor_material_code'), 'empty' => 'Please Select', 'label' => 'Material Code')); ?>
                         </div>
                     </div>
 
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('description', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required', 'label' => 'Material Description', 'readonly')); ?>
+                            <?php echo $this->Form->control('description', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group', 'required', 'label' => 'Material Description', 'readonly')); ?>
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('uom', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group',  'label' => 'Unit Of Measurement', 'readonly')); ?>
+                            <?php echo $this->Form->control('uom', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group',  'label' => 'Unit Of Measurement', 'readonly')); ?>
                         </div>
                     </div>
 
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('opening_stock', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'min' => "1", 'style' => "height: unset !important;", 'div' => 'form-group')); ?>
+                            <?php echo $this->Form->control('opening_stock', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'min' => "1", 'div' => 'form-group')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-8 col-md-3 d-flex justify-content-start align-items-end">
+                    <div class="col-sm-8 col-md-1 d-flex justify-content-end align-items-end">
+                        <div class="form-group">
                         <button type="button" class="btn bg-gradient-submit" id="stockClick">Submit</button>
                         <button type="submit" style="display: none;" id="stockInputSubmit">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>

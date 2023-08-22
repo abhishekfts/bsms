@@ -10,12 +10,12 @@
 <!-- <?= $this->Html->css('listing.css') ?> -->
 <?= $this->Html->css('v_purchaseorder_index') ?>
 <!-- <?= $this->Html->css('v_vendorCustom') ?> -->
-<div class="poHeaders index content card purchase-order purchase-order-card">
+<div class="poHeaders index content card purchase-order purchase-order-card card_boxshadow">
   <div class="card-body">
     <div class="table-responsive">
       <div class="table-responsive" id="purViewId">
         <div class="search-bar d-flex mb-2">
-          <input type="search" placeholder="Search all orders, meterials.." class="form-control search-box">
+          <input type="search" placeholder="Search all orders, materials.." class="form-control search-box">
           <!-- <button type="button" class="btn-go searchgo ">GO</button> -->
         </div>
         <div class="po-list">

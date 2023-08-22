@@ -133,7 +133,7 @@ class LineMastersController extends VendorAppController
                                 ->select(['id'])
                                 ->where(['factory_code' => $value])
                                 ->first();
-                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $tmp['vendor_factory_id'] = $factory ? $factory : null;
                                 $datas['factory_code'] = $value;
                                 if(!$factory) {
                                     $facError = true;
