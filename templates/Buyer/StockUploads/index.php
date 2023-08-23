@@ -18,7 +18,7 @@
                         <h5>Stock Upload</h5>
                     </div>
                     <div class="col-lg-6 d-flex justify-content-end text-align-end">
-                        <a href="<?= $this->Url->build('/') ?>vendor/stock-uploads/add"><button type="button"
+                        <a href="<?= $this->Url->build('/') ?>buyer/stock-uploads/add"><button type="button"
                                 id="continueSub" class="btn bg-gradient-button mb-0 continue_btn">Add Stock</button></a>
                     </div>
                 </div>
@@ -38,8 +38,7 @@
                     <tbody>
                         <?php if (isset($stockupload)) : ?>
                         <?php foreach ($stockupload as $stockuploads) : ?>
-                        <tr class="redirect"
-                            data-href="<?= $this->Url->build('/') ?>vendor/stock-uploads/edit/<?= $stockuploads->id ?>">
+                        <tr>
                             <td>
                                 <?= h($stockuploads->sap_vendor_code) ?>
                             </td>
@@ -56,8 +55,7 @@
                                 <?= h($stockuploads->opening_stock . ' '. $stockuploads->material->uom) ?>
                             </td>
                         </tr>
-                    </tbody>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     <?php else : ?>
                     <tr>
                         <td colspan="5">
@@ -65,6 +63,7 @@
                         </td>
                     </tr>
                     <?php endif; ?>
+                    </tbody>
                 </table>
             </div>
         </div>

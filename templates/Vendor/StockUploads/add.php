@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
         <?= $this->Form->create($stockupload, ['id' => 'stockuploadForm']) ?>
         <div class="card">
             <div class="card-header pb-1 pt-2">
-                <div class="row">
+                <div class="row">   
                     <div class="col-lg-6 d-flex justify-content-start">
                         <h5><b>Add Stock Upload</b></h5>
                     </div>
@@ -22,20 +22,14 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
             </div>
             <div class="card-body invoice-details">
                 <div class="row dgf m-0">
-                    <div class="col-sm-8 col-md-3">
+                <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('code', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe', 'value' => $this->getRequest()->getData('vendor_material_code'), 'empty' => 'Please Select', 'label' => 'Material Code')); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-8 col-md-3">
-                        <div class="form-group">
-                            <?php echo $this->Form->control('description', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group', 'required', 'label' => 'Material Description', 'readonly')); ?>
+                            <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $vendor_factory, 'id' => 'descripe',  'empty' => 'Please Select', 'label' => 'Factory Code')); ?>
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('uom', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group',  'label' => 'Unit Of Measurement', 'readonly')); ?>
+                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe',  'empty' => 'Please Select', 'label' => 'Material Code')); ?>
                         </div>
                     </div>
 
@@ -81,66 +75,30 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     </div>
                     <div class="col-sm-12 col-md-12 mt-3">
                         <i style="color: black;">
-                            <a href="<?= $this->Url->build('/') ?>webroot/templates/material_stock_upload.xlsx"
+                            <a href="<?= $this->Url->build('/') ?>webroot/templates/material_stock_upload_vendor.xlsx"
                                 download>stock_upload_template</a>
                         </i>
                     </div>
                 </div>
                 <?= $this->Form->end() ?>
             </div>
-            <?php if (isset($stockuploadData)) : ?>
+            
             <div class="card-footer" id="id_pohead">
                 <table class="table table-hover" id="example1">
                     <thead>
                         <tr>
-                            <th>Material Description</th>
+                            <th>Facotry</th>
                             <th>Material Code</th>
-                            <th>Unit Of Measurement</th>
+                            <th>Material Description</th>
                             <th>Opening Stock</th>
-                            <th>Action</th>
+                            <th>Unit Of Measurement</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <?php foreach ($stockuploadData as $stockuploads) :  ?>
-                        <?php if ($stockuploads['status']) : ?>
-
-                        <tr>
-                            <td>
-                                <?= h($stockuploads['data']['desc']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['material_code']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['uoms']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']["opening_stock"]) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads["msg"]) ?>
-                            </td>
-                        </tr>
-                        <?php else : ?>
-                        <tr>
-                            <td>
-                                <?= h($stockuploads['data']['desc']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['material_code']) ?>
-                            </td>
-                            <td colspan="2"></td>
-                            <td class="text-danger text-left">
-                                <?= h($stockuploads["msg"]) ?>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -303,7 +261,20 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                         title: response.message
                     });
 
-                    //setTimeout(function() {history.go(-1);}, 1000);
+                    $("#example1 tbody").empty();
+
+                    // Loop through the response data and build the table rows dynamically
+                    $.each(response.data, function (key, val) { 
+                        var rowHtml = `<tr>
+                        <td> `+ val.factory_code + `</td>
+                        <td> `+ val.material +` </td>
+                        <td> `+ val.description + `</td>
+                        <td> `+ val.opening_stock + `</td>
+                        <td> `+ val.uom + `</td>
+                        <td> `+ val.error + `</td>
+                        </tr>`;
+                        $("#example1 tbody").append(rowHtml);
+                    });
 
                 } else {
                     Toast.fire({
