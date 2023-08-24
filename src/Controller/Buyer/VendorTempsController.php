@@ -51,8 +51,8 @@ class VendorTempsController extends BuyerAppController
         $this->set('user_id', $usr);
         $this->set(compact('vendorTemps'));
 
-        $this->getRequestedVendor();
-        $this->getCreatedVendor();
+        //$this->getRequestedVendor();
+        //$this->getCreatedVendor();
 
     }
 

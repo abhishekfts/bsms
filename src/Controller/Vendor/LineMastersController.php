@@ -44,7 +44,8 @@ class LineMastersController extends VendorAppController
         $lineMaster = $this->LineMasters->newEmptyEntity();
         $this->loadModel("Materials");
         $uom = $this->Materials->find('list',['keyField' => 'uom', 'valueField' => 'uom'])->select(['uom'])->distinct(['uom']);
-        $factory = $this->VendorFactories->find('list',['keyField' => 'id', 'valueField' => 'factory_code']);
+        $factory = $this->VendorFactories->find('list',['keyField' => 'id', 'valueField' => 'factory_code'])->
+        where(['vendor_temp_id' => $session->read('vendor_id')]);
         if ($this->request->is('post')) {
             $lineMaster = $this->LineMasters->patchEntity($lineMaster, $this->request->getData());
             $lineMaster->sap_vendor_code = $session->read('vendor_code');

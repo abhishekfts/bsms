@@ -262,8 +262,6 @@ class DailymonitorController extends VendorAppController
                 $this->set('flash', $flash);
             
             } catch (\Exception $e) {
-
-            }catch (\Exception $e) {
                 $flash['msg'] = 0;
                 $flash['type'] = $e->getMessage();
             }

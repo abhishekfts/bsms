@@ -69,7 +69,10 @@ class DashboardController extends VendorAppController
         $this->loadModel('DeliveryDetails');
         $this->loadModel('StockUploads');
 
-        $totalPos = $this->PoHeaders->find('all', ['condition' => ['sap_vendor_code' => $session->read('vendor_code')]]);
+        $totalPos = $this->PoHeaders->find('all')
+        ->where(['sap_vendor_code' => $session->read('vendor_code')]);
+
+        //echo '<pre>'; print_r($totalPos); exit;
         $totalPos = $totalPos->count();
         
         $this->loadModel('AsnHeaders');

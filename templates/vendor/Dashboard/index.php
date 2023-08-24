@@ -142,7 +142,7 @@
               <?php if(count($stocks)) :  ?>
                 <?php foreach($stocks as $stock) :  ?>
                 <tr>
-                <td><?= $stock->vendor_factory->factory_code; ?></td>
+                <td><?= ($stock->vendor_factory) ? $stock->vendor_factory->factory_code : '-'; ?></td>
                 <td><?= $stock->material->description; ?></td>
                 <td><?= $stock->opening_stock; ?></td>
                 <td><?= $stock->current_stock; ?></td>

@@ -72,7 +72,8 @@ class ProductionLinesController extends VendorAppController
         $session = $this->getRequest()->getSession();
         $sapVendor = $session->read('vendor_code');
         $this->loadModel('VendorFactories');
-        $factory = $this->VendorFactories->find('list',['keyField' => 'id', 'valueField' => 'factory_code']);
+        $factory = $this->VendorFactories->find('list',['keyField' => 'id', 'valueField' => 'factory_code'])
+        ->where(['vendor_temp_id' => $session->read('vendor_id')]);
 
         $flash = [];
         $this->loadModel("LineMasters");

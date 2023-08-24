@@ -74,13 +74,14 @@ class PurchaseOrdersController extends VendorAppController
 
         if ($poHeader->acknowledge == 0) {
             $visit_url = Router::url('/', true);
+            $poNumber  = $poHeader->po_no;
             $poHeader->acknowledge = 1; // Set acknowledge value to 1
             if($this->PoHeaders->save($poHeader)) {
                 if ($user["username"] !== "") {
                     $mailer = new Mailer('default');
                     $mailer
                         ->setTransport('smtp')
-                        ->setViewVars([ 'subject' => 'Dear Buyer', 'mailbody' => 'This email is to inform you that your PO has been successfully acknowledged', 'link' => $visit_url, 'linktext' => 'Visit Vekpro' ])
+                        ->setViewVars([ 'subject' => 'Dear Buyer', 'mailbody' => 'This email is to inform you that your PO('.$poNumber.') has been successfully acknowledged', 'link' => $visit_url, 'linktext' => 'Visit Vekpro' ])
                         ->setFrom(['vekpro@fts-pl.com' => 'FT Portal'])
                         ->setTo($user["username"])
                         ->setEmailFormat('html')

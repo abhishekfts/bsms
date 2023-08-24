@@ -378,6 +378,7 @@ $.ajax({
                                 <select name="prdflt[factory_office][`+ j + `][state]" id="factory_` + j + `_state" data-state="factory_` + j + `_state" data-live-search="true" class="selectpicker form-control my-select factory_` + j + `_state" required="true"></select>
                             </div>
                         </div>
+                        <div class="col-sm-12 col-md-3 mt-3"></div>
 
                         <div class="col-sm-12 col-md-3 mt-4 pt-4 hide">
                             <span class="badge redbadge delete" data-toggle="tooltip" data-id="`+ j + `" data-placement="right" data-class="factory_office"
