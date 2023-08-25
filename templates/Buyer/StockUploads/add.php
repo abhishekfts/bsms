@@ -279,6 +279,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/stock-uploads', 'action' => 'material')); ?>/" + vendorId,
                     dataType: "json",
                     beforeSend: function (xhr) {
+                        $("#gif_loader").show();
                         xhr.setRequestHeader(
                             "Content-type",
                             "application/x-www-form-urlencoded"
@@ -294,6 +295,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                         alert("An error occurred: " + e.responseText.message);
                         console.log(e);
                     },
+                    complete: function () { $("#gif_loader").hide(); }
                 });
             }
         });
@@ -309,6 +311,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
             processData: false, // important
             contentType: false, // important
             data: fd,
+            beforeSend: function () { $("#gif_loader").show(); },
             success: function(response) {
                 if (response.status == 1) {   
                     Toast.fire({
@@ -348,7 +351,8 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     icon: 'error',
                     title: 'An error occured, please try again.'
                 });
-            }
+            },
+            complete: function () { $("#gif_loader").hide(); }
         });
     });
 </script>

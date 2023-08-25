@@ -210,7 +210,8 @@
             $.ajax({
                 type: "GET",
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => 'dashboard', 'action' => 'clear-message-count')); ?>",
-                dataType: 'json',
+                dataType: 'json',,
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function(response) {
 
                     $('.navbar-badge.custom-i').text('0');
@@ -221,7 +222,8 @@
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 

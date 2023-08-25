@@ -402,11 +402,13 @@
             type: "GET",
             url: seengeturl + "/vendor_temps/" + table_pk + "/" + sender_id,
             dataType: 'json',
+            beforeSend: function () { $("#gif_loader").show(); },
             success: function(resp) {
                 if (resp.status == 1) {
                     $('#unread' + sender_id).hide();
                 }
             },
+            complete: function () { $("#gif_loader").hide(); }
         });
     });
 

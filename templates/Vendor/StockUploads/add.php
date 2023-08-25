@@ -14,7 +14,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
         <?= $this->Form->create($stockupload, ['id' => 'stockuploadForm']) ?>
         <div class="card">
             <div class="card-header pb-1 pt-2">
-                <div class="row">
+                <div class="row">   
                     <div class="col-lg-6 d-flex justify-content-start">
                         <h5><b>Add Stock Upload</b></h5>
                     </div>
@@ -22,31 +22,27 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
             </div>
             <div class="card-body invoice-details">
                 <div class="row dgf m-0">
+                <div class="col-sm-8 col-md-3">
+                        <div class="form-group">
+                            <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $vendor_factory, 'id' => 'descripe',  'empty' => 'Please Select', 'label' => 'Factory Code')); ?>
+                        </div>
+                    </div>
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('code', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe', 'style' => "height: unset !important;", 'value' => $this->getRequest()->getData('vendor_material_code'), 'empty' => 'Please Select', 'label' => 'Material Code')); ?>
+                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'id' => 'descripe',  'empty' => 'Please Select', 'label' => 'Material Code')); ?>
                         </div>
                     </div>
 
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('description', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required', 'label' => 'Material Description', 'readonly')); ?>
+                            <?php echo $this->Form->control('opening_stock', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'min' => "1", 'div' => 'form-group')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-1 d-flex justify-content-end align-items-end">
                         <div class="form-group">
-                            <?php echo $this->Form->control('uom', array('type' => 'text', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group',  'label' => 'Unit Of Measurement', 'readonly')); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-8 col-md-3">
-                        <div class="form-group">
-                            <?php echo $this->Form->control('opening_stock', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'min' => "1", 'style' => "height: unset !important;", 'div' => 'form-group')); ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-8 col-md-3 d-flex justify-content-start align-items-end">
                         <button type="button" class="btn bg-gradient-submit" id="stockClick">Submit</button>
                         <button type="submit" style="display: none;" id="stockInputSubmit">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,66 +75,30 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     </div>
                     <div class="col-sm-12 col-md-12 mt-3">
                         <i style="color: black;">
-                            <a href="<?= $this->Url->build('/') ?>webroot/templates/material_stock_upload.xlsx"
+                            <a href="<?= $this->Url->build('/') ?>webroot/templates/material_stock_upload_vendor.xlsx"
                                 download>stock_upload_template</a>
                         </i>
                     </div>
                 </div>
                 <?= $this->Form->end() ?>
             </div>
-            <?php if (isset($stockuploadData)) : ?>
+            
             <div class="card-footer" id="id_pohead">
                 <table class="table table-hover" id="example1">
                     <thead>
                         <tr>
-                            <th>Material Description</th>
+                            <th>Facotry</th>
                             <th>Material Code</th>
-                            <th>Unit Of Measurement</th>
+                            <th>Material Description</th>
                             <th>Opening Stock</th>
-                            <th>Action</th>
+                            <th>Unit Of Measurement</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <?php foreach ($stockuploadData as $stockuploads) :  ?>
-                        <?php if ($stockuploads['status']) : ?>
-
-                        <tr>
-                            <td>
-                                <?= h($stockuploads['data']['desc']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['material_code']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['uoms']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']["opening_stock"]) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads["msg"]) ?>
-                            </td>
-                        </tr>
-                        <?php else : ?>
-                        <tr>
-                            <td>
-                                <?= h($stockuploads['data']['desc']) ?>
-                            </td>
-                            <td>
-                                <?= h($stockuploads['data']['material_code']) ?>
-                            </td>
-                            <td colspan="2"></td>
-                            <td class="text-danger text-left">
-                                <?= h($stockuploads["msg"]) ?>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -264,6 +224,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/stock-uploads', 'action' => 'material')); ?>/" + vendorId,
                     dataType: "json",
                     beforeSend: function (xhr) {
+                        $("#gif_loader").show();
                         xhr.setRequestHeader(
                             "Content-type",
                             "application/x-www-form-urlencoded"
@@ -279,6 +240,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                         alert("An error occurred: " + e.responseText.message);
                         console.log(e);
                     },
+                    complete: function () { $("#gif_loader").hide(); }
                 });
             }
         });
@@ -294,6 +256,7 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
             processData: false, // important
             contentType: false, // important
             data: fd,
+            beforeSend: function () { $("#gif_loader").show(); },
             success: function(response) {
                 if (response.status) {
                     Toast.fire({
@@ -301,7 +264,20 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                         title: response.message
                     });
 
-                    //setTimeout(function() {history.go(-1);}, 1000);
+                    $("#example1 tbody").empty();
+
+                    // Loop through the response data and build the table rows dynamically
+                    $.each(response.data, function (key, val) { 
+                        var rowHtml = `<tr>
+                        <td> `+ val.factory_code + `</td>
+                        <td> `+ val.material +` </td>
+                        <td> `+ val.description + `</td>
+                        <td> `+ val.opening_stock + `</td>
+                        <td> `+ val.uom + `</td>
+                        <td> `+ val.error + `</td>
+                        </tr>`;
+                        $("#example1 tbody").append(rowHtml);
+                    });
 
                 } else {
                     Toast.fire({
@@ -316,7 +292,8 @@ use PhpOffice\PhpSpreadsheet\Calculation\Information\Value;
                     icon: 'error',
                     title: 'An error occured, please try again.'
                 });
-            }
+            },
+            complete: function () { $("#gif_loader").hide(); }
         });
     });
 </script>

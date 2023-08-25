@@ -141,12 +141,12 @@
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/purchase-orders', 'action' => 'get-items')); ?>/" + rowData,
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "json",
-                beforeSend: function () { $("#loaderss").show(); },
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
                     if (response.status == 'success') { div.html(response.html).removeClass('loading'); }
                     else { div.html(response.message).removeClass('loading'); }
                 },
-                complete: function () { $("#loaderss").hide(); }
+                complete: function () { $("#gif_loader").hide(); }
             });
 
             return div;
@@ -184,6 +184,7 @@
                 type: "GET",
                 url: uri,
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
                     if (response.status) {
                         $.each(response.data, function (key, val) {
@@ -197,7 +198,8 @@
                         });
                         $('div.details-control:first').click();
                     }
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
 

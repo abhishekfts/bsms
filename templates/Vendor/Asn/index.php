@@ -14,6 +14,7 @@
                     style="border-left: .5px solid lightgray;border-right: .5px solid lightgray; border-bottom: .5px solid lightgray;">
                     <thead>
                         <tr>
+                            <th>Factory</th>
                             <th>ASN NO</th>
                             <th>Purchase Order</th>
                             <th>Invoice No</th>
@@ -37,6 +38,9 @@
                         }?>
                         <tr class="redirect"
                             data-href="<?= $this->Url->build('/') ?>vendor/asn/view/<?= $deliveryDetail->id ?>">
+                            <td>
+                                <?=  $deliveryDetail->vendor_factory->factory_code ?>
+                            </td>
                             <td>
                                 <?=  $deliveryDetail->asn_no ?>
                             </td>

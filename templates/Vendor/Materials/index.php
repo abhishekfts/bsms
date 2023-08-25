@@ -104,8 +104,8 @@
             $.ajax({
                 type: "get",
                 url: "<?php echo \Cake\Routing\Router::url(array('prefix' => false, 'controller' => 'api/sync', 'action' => 'get-material-min-stock')); ?> ",
-
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
                     console.log(response);
                     if (response.status == '1') {
@@ -122,7 +122,8 @@
                         });
                     }
 
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 

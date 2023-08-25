@@ -37,8 +37,8 @@ class AsnController extends VendorAppController
 
 
         $query = $this->AsnHeaders->find()
-            ->select(['AsnHeaders.id', 'AsnHeaders.asn_no', 'AsnHeaders.invoice_no', 'AsnHeaders.invoice_date', 'PoHeaders.po_no', 'AsnHeaders.added_date', 'AsnHeaders.status'])
-            ->contain(['PoHeaders'])
+            ->select(['AsnHeaders.id', 'AsnHeaders.asn_no', 'AsnHeaders.invoice_no', 'AsnHeaders.invoice_date', 'PoHeaders.po_no', 'AsnHeaders.added_date', 'AsnHeaders.status', 'VendorFactories.factory_code'])
+            ->contain(['PoHeaders', 'VendorFactories'])
             ->where(['PoHeaders.sap_vendor_code' => $session->read('vendor_code')]);
 
         //echo '<pre>'; print_r($query); exit;
@@ -60,24 +60,15 @@ class AsnController extends VendorAppController
         $this->loadModel('AsnHeaders');
 
         $deliveryDetails = $this->AsnHeaders->find('all')
-            ->select(['AsnHeaders.id', 'AsnHeaders.status', 'AsnHeaders.asn_no', 'AsnHeaders.invoice_path', 'AsnHeaders.invoice_no', 'AsnHeaders.invoice_date', 'AsnHeaders.invoice_value', 'AsnHeaders.vehicle_no', 'AsnHeaders.driver_name', 'AsnHeaders.driver_contact', 'AsnHeaders.added_date', 'PoHeaders.po_no', 'PoFooters.item', 'PoFooters.material', 'PoFooters.order_unit', 'AsnFooters.qty', 'PoItemSchedules.actual_qty', 'PoItemSchedules.delivery_date'])
+            ->select(['AsnHeaders.id', 'AsnHeaders.status', 'AsnHeaders.asn_no', 'AsnHeaders.invoice_path', 'AsnHeaders.invoice_no', 'AsnHeaders.invoice_date', 'AsnHeaders.invoice_value', 'AsnHeaders.vehicle_no', 'AsnHeaders.driver_name', 'AsnHeaders.driver_contact', 'AsnHeaders.added_date', 'PoHeaders.po_no', 'PoFooters.item', 'PoFooters.material', 'PoFooters.order_unit', 'AsnFooters.qty', 'PoItemSchedules.actual_qty', 'PoItemSchedules.delivery_date', 'VendorFactories.factory_code'])
             ->innerJoin(['PoHeaders' => 'po_headers'], ['AsnHeaders.po_header_id = PoHeaders.id'])
             ->innerJoin(['PoFooters' => 'po_footers'], ['PoFooters.po_header_id = PoHeaders.id'])
+            ->innerJoin(['VendorFactories' => 'vendor_factories'], ['VendorFactories.id = AsnHeaders.vendor_factory_id'])
             ->innerJoin(['PoItemSchedules' => 'po_item_schedules'], ['PoItemSchedules.po_header_id = PoHeaders.id', 'PoItemSchedules.po_footer_id = PoFooters.id'])
             ->innerJoin(['AsnFooters' => 'asn_footers'], ['AsnFooters.asn_header_id = AsnHeaders.id', 'AsnFooters.po_footer_id = PoFooters.id'])
             ->innerJoin(['AsnFooters' => 'asn_footers'], ['AsnFooters.asn_header_id = AsnHeaders.id', 'AsnFooters.po_footer_id = PoFooters.id', 'AsnFooters.po_schedule_id = PoItemSchedules.id'])
 
             ->where(['AsnHeaders.id' => $id])->toArray();
-
-
-
-        //echo '<pre>';  print_r($deliveryDetails); exit;
-        /*$deliveryDetail = $this->AsnHeaders->get($id, [
-            'contain' => ['PoHeaders'],
-        ]); */
-
-        //$record = $deliveryDetails->first();
-        //$this->set('deliveryDetailw', $record);
 
 
         $this->set('deliveryDetails', $deliveryDetails);
@@ -167,12 +158,30 @@ class AsnController extends VendorAppController
         $this->autoRender = false;
 
         $this->loadModel('AsnHeaders');
+        $this->loadModel('StockUploads');
+        $session = $this->getRequest()->getSession();
 
+        $deliveryDetail = $this->AsnHeaders->find('all')
+        ->select($this->AsnHeaders)
+        ->select(['material_id'=>'Materials.id', 'qty' => 'AsnFooters.qty'])
+        ->innerJoin(['AsnFooters' => 'asn_footers'], ['AsnFooters.asn_header_id = AsnHeaders.id'])
+        ->innerJoin(['PoFooters' => 'po_footers'], ['PoFooters.id = AsnFooters.po_footer_id'])
+        ->innerJoin(['Materials' => 'materials'], ['Materials.code = PoFooters.material'])
+        ->where(['AsnHeaders.id' => $id])->first();
 
-        $deliveryDetail = $this->AsnHeaders->get($id);
 
         $deliveryDetail = $this->AsnHeaders->patchEntity($deliveryDetail, ['status' => 2, 'gateout_date'=>date('Y-m-d h:i:s')]);
+
         if ($this->AsnHeaders->save($deliveryDetail)) {
+
+            $stockDetails = $this->StockUploads->find('all', 
+            ['conditions' => array('StockUploads.sap_vendor_code' => $session->read('vendor_code'), 
+            'material_id' => $deliveryDetail->material_id, 
+            'vendor_factory_id' => $deliveryDetail->vendor_factory_id)])->first();
+
+            $stockDetails = $this->StockUploads->patchEntity($stockDetails, ['asn_stock' => ($stockDetails->asn_stock + $deliveryDetail->qty)]);
+            $this->StockUploads->save($stockDetails);
+            
             $response['status'] = 'success';
             $response['message'] = 'success';
         } else {

@@ -25,31 +25,34 @@
 
                     <div class="col-sm-12 col-md-3 col-lg-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Factory', 'required')); ?>
+                            <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Factory', 'required')); ?>
+
                         </div>
                     </div>
-                    <div class="col-sm-8 col-md-2">
+                    <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('line_master_id', array('class' => 'form-control w-100', 'options' => $lineMasterList, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Line')); ?>
+                            <?php echo $this->Form->control('line_master_id', array('class' => 'form-control w-100', 'options' => $lineMasterList, 'empty' => 'Please Select', 'label' => 'Line')); ?>
                         </div>
                     </div>
 
 
                     <div class="col-sm-8 col-md-3">
                         <div class="form-group">
-                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Material')); ?>
+                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'options' => $vendor_mateial, 'empty' => 'Please Select', 'label' => 'Material')); ?>
                         </div>
                     </div>
   
                     <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('capacity', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required', 'label' => 'Capacity (Per Day)')); ?>
+                            <?php echo $this->Form->control('capacity', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group', 'required', 'label' => 'Capacity (Per Day)')); ?>
                         </div>
                     </div>
 
-                    <div class="col-sm-8 col-md-3 pt-2">
-                        <button type="button" class="btn bg-gradient-submit mt-4"
+                    <div class="col-sm-8 col-md-1 d-flex justify-content-end align-items-end">
+                        <div class="form-group">
+                        <button type="button" class="btn bg-gradient-submit"
                             onclick="showConfirmationModal()" id="submit-btn">Submit</button>
+                        </div>
                     </div>
 
                     <div id="line-capacity-view" style="display:none;">Capacity : <span id="line-capacity"></span>
@@ -96,6 +99,7 @@
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/stock-uploads', 'action' => 'material')); ?>/" + vendorId,
                 dataType: "json",
                 beforeSend: function(xhr) {
+                    $("#gif_loader").show();
                     xhr.setRequestHeader(
                         "Content-type",
                         "application/x-www-form-urlencoded"
@@ -111,6 +115,7 @@
                     alert("An error occurred: " + e.responseText.message);
                     console.log(e);
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
     });
@@ -132,6 +137,7 @@
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/line-masters', 'action' => 'get-detail')); ?>/" + lineId,
                 dataType: "json",
                 beforeSend: function (xhr) {
+                    $("#gif_loader").show();
                     xhr.setRequestHeader(
                         "Content-type",
                         "application/x-www-form-urlencoded"
@@ -161,6 +167,7 @@
                     alert("An error occurred: " + e.responseText.message);
                     console.log(e);
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
     });
@@ -173,7 +180,7 @@
         }
     });
 
-    $("#factory-id").change(function () {
+    $("#vendor-factory-id").change(function () {
         var lineId = $(this).val();
         $("#line-master-id").empty().append("<option value=''>Please Select</option>");
         $("#material-id").empty().append("<option value=''>Please Select</option>");
@@ -184,6 +191,7 @@
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/line-masters', 'action' => 'get-factory-lines')); ?>/" + lineId,
                 dataType: "json",
                 beforeSend: function (xhr) {
+                    $("#gif_loader").show();
                     xhr.setRequestHeader(
                         "Content-type",
                         "application/x-www-form-urlencoded"
@@ -203,6 +211,7 @@
                     alert("An error occurred: " + e.responseText.message);
                     console.log(e);
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
     });
@@ -210,7 +219,7 @@
     
     function checkRecordExists() {
 
-        var factory = $("#factory-id").val();
+        var factory = $("#vendor-factory-id").val();
         var line = $("#line-master-id").val();
         var material = $("#material-id").val()
 
@@ -220,6 +229,7 @@
             dataType: "json",
             data: {line: line, material:material},
             beforeSend: function (xhr) {
+                $("#gif_loader").show();
                 xhr.setRequestHeader(
                     "Content-type",
                     "application/x-www-form-urlencoded"
@@ -244,6 +254,7 @@
                 alert("An error occurred: " + e.responseText.message);
                 console.log(e);
             },
+            complete: function () { $("#gif_loader").hide(); }
         });
     }
 

@@ -300,7 +300,7 @@ class StockUploadsController extends BuyerAppController
                                 ->first();
 
                                 //echo '<pre>';  print_r($factory); exit;
-                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $tmp['vendor_factory_id'] = $factory ? $factory : null;
                                 $datas['factory_code'] = $value;
                                 if(!$factory) {
                                     $facError = true;
@@ -360,7 +360,7 @@ class StockUploadsController extends BuyerAppController
                         foreach ($uploadData as $data) {
                             $upsertQuery->values($data);
                         }
-                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE sap_vendor_code=VALUES(sap_vendor_code), factory_id=VALUES(factory_id), `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
+                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE sap_vendor_code=VALUES(sap_vendor_code), vendor_factory_id=VALUES(vendor_factory_id), `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
                             ->execute();
                     }
 

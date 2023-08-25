@@ -22,7 +22,7 @@
 }
 
 .navbar.card-header h4 {
-    color: #004d87;
+    color: #F7941D;
     text-transform: uppercase;
     font-size: 20px;
     letter-spacing: 0.04rem;
@@ -126,6 +126,7 @@ th {
 }
 
 .bg-gradient-button.btn:hover {
+    transition: all ease .5s;
     border: 1px solid #F7941D;
     color: #F7941D !important;
     background-color: #fff;
@@ -143,7 +144,7 @@ th {
 .bg-gradient-button.btn:disabled,
 .bg-gradient-button.btn.disabled {
     background-image: none !important;
-    border-color: #F2EDD7FF;
+    border-color: #eee;
     /* color: #755139FF !important; */
 }
 
@@ -192,11 +193,11 @@ th {
 /* Submit Button */
 
 /* Reject Button */
-.bg-gradient-reject {
+/* .bg-gradient-reject {
     background: #F1F4FFFF linear-gradient(180deg, #F1F4FFFF, #ffc8be) repeat-x !important;
     border-color: #F1F4FFFF;
     color: #990011FF;
-}
+} */
 
 .bg-gradient-reject.btn:not(:disabled):not(.disabled):active,
 .bg-gradient-reject.btn:not(:disabled):not(.disabled).active,
@@ -243,7 +244,7 @@ th {
 }
 
 .bg-gradient-cancel.btn:hover {
-    background: #F7941D !important;
+    background-color: #F7941D !important;
     /* border-color: #F1F4FFFF; */
     color: #fff !important;
 }
@@ -260,8 +261,9 @@ th {
 .bg-gradient-cancel.btn:disabled,
 .bg-gradient-cancel.btn.disabled {
     background-image: none !important;
-    background-color: #F1F4FFFF !important;
-    border-color: #F1F4FFFF;
+    background-color: #fff !important;
+    border-color: #F7941D;
+    color: #F7941D !important;
     /* color: #496e97; */
 }
 
@@ -392,7 +394,8 @@ body {
 /* table styling end here */
 
 .form-control {
-    background-color: #F4F6F9 !important;
+    border: 1px solid #ddd;
+    background-color: #fff !important;
 }
 
 [class*=sidebar-dark-] .sidebar a {
@@ -520,3 +523,18 @@ body {
     background-color: #ED1C24 !important;
     color: #fff !important;
 }
+
+.upload_invoice, .upload_ewaybill, .other_document {
+    width: 100% !important;
+    color: #121212 !important;
+    background-color: #fff !important;
+    border: 1px solid #cecece !important;
+}
+
+.upload_invoice:hover, .upload_ewaybill:hover, .other_document:hover {
+    transition: all ease .5s;
+    color: #F7941D !important;
+    border: 1px solid #F7941D !important;
+}
+
+.card_boxshadow { box-shadow: none !important;}

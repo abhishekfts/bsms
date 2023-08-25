@@ -12,10 +12,10 @@
     }
 </style>
 <?= $this->Html->css('cstyle.css') ?>
-  <?= $this->Html->css('custom') ?>
-  <?= $this->Html->css('table.css') ?>
-  <?= $this->Html->css('listing.css') ?>
-  <?= $this->Html->css('b_index.css') ?>
+<?= $this->Html->css('custom') ?>
+<?= $this->Html->css('table.css') ?>
+<?= $this->Html->css('listing.css') ?>
+<?= $this->Html->css('b_index.css') ?>
 <div class="row content card gate-entry">
     <div class="column-responsive column-80">
         <div class="card-header">
@@ -190,22 +190,15 @@
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             dataType: "json",
             // async: false,
-            beforeSend: function () {
-                $("#loaderss").show();
-            },
+            beforeSend: function () { $("#gif_loader").show(); },
             success: function (response) {
                 if (response.status == 'success') {
-
                     $("#modal-confirm").modal('hide');
                     $(".mrk").hide();
                     $(".asnstatus").html('Received');
-                } else {
-                    alert('Please try again...');
-                }
+                } else { alert('Please try again...'); }
             },
-            complete: function () {
-                $("#loaderss").hide();
-            }
+            complete: function () { $("#gif_loader").hide(); }
         });
     });
 </script>

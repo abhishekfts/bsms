@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * StockUploads Model
  *
+ * @property \App\Model\Table\VendorFactoriesTable&\Cake\ORM\Association\BelongsTo $VendorFactories
  * @property \App\Model\Table\MaterialsTable&\Cake\ORM\Association\BelongsTo $Materials
  *
  * @method \App\Model\Entity\StockUpload newEmptyEntity()
@@ -78,6 +79,10 @@ class StockUploadsTable extends Table
             ->decimal('opening_stock')
             ->requirePresence('opening_stock', 'create')
             ->notEmptyString('opening_stock');
+
+        $validator
+            ->decimal('production_stock')
+            ->notEmptyString('production_stock');
 
         $validator
             ->decimal('current_stock')

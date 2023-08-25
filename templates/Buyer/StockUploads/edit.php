@@ -125,6 +125,7 @@
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/stock-uploads', 'action' => 'material')); ?>/" + vendorId,
                 dataType: "json",
                 beforeSend: function(xhr) {
+                    $("#gif_loader").show();
                     xhr.setRequestHeader(
                         "Content-type",
                         "application/x-www-form-urlencoded"
@@ -140,6 +141,7 @@
                     alert("An error occurred: " + e.responseText.message);
                     console.log(e);
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
     });

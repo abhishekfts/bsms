@@ -69,7 +69,10 @@ class DashboardController extends VendorAppController
         $this->loadModel('DeliveryDetails');
         $this->loadModel('StockUploads');
 
-        $totalPos = $this->PoHeaders->find('all', ['condition' => ['sap_vendor_code' => $session->read('vendor_code')]]);
+        $totalPos = $this->PoHeaders->find('all')
+        ->where(['sap_vendor_code' => $session->read('vendor_code')]);
+
+        //echo '<pre>'; print_r($totalPos); exit;
         $totalPos = $totalPos->count();
         
         $this->loadModel('AsnHeaders');
@@ -80,9 +83,10 @@ class DashboardController extends VendorAppController
         $totalIntransit = $intraQry->count();
 
         $stocks = $this->StockUploads->find()
-        ->select(['VendorFactories.factory_code', 'Materials.description', 'opening_stock', 'current_stock', 'asn_stock', 'closing_stock' => "(current_stock - asn_stock)"])
+        ->select(['VendorFactories.factory_code', 'Materials.description', 'opening_stock', 'production_stock', 'current_stock', 'asn_stock', 'closing_stock' => "(current_stock - asn_stock)"])
         ->contain(['Materials', 'VendorFactories'])
-        ->where(['StockUploads.sap_vendor_code' => $session->read('vendor_code')])->toArray();
+        ->where(['StockUploads.sap_vendor_code' => $session->read('vendor_code')])
+        ->toArray();
         
         //echo '<pre>'; print_r($stocks); exit;
         $this->set(compact('totalPos', 'totalIntransit', 'stocks'));
@@ -93,7 +97,6 @@ class DashboardController extends VendorAppController
         $this->autoRender = false;
         $this->loadModel('PoHeaders');
         $this->loadModel('VendorTemps');
-
 
         $query = $this->PoHeaders->find();
         $query->join(['PoFooters' => 'po_footers'])

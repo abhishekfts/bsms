@@ -59,6 +59,7 @@ class DailymonitorController extends VendorAppController
                 ->first();
 
             $stockUpload->current_stock = $stockUpload->current_stock + $confirm_production;
+            $stockUpload->production_stock = $stockUpload->production_stock + $confirm_production;
             $this->StockUploads->save($stockUpload);
 
             $response = ['status' => 1, 'message' => $dailymonitor];
@@ -125,7 +126,7 @@ class DailymonitorController extends VendorAppController
                                 ->select(['id'])
                                 ->where(['factory_code' => $value])
                                 ->first();
-                                $tmp['factory_id'] = $factory ? $factory : null;
+                                $tmp['vendor_factory_id'] = $factory ? $factory : null;
                                 $datas['factory_code'] = $value;
                                 if(!$factory) {
                                     $facError = true;
@@ -136,10 +137,10 @@ class DailymonitorController extends VendorAppController
                                     $lm = $this->LineMasters->find()
                                         ->where([
                                             'sap_vendor_code' => $session->read('vendor_code'),
-                                            'vendor_factory_id' => $tmp['factory_id'],
+                                            'vendor_factory_id' => $tmp['vendor_factory_id'],
                                             'name' => $value
                                         ])->first();
-                                        unset($tmp['factory_id']);
+                                        unset($tmp['vendor_factory_id']);
                                     if ($lm) {
                                         $pl = $this->ProductionLines->find()
                                             ->where([
@@ -262,8 +263,6 @@ class DailymonitorController extends VendorAppController
                 $this->set('flash', $flash);
             
             } catch (\Exception $e) {
-
-            }catch (\Exception $e) {
                 $flash['msg'] = 0;
                 $flash['type'] = $e->getMessage();
             }

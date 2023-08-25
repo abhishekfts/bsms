@@ -452,6 +452,7 @@ switch ($vendorTemp->status) {
                 type: "GET",
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/VendorTemps', 'action' => 'user-credentials')); ?>/" + $id,
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function(response) {
                     if (response.status == "1") {
                         Toast.fire({
@@ -461,9 +462,6 @@ switch ($vendorTemp->status) {
                         $('#modal-sm').modal('hide');
                         $(".sendCrendential").hide();
                         $(".statusVendor span").text("Approved");
-
-
-
                     } else {
                         Toast.fire({
                             icon: "error",
@@ -473,7 +471,8 @@ switch ($vendorTemp->status) {
                 },
                 error: function(xhr, status, error) {
                     // Handle error case if needed
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 
@@ -486,6 +485,7 @@ switch ($vendorTemp->status) {
                 data: $("#userForm").serialize(),
 
                 dataType: "json",
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function(response) {
                     console.log(response);
                     if (response.status == "1") {
@@ -511,6 +511,7 @@ switch ($vendorTemp->status) {
                         });
                     }
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
 
 

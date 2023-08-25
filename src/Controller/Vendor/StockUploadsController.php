@@ -31,8 +31,8 @@ class StockUploadsController extends VendorAppController
     {
 
         $session = $this->getRequest()->getSession();
-        $vendorId = $session->read('id');
-        $stockupload = $this->StockUploads->find('all', [
+        $vendorId = $session->read('vendor_id');
+        /*$stockupload = $this->StockUploads->find('all', [
             'conditions' => ['StockUploads.sap_vendor_code' => $session->read('vendor_code')]
         ])->select([
             'id', 'opening_stock', 'material_id', 'sap_vendor_code', 'added_date', 'updated_date',
@@ -42,8 +42,12 @@ class StockUploadsController extends VendorAppController
             'alias' => 'vm',
             'type' => 'LEFT',
             'conditions' => 'vm.id = StockUploads.material_id',
-        ])->toArray();
+        ])->toArray(); */
         // echo '<pre>';print_r($stockupload);exit;
+
+        $stockupload = $this->StockUploads->find('all')->contain(['Materials', 'VendorFactories'])
+        ->where(['StockUploads.sap_vendor_code' => $session->read('vendor_code')])
+        ->toArray();
 
 
         $this->set(compact('stockupload'));
@@ -78,105 +82,46 @@ class StockUploadsController extends VendorAppController
         $flash = [];
         $this->loadModel("Materials");
         $this->loadModel("StockUploads");
+        $this->loadModel("VendorFactories");
         $stockupload = $this->StockUploads->newEmptyEntity();
 
         $stockUpload = [];
         $stockView = [];
         $flash = [];
         $session = $this->getRequest()->getSession();
-        $vendorId = $session->read('id');
+        $vendorId = $session->read('vendor_id');
         $sapVendor = $session->read('vendor_code');
 
         if ($this->request->is('post')) {
+            $minivendor = [];
+            $res = $this->request->getData();
+            $res['sap_vendor_code'] = $sapVendor;
+            $res['current_stock'] = $res['opening_stock'];
+            $res['asn_stock'] = 0;
 
-            $importFile = $this->request->getData('vendor_code');
-            if (isset($_FILES['vendor_code']) && $_FILES['vendor_code']['name'] != "" && $importFile !== null && isset($_FILES['vendor_code']['name'])) {
-                $destination = "uploads/";
-                $filename = $_FILES['vendor_code']['name'];
-                $path = $destination . $filename;
-                move_uploaded_file($_FILES['vendor_code']['tmp_name'], $path);
-                $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($path);
-                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
-                $spreadsheet = $reader->load($path);
-                $worksheet = $spreadsheet->getActiveSheet();
-
-                foreach ($worksheet->getRowIterator(2) as $row) {
-                    $minivendor = [];
-                    foreach ($row->getCellIterator() as $cell) {
-                        $cellval = $cell->getValue();
-                        if (!empty($cellval)) {
-                            $minivendor[] = $cellval;
-                        }
-                    }
-
-                    array_push($stockUpload, $minivendor);
-                }
+            
+            $columns = array_keys($res);
+            $upsertQuery = $this->StockUploads->query();
+            $upsertQuery->insert($columns);
+            $upsertQuery->values($res);
+            if($upsertQuery->epilog('ON DUPLICATE KEY UPDATE sap_vendor_code=VALUES(sap_vendor_code), vendor_factory_id=VALUES(vendor_factory_id), `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
+                ->execute()) {
+                $flash = ['type' => 'success', 'msg' => 'The stockupload has been saved'];
+                
+            } else {
+                $flash = ['type' => 'error', 'msg' => 'The stockupload could not be saved. Please, try again'];
             }
-
-
-
-            if (empty($minivendor)) {
-                $minivendor = [];
-                $res = $this->request->getData();
-                //  print_r($res);exit;
-
-                if ($res["code"] && $res["description"] && $res["opening_stock"] && $res["uom"]) {
-
-                    $VendorMaterials = $this->paginate($this->Materials->find('all', [
-                        'conditions' => ['Materials.id' => $res['code']]
-                    ]))->first();
-                    array_push($minivendor, $VendorMaterials->code);
-                    array_push($minivendor, $res["opening_stock"]);
-                    array_push($stockUpload, $minivendor);
-                }
-            }
-
-
-            foreach ($stockUpload as $stockuploads) {
-                if (!empty($stockuploads)) {
-                    $materialCode = $stockuploads[0];
-                    $VendorMaterials = $this->paginate($this->Materials->find('all', [
-                        'conditions' => ['Materials.code' => $materialCode]
-                    ]))->first();
-
-                    $stockData = array();
-                    $stockData['sap_vendor_code'] = $sapVendor;
-                    $stockData['material_id'] = $VendorMaterials->id;
-                    $stockData['opening_stock'] = $stockuploads[1];
-                    $stockData['desc'] =  $VendorMaterials->description;
-                    $stockData['material_code'] =  $VendorMaterials->code;
-                    $stockData['uoms'] =  $VendorMaterials->uom;
-
-
-
-                    $existingStockUpload = $this->StockUploads->find('all', [
-                        'conditions' => [
-                            'StockUploads.material_id' => $VendorMaterials->id,
-                        ]
-                    ])->first();
-
-                 if (!$existingStockUpload) {
-                    $stockupload = $this->StockUploads->newEmptyEntity();
-                    $stockupload = $this->StockUploads->patchEntity($stockupload, $stockData);
-                    if ($this->StockUploads->save($stockupload)) {
-                        $flash = ['type' => 'success', 'msg' => 'The stock Upload has been saved'];
-                        $this->set('flash', $flash);
-                        array_push($stockView, ['status' => true, 'msg' => "The vendor material has been saved.", 'data' => $stockData]);
-                    } else {
-                        array_push($stockView, ['status' => false, 'msg' => "The vendor material could not be saved. Please, try again.", 'data' => $stockData]);
-                    }
-                    } 
-                    else {
-                        array_push($stockView, ['status' => false, 'msg' => "Vendor material code already exits in stock upload", 'data' => $stockData]);
-                    }
-                }
-            }
-
-            $this->set('stockuploadData', $stockView);
+            $this->set('flash', $flash);
+            return $this->redirect(['action' => 'index']);
         }
 
-        $vendor_mateial = $this->Materials->find('list', ['keyField' => 'id', 'valueField' => 'code'])->all();
-        $this->set(compact('stockupload', 'vendor_mateial'));
+        $vendor_mateial = $this->Materials->find('list', ['keyField' => 'id', 'valueField' => 'description'])->where(['sap_vendor_code' => $sapVendor])->all();
+        $vendor_factory = $this->VendorFactories->find('list', ['keyField' => 'id', 'valueField' => 'factory_code'])->where(['vendor_temp_id' => $vendorId])->all();
+        
+
+        //echo '<pre>'; print_r($this->VendorFactories); exit;
+
+        $this->set(compact('stockupload', 'vendor_mateial', 'vendor_factory'));
     }
 
 
@@ -270,21 +215,16 @@ class StockUploadsController extends VendorAppController
         $response['status'] = 0;
         $response['message'] = 'upload fail';
         $this->autoRender = false;
+       
         $session = $this->getRequest()->getSession();
-        
+
         if ($this->request->is(['patch', 'post', 'put', 'ajax'])) {
             try {
             
 
                 $uploadData = [];
+                $stockData =[];
                 if (isset($_FILES['upload_file']) && $_FILES['upload_file']['name'] != "" && isset($_FILES['upload_file']['name'])) {
-
-                    $this->loadModel("Materials");
-                    $materials = $this->Materials->find('list')
-                    ->select(['id', 'code'])
-                    ->where(['sap_vendor_code' => $session->read('vendor_code')])->toArray();
-
-                    //echo '<pre>'; print_r($materials);  exit;
 
                     $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($_FILES['upload_file']['tmp_name']);
                     $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
@@ -293,35 +233,91 @@ class StockUploadsController extends VendorAppController
                     $highestRow = $worksheet->getHighestRow(); 
                     $highestColumn = $worksheet->getHighestColumn();
                     $highestColumnIndex = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($highestColumn); // e.g. 5
+                    $this->loadModel("Materials");
+                    $this->loadModel("VendorFactories");
 
                     $tmp = [];
-                    for ($row = 3; $row <= $highestRow; ++$row) {
-                        
-                        $tmp['sap_vendor_code']  = $session->read('vendor_code');
+                    $datas = [];
+                    
+
+                    // echo "<pre>";
+                    for ($row = 2; $row <= $highestRow; $row++) {
+                        $facError = false;
+                        $matError = false;
                         for ($col = 1; $col <= $highestColumnIndex; ++$col) {
+                            
+                            $tmp['sap_vendor_code'] = $session->read('vendor_code');
+                            
                             $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
                             if($col == 1) {
-                                $tmp['material_id'] = array_search ($value, $materials);
-                            } else if($col == 2) {
-                                $tmp['opening_stock'] = $value;
+                                $factory = $this->VendorFactories->find('list')
+                                ->select(['id'])
+                                ->where(['factory_code' => $value])
+                                ->first();
+
+                                //echo '<pre>';  print_r($factory); exit;
+                                $tmp['vendor_factory_id'] = $factory ? $factory : null;
+                                $datas['factory_code'] = $value;
+                                if(!$factory) {
+                                    $facError = true;
+                                }
+                            } else if ($col ==2) {
+                                $materials = $this->Materials->find('all')
+                                ->select(['id', 'code'])
+                                ->where(['code IN' => $value])->first();
+    
+                               $tmp['material_id'] = $materials['id'] ? $materials['id'] : null;
+                               $datas['material'] = $value;
+                               if(!$materials['id']) {
+                                $matError = true;
+                                $datas['error'] = 'Invalid material';
                             }
+                            }
+                            else if($col == 3) {
+                            
+                                $datas['description'] = $value;
+                            }
+                            else if($col == 4) {
+                                $tmp['opening_stock'] = $value;
+                                $datas['opening_stock'] = $value;
+                                $tmp['current_stock'] = $value;
+                            }
+                            else if($col == 5) {
+                                $datas['uom'] = $value;
+                            }
+                            
                         }
 
-                        $uploadData[] = $tmp;
-                    }
-                    
-                    $columns = array_keys($uploadData[0]);
-                    $upsertQuery = $this->StockUploads->query();
-                    $upsertQuery->insert($columns);
+                        $datas['error'] = '';
+                        if($facError) {
+                            $datas['error'] = 'Invalid factory code';
+                        } else if($matError) {
+                            $datas['error'] = 'Invalid Material';
+                        }
 
-                    foreach($uploadData as $row) {
-                        $upsertQuery->values($row);
-                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE `material_id`=VALUES(`material_id`), `opening_stock`=VALUES(`opening_stock`)')
-                        ->execute();
+                        $stockData[] = $datas;
+                        $tmp['asn_stock'] = 0;
+                        if(empty($datas['error'])) {
+                            $uploadData[] = $tmp;   
+                        }
                     }
 
-                    $response['status'] = 1;
-                    $response['message'] = 'uploaded Successfully';
+      
+                    if(!empty($uploadData)) {
+                        $columns = array_keys($uploadData[0]);
+                        $upsertQuery = $this->StockUploads->query();
+                        $upsertQuery->insert($columns);
+                        foreach ($uploadData as $data) {
+                            $upsertQuery->values($data);
+                        }
+                        $upsertQuery->epilog('ON DUPLICATE KEY UPDATE sap_vendor_code=VALUES(sap_vendor_code), vendor_factory_id=VALUES(vendor_factory_id), `material_id`=VALUES(`material_id`),`opening_stock`=VALUES(`opening_stock`)')
+                            ->execute();
+                    }
+
+
+                        $response['status'] = 1;
+                        $response['data'] = $stockData;
+                        $response['message'] = 'uploaded Successfully';
                 } else {
                     $response['status'] = 0;
                     $response['message'] = 'file not uploaded';

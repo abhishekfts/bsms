@@ -18,6 +18,11 @@
             <div class="card m-1">
                 <div class="card-header" style="background-color: #d4ddf7  !important;">
                     <div class="row align-items-center">
+                        <div class="col-sm-12">
+                            Factory : <b>
+                                <?= h($deliveryDetails[0]->VendorFactories['factory_code']) ?>
+                            </b>
+                        </div>
                         <div class="col-sm-12 col-lg-2">
                             ASN No : <b>
                                 <?= h($deliveryDetails[0]->asn_no) ?>
@@ -192,9 +197,7 @@
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
                 dataType: "json",
                 // async: false,
-                beforeSend: function () {
-                    $("#loaderss").show();
-                },
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
                     if (response.status == 'success') {
                         //location.reload(true);
@@ -206,9 +209,7 @@
                         alert('Please try again...');
                     }
                 },
-                complete: function () {
-                    $("#loaderss").hide();
-                }
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 

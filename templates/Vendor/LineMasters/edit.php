@@ -22,7 +22,7 @@
                     ?>
                     </div>
                     <div class="col-sm-12 col-md-3 col-lg-3">
-                        <?php echo $this->Form->control('factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select','label'=>'Factories')); ?>
+                        <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select','label'=>'Factories')); ?>
                     </div>
                     <div class="col-sm-12 col-md-3 col-lg-3">
                         <?php

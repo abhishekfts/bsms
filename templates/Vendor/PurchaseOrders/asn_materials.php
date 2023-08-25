@@ -70,11 +70,16 @@
         <div class="row dgf">
           <div class="col-sm-8  col-md-2">
             <div class="form-group">
+              <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control rounded-0', 'maxlength'=>'20', 'div' => 'form-group', 'required', 'empty' => 'Please Select')); ?>
+            </div>
+          </div>
 
+          <div class="col-sm-8  col-md-2">
+            <div class="form-group">
               <?php echo $this->Form->control('invoice_no', array('class' => 'form-control rounded-0', 'maxlength'=>'20', 'div' => 'form-group', 'required')); ?>
             </div>
-
           </div>
+
           <div class="col-sm-8 col-md-2">
             <div class="form-group">
               <?php echo $this->Form->control('invoice_date', array('type' => 'date', 'class' => 'form-control rounded-0', 'div' => 'form-group', 'required')); ?>
@@ -111,12 +116,12 @@
           </div>
 
 
-          <div class="col-sm-8 col-md-3">
+          <div class="col-sm-8 col-md-2">
             <div class="form-group">
               <label for="invoices">Upload Invoice</label>
               <input type="file" name="invoice" accept=".pdf" class="pt-1 rounded-0"
                 style="visibility: hidden;position:absolute;" div="form-group" required="required" id="invoices">
-              <button id="OpenImgUpload" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
+              <button id="OpenImgUpload" type="button" class="upload_invoice d-block btn bg-gradient-button mb-0 file-upld-btn">
                 Choose File
               </button>
 
@@ -125,12 +130,12 @@
             
           </div>
 
-          <div class="col-sm-8 col-md-3">
+          <div class="col-sm-8 col-md-2">
             <div class="form-group">
               <label for="invoices">Upload E-wayBill</label>
               <input type="file" name="ewaybill" accept=".pdf" class="pt-1 rounded-0" id="ewaybill"
                 style="visibility: hidden;position:absolute;" div="form-group">
-              <button id="OpenImgUploadEwaybill" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
+              <button id="OpenImgUploadEwaybill" type="button" class="upload_ewaybill d-block btn bg-gradient-button mb-0 file-upld-btn">
                 Choose File
               </button>
 
@@ -138,12 +143,12 @@
             </div>
             
           </div>
-          <div class="col-sm-8 col-md-3">
+          <div class="col-sm-8 col-md-2">
             <div class="form-group">
               <label for="invoices">Other Document</label>
               <input type="file" name="others" accept=".pdf" class="pt-1 rounded-0" id="others"
                 style="visibility: hidden;position:absolute;" div="form-group">
-              <button id="OpenImgUploadOthers" type="button" class="d-block btn bg-gradient-button mb-0 file-upld-btn">
+              <button id="OpenImgUploadOthers" type="button" class="other_document d-block btn bg-gradient-button mb-0 file-upld-btn">
                 Choose File
               </button>
 
@@ -561,7 +566,7 @@
 
     console.log('stock=' + currStock+"="+minStock );
     if(currStock < minStock) {
-        $("#Create-btn").attr('disabled', 'disabled');
+        //$("#Create-btn").attr('disabled', 'disabled');
         $("#error_msg").text('Please maintain minimum stocks');
     }
   });

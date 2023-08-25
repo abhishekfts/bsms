@@ -524,14 +524,15 @@
         url: "<?php echo \Cake\Routing\Router::url(array('/controller' => 'users-controller', 'action' => 'api-login')); ?>",
         data: $("#loginForm").serialize(),
         dataType: 'json',
+        beforeSend: function () { $("#gif_loader").show(); },
         success: function (response) {
           if (response.status == '1') {
             window.location.href = response.redirect.controller;
           } else {
             $('span.userpassError').empty().append(response.message);
           }
-
-        }
+        },
+        complete: function () { $("#gif_loader").hide(); }
       });
     });
 
@@ -545,14 +546,15 @@
         url: "<?php echo \Cake\Routing\Router::url(array('/controller' => 'users-controller', 'action' => 'api-login')); ?>",
         data: $("#otpForm").serialize(),
         dataType: 'json',
+        beforeSend: function () { $("#gif_loader").show(); },
         success: function (response) {
           if (response.status == '1') {
             window.location.href = response.redirect.controller;
           } else {
             $('#otp_error').empty().append(response.message);
           }
-
-        }
+        },
+        complete: function () { $("#gif_loader").hide(); }
       });
     });
 
@@ -591,20 +593,18 @@
         var request = $.ajax({
           url: "users/get-otp",
           method: "POST",
-          headers: {
-            'X-CSRF-Token': $('[name="_csrfToken"]').val()
-          },
-          data: {
-            mobile: $("#mobile").val()
-          },
+          headers: { 'X-CSRF-Token': $('[name="_csrfToken"]').val() },
+          data: { mobile: $("#mobile").val() },
           dataType: "json",
+          beforeSend: function () { $("#gif_loader").show(); },
           success: function (response) {
             if (response.status == '1') {
               // window.location.href = response.redirect.controller;
             } else {
               $('span.userpassError').empty().append(response.message);
             }
-          }
+          },
+          complete: function () { $("#gif_loader").hide(); }
         });
 
         request.done(function (response) {

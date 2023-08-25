@@ -152,10 +152,9 @@
             $.ajax({
                 type: "GET",
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => 'dashboard', 'action' => 'clear-message-count')); ?>",
-                data: {
-                    id: dataId
-                },
+                data: { id: dataId },
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
                     if (response.status === 1) {
                         $('.notificationId[data-id="' + dataId + '"]').remove();
@@ -174,30 +173,24 @@
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 
         $('.clearNotificationsAll').click(function (event) {
-
-
             event.stopPropagation();
             var ids = [];
-
-            
             $('.notificationId').each(function () {
                 var dataId = $(this).data('id');
                 ids.push(dataId);
             });
-            
-            //console.log(ids);
             $.ajax({
                 type: "GET",
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => 'dashboard', 'action' => 'clear-message-count')); ?>",
-                data: {
-                    id: ids
-                },
+                data: { id: ids },
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function (response) {
 
                     $('.navbar-badge.custom-i').text('0');
@@ -208,7 +201,8 @@
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
-                }
+                },
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
     })

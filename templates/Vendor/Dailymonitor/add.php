@@ -24,41 +24,43 @@
             <div class="card-body invoice-details">
 
                 <div class="row dgf m-0">
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('plan_date', array('type'=>'date', 'class' => 'form-control w-100', 'style' => "height: unset !important;")); ?>
+                            <?php echo $this->Form->control('plan_date', array('type'=>'date', 'class' => 'form-control w-100')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-3 col-lg-3">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'style' => "height: unset !important;", 'empty' => 'Please Select', 'label' => 'Factory', 'required')); ?>
+                            <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control w-100', 'options' => $factory, 'empty' => 'Please Select', 'label' => 'Factory', 'required')); ?>
                         </div>
                     </div>
                     
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('production_line_id', array('name' => 'production_line_id', 'class' => 'form-control w-100',  'style' => "height: unset !important;", 'empty' => 'Please Select')); ?>
+                            <?php echo $this->Form->control('production_line_id', array('name' => 'production_line_id', 'class' => 'form-control w-100', 'empty' => 'Please Select')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-8 col-md-3">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'style' => "height: unset !important;", 'empty' => 'Please Select')); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-8 col-md-3">
-                        <div class="form-group">
-                            <?php echo $this->Form->control('target_production', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required')); ?>
+                            <?php echo $this->Form->control('material_id', array('class' => 'form-control w-100', 'empty' => 'Please Select')); ?>
                         </div>
                     </div>
 
-                    <div class="col-sm-8 col-md-3" style="display:none;">
+                    <div class="col-sm-8 col-md-2">
                         <div class="form-group">
-                            <?php echo $this->Form->control('confirm_production', array('type' => 'number', 'value' => '0','class' => 'form-control rounded-0 w-100', 'style' => "height: unset !important;", 'div' => 'form-group', 'required')); ?>
+                            <?php echo $this->Form->control('target_production', array('type' => 'number', 'class' => 'form-control rounded-0 w-100', 'div' => 'form-group', 'required')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-8 col-md-3 d-flex justify-content-start align-items-end">
-                        <button type="button" class="btn bg-gradient-submit" onclick="showConfirmationModal()">Submit</button>
+
+                    <div class="col-sm-8 col-md-2" style="display:none;">
+                        <div class="form-group">
+                            <?php echo $this->Form->control('confirm_production', array('type' => 'number', 'value' => '0','class' => 'form-control rounded-0 w-100', 'div' => 'form-group', 'required')); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-2 d-flex justify-content-end align-items-end">
+                        <div class="form-group">
+                            <button type="button" class="btn bg-gradient-submit" onclick="showConfirmationModal()">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,6 +145,7 @@
           url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/line-masters', 'action' => 'get-factory-lines')); ?>/" + lineId,
           dataType: "json",
           beforeSend: function (xhr) {
+            $("#gif_loader").show();
               xhr.setRequestHeader(
                   "Content-type",
                   "application/x-www-form-urlencoded"
@@ -162,6 +165,7 @@
               alert("An error occurred: " + e.responseText.message);
               console.log(e);
           },
+          complete: function () { $("#gif_loader").hide(); }
       });
   }
 });
@@ -175,6 +179,7 @@ $("#production-line-id").change(function () {
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/production-lines', 'action' => 'get-line-materials')); ?>/" + lineId,
                 dataType: "json",
                 beforeSend: function (xhr) {
+                    $("#gif_loader").show();
                     xhr.setRequestHeader(
                         "Content-type",
                         "application/x-www-form-urlencoded"
@@ -191,6 +196,7 @@ $("#production-line-id").change(function () {
                     alert("An error occurred: " + e.responseText.message);
                     console.log(e);
                 },
+                complete: function () { $("#gif_loader").hide(); }
             });
         }
     });
@@ -220,6 +226,7 @@ $("#production-line-id").change(function () {
             processData: false, // important
             contentType: false, // important
             data: fd,
+            beforeSend: function () { $("#gif_loader").show(); },
             success: function(response) {
                 if (response.status) {
                     Toast.fire({
@@ -254,7 +261,8 @@ $("#production-line-id").change(function () {
                     icon: 'error',
                     title: 'An error occured, please try again.'
                 });
-            }
+            },
+            complete: function () { $("#gif_loader").hide(); }
         });
     });
     

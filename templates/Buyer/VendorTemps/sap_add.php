@@ -179,27 +179,16 @@
     </div>
 </div>
 
-<div class="row sap-vendor">
-
-    <div class="col-12">
-
-    </div>
-</div>
-
-<div class="card-body">
-
-</div>
-
-
+<div class="row sap-vendor"><div class="col-12"></div></div>
+<div class="card-body"></div>
 
 <script>
     $(document).ready(function() {
-        $('#OpenImgUpload').click(function() {
-            $('#vendorCodeInput').trigger('click');
-        });
+        $('#OpenImgUpload').click(function() { $('#vendorCodeInput').trigger('click'); });
+        
         $('#vendorCodeInput').change(function() {
             var file = $(this).prop('files')[0].name;
-            $("#filessnames").append(file);
+            $("#filessnames").empty().append(file);
         });
 
         // Users crendential send api
@@ -210,6 +199,7 @@
                 type: "GET",
                 url: "<?php echo \Cake\Routing\Router::url(array('controller' => '/VendorTemps', 'action' => 'user-credentials')); ?>/" + $id,
                 dataType: 'json',
+                beforeSend: function () { $("#gif_loader").show(); },
                 success: function(response) {
                     if (response.status == "1") {
                         Toast.fire({
@@ -226,7 +216,8 @@
                         });
                     }
                 },
-                error: function(xhr, status, error) {}
+                error: function(xhr, status, error) {},
+                complete: function () { $("#gif_loader").hide(); }
             });
         });
 
@@ -265,6 +256,12 @@
             if (redirectUrl !== undefined && redirectUrl !== "") {
                 window.open(redirectUrl, '_blank');
             }
+        });
+
+        $('.addVendor').click(function() {
+            $('#gif_loader').show();
+            $('#sapvendorcodeform').trigger('submit');
+            $('#modal-sm').modal('hide');
         });
     });
 </script>

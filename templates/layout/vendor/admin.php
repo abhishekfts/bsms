@@ -78,9 +78,9 @@
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
-    <!-- <div class="loader-container" id="loaderss">
+    <div class="loader-container" id="gif_loader">
         <img src="<?= $this->Url->build('/') ?>img/loaders.gif" alt="Loader" class="loader">
-    </div> -->
+    </div>
     <div class="wrapper">
             <?= $this->element('header/vendor/main') ?>
 
@@ -150,7 +150,7 @@
             });
         <?php endif; ?>
         // $(document).ready(function() {});
-        $(window).on('load', function () { $('#loaderss').hide(); });
+        $(window).on('load', function () { $('#gif_loader').hide(); });
         $(function () { $('[data-toggle="tooltip"]').tooltip(); $('#summernote').summernote({ width: 1000, }); });
     </script>
 <?= $this->element('layout/script') ?>
