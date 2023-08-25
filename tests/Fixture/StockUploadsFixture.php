@@ -24,10 +24,11 @@ class StockUploadsFixture extends TestFixture
                 'vendor_factory_id' => 1,
                 'material_id' => 1,
                 'opening_stock' => 1.5,
+                'production_stock' => 1.5,
                 'current_stock' => 1.5,
                 'asn_stock' => 1.5,
-                'added_date' => '2023-08-21 12:58:39',
-                'updated_date' => '2023-08-21 12:58:39',
+                'added_date' => '2023-08-24 15:12:59',
+                'updated_date' => '2023-08-24 15:12:59',
             ],
         ];
         parent::init();

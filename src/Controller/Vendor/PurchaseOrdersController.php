@@ -351,6 +351,7 @@ class PurchaseOrdersController extends VendorAppController
                 // print_r($uploads["invoices"]);exit;
                 $asnData = array();
                 $asnData['asn_no'] = $asnNo;
+                $asnData['vendor_factory_id'] = $request['vendor_factory_id'];
                 $asnData['po_header_id'] = $request['po_header_id'];
                 $asnData['invoice_path'] = json_encode($uploads["uploads"]);
                 $asnData['invoice_no'] = $request['invoice_no'];
@@ -771,6 +772,9 @@ class PurchaseOrdersController extends VendorAppController
     public function asnMaterials($id = null)
     {
         $this->set('headTitle', 'Create ASN Review');
+        
+        $session = $this->getRequest()->getSession();
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $request = $this->request->getData();
@@ -782,6 +786,8 @@ class PurchaseOrdersController extends VendorAppController
             $this->loadModel('PoItemSchedules');
             $this->loadModel("StockUploads");
             $this->loadModel("Materials");
+            $this->loadModel('VendorFactories');
+            
 
             $conditions = array();
             $whereFooterIds = "";
@@ -818,12 +824,12 @@ class PurchaseOrdersController extends VendorAppController
                         $row->actual_qty = $request['footer_id_qty'][$key];
                     }
                 }
-                //echo '<pre>';print_r($row); exit;
             }
 
+            $vendorFactories = $this->VendorFactories->find('list', ['keyField' => 'id', 'valueField' => 'factory_code'])->where(['vendor_temp_id' => $session->read('vendor_id')])->all();
+        
 
-
-            $this->set(compact('poHeader', 'materialStock'));
+            $this->set(compact('poHeader', 'materialStock', 'vendorFactories'));
         } else {
             return $this->redirect(['action' => 'create-asn']);
         }

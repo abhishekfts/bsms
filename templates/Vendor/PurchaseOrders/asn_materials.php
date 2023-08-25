@@ -70,11 +70,16 @@
         <div class="row dgf">
           <div class="col-sm-8  col-md-2">
             <div class="form-group">
+              <?php echo $this->Form->control('vendor_factory_id', array('class' => 'form-control rounded-0', 'maxlength'=>'20', 'div' => 'form-group', 'required', 'empty' => 'Please Select')); ?>
+            </div>
+          </div>
 
+          <div class="col-sm-8  col-md-2">
+            <div class="form-group">
               <?php echo $this->Form->control('invoice_no', array('class' => 'form-control rounded-0', 'maxlength'=>'20', 'div' => 'form-group', 'required')); ?>
             </div>
-
           </div>
+
           <div class="col-sm-8 col-md-2">
             <div class="form-group">
               <?php echo $this->Form->control('invoice_date', array('type' => 'date', 'class' => 'form-control rounded-0', 'div' => 'form-group', 'required')); ?>
@@ -561,7 +566,7 @@
 
     console.log('stock=' + currStock+"="+minStock );
     if(currStock < minStock) {
-        $("#Create-btn").attr('disabled', 'disabled');
+        //$("#Create-btn").attr('disabled', 'disabled');
         $("#error_msg").text('Please maintain minimum stocks');
     }
   });

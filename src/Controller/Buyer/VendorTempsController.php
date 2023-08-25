@@ -330,12 +330,24 @@ class VendorTempsController extends BuyerAppController
             }
         }
         $titles = $this->Titles->find('list', ['keyField' => 'name', 'valueField' => 'name'])->all();
-        $purchasingOrganizations = $this->VendorTemps->PurchasingOrganizations->find('list', ['limit' => 200])->all();
-        $accountGroups = $this->VendorTemps->AccountGroups->find('list', ['limit' => 200])->all();
-        $schemaGroups = $this->VendorTemps->SchemaGroups->find('list', ['limit' => 200])->all();
-        $payment_term = $this->PaymentTerms->find('list', ['keyField' => 'id', 'valueField' => 'description'])->all();
-        $company_codes = $this->CompanyCodes->find('list', ['keyField' => 'id', 'valueField' => 'name'])->all();
-        $reconciliation_account = $this->ReconciliationAccounts->find('list', ['keyField' => 'code', 'valueField' => 'name'])->all();
+        $purchasingOrganizations = $this->VendorTemps->PurchasingOrganizations->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->name;
+        }])->all();
+        $accountGroups = $this->VendorTemps->AccountGroups->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->name;
+        }])->all();
+        $schemaGroups = $this->VendorTemps->SchemaGroups->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->name;
+        }])->all();
+        $payment_term = $this->PaymentTerms->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->description;
+        }])->all();
+        $company_codes = $this->CompanyCodes->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->name;
+        }])->all();
+        $reconciliation_account = $this->ReconciliationAccounts->find('list', ['keyField' => 'id', 'valueField' => function ($row) {
+            return $row->code.' - '.$row->name;
+        }])->all();
 
         $this->set(compact('vendorTemp','titles', 'purchasingOrganizations', 'accountGroups', 'schemaGroups', 'payment_term', 'reconciliation_account', 'company_codes', 'latestVendors'));
     }

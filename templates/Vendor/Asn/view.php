@@ -18,6 +18,11 @@
             <div class="card m-1">
                 <div class="card-header" style="background-color: #d4ddf7  !important;">
                     <div class="row align-items-center">
+                        <div class="col-sm-12">
+                            Factory : <b>
+                                <?= h($deliveryDetails[0]->VendorFactories['factory_code']) ?>
+                            </b>
+                        </div>
                         <div class="col-sm-12 col-lg-2">
                             ASN No : <b>
                                 <?= h($deliveryDetails[0]->asn_no) ?>

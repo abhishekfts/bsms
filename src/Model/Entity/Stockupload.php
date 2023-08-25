@@ -13,11 +13,13 @@ use Cake\ORM\Entity;
  * @property int|null $vendor_factory_id
  * @property int $material_id
  * @property string $opening_stock
+ * @property string $production_stock
  * @property string $current_stock
  * @property string $asn_stock
  * @property \Cake\I18n\FrozenTime|null $added_date
  * @property \Cake\I18n\FrozenTime|null $updated_date
  *
+ * @property \App\Model\Entity\VendorFactory $vendor_factory
  * @property \App\Model\Entity\Material $material
  */
 class StockUpload extends Entity
@@ -36,10 +38,12 @@ class StockUpload extends Entity
         'vendor_factory_id' => true,
         'material_id' => true,
         'opening_stock' => true,
+        'production_stock' => true,
         'current_stock' => true,
         'asn_stock' => true,
         'added_date' => true,
         'updated_date' => true,
+        'vendor_factory' => true,
         'material' => true,
     ];
 }

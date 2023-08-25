@@ -20,19 +20,20 @@ class AsnHeadersFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'asn_no' => 'Lorem ipsum d',
+                'vendor_factory_id' => 1,
                 'po_header_id' => 1,
+                'asn_no' => 'Lorem ipsum d',
                 'invoice_path' => '',
                 'invoice_no' => 'Lorem ipsum d',
-                'invoice_date' => '2023-06-28',
+                'invoice_date' => '2023-08-24',
                 'invoice_value' => 1.5,
                 'vehicle_no' => 'Lorem ipsu',
                 'driver_name' => 'Lorem ipsum d',
                 'driver_contact' => 'Lorem ipsum d',
-                'gateout_date' => '2023-06-28 15:26:41',
                 'status' => 1,
-                'added_date' => '2023-06-28 15:26:41',
-                'updated_date' => '2023-06-28 15:26:41',
+                'added_date' => '2023-08-24 15:18:27',
+                'updated_date' => '2023-08-24 15:18:27',
+                'gateout_date' => '2023-08-24 15:18:27',
             ],
         ];
         parent::init();

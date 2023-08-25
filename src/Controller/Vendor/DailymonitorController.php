@@ -59,6 +59,7 @@ class DailymonitorController extends VendorAppController
                 ->first();
 
             $stockUpload->current_stock = $stockUpload->current_stock + $confirm_production;
+            $stockUpload->production_stock = $stockUpload->production_stock + $confirm_production;
             $this->StockUploads->save($stockUpload);
 
             $response = ['status' => 1, 'message' => $dailymonitor];

@@ -25,6 +25,7 @@ class AsnHeadersTableTest extends TestCase
      */
     protected $fixtures = [
         'app.AsnHeaders',
+        'app.VendorFactories',
         'app.PoHeaders',
         'app.AsnFooters',
     ];

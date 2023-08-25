@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * AsnHeaders Model
  *
+ * @property \App\Model\Table\VendorFactoriesTable&\Cake\ORM\Association\BelongsTo $VendorFactories
  * @property \App\Model\Table\PoHeadersTable&\Cake\ORM\Association\BelongsTo $PoHeaders
  * @property \App\Model\Table\AsnFootersTable&\Cake\ORM\Association\HasMany $AsnFooters
  *
@@ -44,6 +45,10 @@ class AsnHeadersTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('VendorFactories', [
+            'foreignKey' => 'vendor_factory_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('PoHeaders', [
             'foreignKey' => 'po_header_id',
             'joinType' => 'INNER',
@@ -62,15 +67,19 @@ class AsnHeadersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
+            ->integer('vendor_factory_id')
+            ->notEmptyString('vendor_factory_id');
+
+        $validator
+            ->integer('po_header_id')
+            ->notEmptyString('po_header_id');
+
+        $validator
             ->scalar('asn_no')
             ->maxLength('asn_no', 15)
             ->requirePresence('asn_no', 'create')
             ->notEmptyString('asn_no')
             ->add('asn_no', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-
-        $validator
-            ->integer('po_header_id')
-            ->notEmptyString('po_header_id');
 
         $validator
             ->requirePresence('invoice_path', 'create')
@@ -110,10 +119,6 @@ class AsnHeadersTable extends Table
             ->notEmptyString('driver_contact');
 
         $validator
-            ->dateTime('gateout_date')
-            ->allowEmptyDateTime('gateout_date');
-
-        $validator
             ->integer('status')
             ->notEmptyString('status');
 
@@ -124,6 +129,10 @@ class AsnHeadersTable extends Table
         $validator
             ->dateTime('updated_date')
             ->notEmptyDateTime('updated_date');
+
+        $validator
+            ->dateTime('gateout_date')
+            ->allowEmptyDateTime('gateout_date');
 
         return $validator;
     }
@@ -138,6 +147,7 @@ class AsnHeadersTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['asn_no']), ['errorField' => 'asn_no']);
+        $rules->add($rules->existsIn('vendor_factory_id', 'VendorFactories'), ['errorField' => 'vendor_factory_id']);
         $rules->add($rules->existsIn('po_header_id', 'PoHeaders'), ['errorField' => 'po_header_id']);
 
         return $rules;
